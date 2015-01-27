@@ -1,0 +1,16 @@
+# Contributing
+
+1. Fork the repo.
+2. Add your section following the [styling guide](#styling).
+3. Commit changes.
+4. Push your commit.
+5. Create a pull request.
+6. Wait with your fingers crossed.
+
+## Styling
+
+- Put your snippets into corresponding sections.
+- Use `###` headers for your snippets.
+- Add some note/description if applicable. People will thank you for that.
+- For Apache-related examples, wrap your commands in a `apacheconf` code block.
+- For command-line examples, wrap your commands in a `bash` code block.
