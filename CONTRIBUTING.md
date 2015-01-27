@@ -12,5 +12,6 @@
 - Put your snippets into corresponding sections.
 - Use `###` headers for your snippets.
 - Add some note/description if applicable. People will thank you for that.
+- Be grateful. Indicate a source using this format `[Source](link)` if applicable. 
 - For Apache-related examples, wrap your commands in a `apacheconf` code block.
 - For command-line examples, wrap your commands in a `bash` code block.
