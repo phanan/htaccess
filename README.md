@@ -5,9 +5,31 @@ A collection of useful .htaccess, all in one place. I decided to create this rep
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
+    - [Force www](#force-www)
+    - [Force www in a Generic Way](#force-www-in-a-generic-way)
+    - [Force non-www](#force-non-www)
+    - [Force HTTPS](#force-https)
+    - [Force Trailing Slash](#force-trailing-slash)
+    - [Redirect a Single Page](#redirect-a-single-page)
+    - [Redirect an Entire Site](#redirect-an-entire-site)
 - [Security](#security)
+    - [Deny All Access](#deny-all-access)
+    - [Deny All Access Except Yours](#deny-all-access-except-yours)
+    - [Allow All Access Except Spammers'](#allow-all-access-except-spammers)
+    - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directores)
+    - [Disable Directory Browsing](#disable-directory-browsing)
+    - [Disable Image Hotlinking](#disable-image-hotlinking)
+    - [Password Protect a Directory](#password-protect-a-directory)
+    - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
 - [Performance](#performance)
+    - [Compress Text Files](#compress-text-files)
+    - [Set Expires Headers](#set-expires-headers)
+    - [Turn eTags Off](#turn-etags-off)
 - [Miscellaneous](#miscellaneous)
+    - [Set PHP Variables](#set-php-variables)
+    - [Custom Error Pages](#custom-error-pages)
+    - [Force Downloading](#force-downloading)
+    - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -121,6 +143,21 @@ AuthType Basic
 AuthName "One does not simply"
 AuthUserFile /home/fellowship/.htpasswd
 Require valid-user
+```
+
+### Password Protect a File or Several Files
+``` apacheconf
+AuthName "One still does not simply"
+AuthType Basic
+AuthUserFile /home/fellowship/.htpasswd
+
+<Files "one-ring.o">
+Require valid-user
+</Files>
+
+<FilesMatch ^((one|two|three)-rings?\.o)$>
+Require valid-user
+</FilesMatch>
 ```
 
 ## Performance
