@@ -30,6 +30,7 @@ A collection of useful .htaccess, all in one place. I decided to create this rep
     - [Custom Error Pages](#custom-error-pages)
     - [Force Downloading](#force-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
+    - [Auto UTF-8 Encode](#auto-utf-8-encode)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -305,3 +306,14 @@ CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wik
     </FilesMatch>
 </IfModule>
 ```
+
+### Auto UTF-8 Encode
+Your text content should always be UTF-8 encoded, no?
+``` apacheconf
+# Use UTF-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
+
+# Force UTF-8 for a number of file formats
+AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
+```
+[Source](http://h5bp.com)
