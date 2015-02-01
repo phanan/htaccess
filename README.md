@@ -17,6 +17,7 @@ A collection of useful .htaccess, all in one place. I decided to create this rep
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
     - [Allow All Access Except Spammers'](#allow-all-access-except-spammers)
     - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directores)
+    - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
     - [Password Protect a Directory](#password-protect-a-directory)
@@ -118,6 +119,17 @@ RewriteCond %{SCRIPT_FILENAME} -d [OR]
 RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
+
+### Deny Access to Backup and Source Files
+These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
+``` apacheconf
+<FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+```
+[Source](http://h5bp.com)
 
 ### Disable Directory Browsing
 ``` apacheconf
