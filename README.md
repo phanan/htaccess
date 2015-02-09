@@ -11,6 +11,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force www in a Generic Way](#force-www-in-a-generic-way)
     - [Force non-www](#force-non-www)
     - [Force HTTPS](#force-https)
+    - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Redirect an Entire Site](#redirect-an-entire-site)
@@ -66,6 +67,13 @@ RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+```
+
+### Force HTTPS Behind a Proxy
+Useful if you have a proxy in front of your server performing TLS termination.
+``` apacheconf
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
