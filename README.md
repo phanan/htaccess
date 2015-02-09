@@ -14,8 +14,9 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
-    - [Redirect a Single Directory](#redirect-a-single-directory)
+    - [Redirect a Single Directory](#alias-a-single-directory)
     - [Redirect an Entire Site](#redirect-an-entire-site)
+    - [Clean URLs](#alias-clean-urls)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -92,8 +93,9 @@ Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Redirect a Single Directory
+### Alias a Single Directory
 ``` apacheconf
+RewriteEngine On
 RewriteRule ^source-directory/(.*) target-directory/$1
 ```
 
@@ -102,6 +104,16 @@ RewriteRule ^source-directory/(.*) target-directory/$1
 Redirect 301 / http://newsite.com/
 ```
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+### Alias "Clean" URLs
+``` apacheconf
+# This snippet lets you use "clean URLs", without a PHP extension.
+# Example: "example.com/users" => "example.com/users.php"
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.php [NC,L]
+```
+[Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
 ## Security
 ### Deny All Access
