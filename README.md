@@ -94,7 +94,7 @@ Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 
 ### Redirect a Single Directory
 ``` apacheconf
-#RewriteRule ^source-directory/(.*) target-directory/$1
+RewriteRule ^source-directory/(.*) target-directory/$1
 ```
 
 ### Redirect an Entire Site
