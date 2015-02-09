@@ -120,6 +120,11 @@ RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
+Alternatively, you can just raise a `Not Found` error, giving the attacker dude no clue:
+``` apacheconf
+RedirectMatch 404 /\..*$
+```
+
 ### Deny Access to Backup and Source Files
 These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
 ``` apacheconf
