@@ -1,5 +1,5 @@
 # .htaccess Snippets
-A collection of useful .htaccess snippets, all in one place. I decided to create this repo after getting so tired (and bored) with Googling everytime there's a need of forcing `www` for my new website.
+A collection of useful .htaccess, all in one place. I decided to create this repo after getting so tired (and bored) with Googling everytime there's a need of forcing `www` for my new website.
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
@@ -14,6 +14,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Redirect an Entire Site](#redirect-an-entire-site)
+    - [Reverse Proxy](#reverse-proxy)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -87,6 +88,26 @@ Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 Redirect 301 / http://newsite.com/
 ```
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+### Reverse Proxy
+``` apacheconf
+NameVirtualHost *:80
+
+<VirtualHost *>
+    ServerAdmin me@mydomain.com
+    ServerName dev.mydomain.com
+    ProxyPreserveHost On
+
+    # setup the proxy
+    <Proxy *>
+        Order allow,deny
+        Allow from all
+    </Proxy>
+    ProxyPass / http://localhost:8888/
+    ProxyPassReverse / http://localhost:8888/
+</VirtualHost>
+```
+[Source](http://serverfault.com/questions/195611/how-do-i-redirect-subdomains-to-a-different-port-on-the-same-server)
 
 ## Security
 ### Deny All Access
