@@ -1,5 +1,5 @@
 # .htaccess Snippets
-A collection of useful .htaccess, all in one place. I decided to create this repo after getting so tired (and bored) with Googling everytime there's a need of forcing `www` for my new website.
+A collection of useful .htaccess snippets, all in one place. I decided to create this repo after getting so tired (and bored) with Googling everytime there's a need of forcing `www` for my new website.
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
