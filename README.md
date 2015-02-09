@@ -14,6 +14,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
+    - [Redirect a Single Directory](#redirect-a-single-directory)
     - [Redirect an Entire Site](#redirect-an-entire-site)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
@@ -90,6 +91,11 @@ Redirect 301 /oldpage.html http://www.yoursite.com/newpage.html
 Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+### Redirect a Single Directory
+``` apacheconf
+#RewriteRule ^source-directory/(.*) target-directory/$1
+```
 
 ### Redirect an Entire Site
 ``` apacheconf
