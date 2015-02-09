@@ -3,6 +3,8 @@ A collection of useful .htaccess, all in one place. I decided to create this rep
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
+**NOTE**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
+
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
     - [Force www](#force-www)
