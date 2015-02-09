@@ -35,6 +35,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force Downloading](#force-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
+    - [Switch to Another PHP Version](#switch-to-another-php-version)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -344,3 +345,13 @@ AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
 [Source](http://h5bp.com)
+
+### Switch to Another PHP Version
+If you're on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. For example, [Laravel](https://github.com/laravel/laravel) requires PHP >= 5.4. The following snippet should switch the PHP version for you.
+
+``` apacheconf
+AddHandler application/x-httpd-php55 .php
+
+# Alternatively, you can use AddType
+AddType application/x-httpd-php55 .php
+```
