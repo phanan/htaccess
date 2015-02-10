@@ -31,7 +31,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Turn eTags Off](#turn-etags-off)
 - [Logging](#logging)
     - [Log Format](#log-format)
-    - [Log Rotation)(#log-rotation)
+    - [Log Rotation](#log-rotation)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -300,7 +300,7 @@ FileETag None
 
 ## Logging
 
-## Log Format
+### Log Format
 ``` apacheconf
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 ErrorLog /var/logs/apache/error_log
@@ -308,11 +308,11 @@ LogLevel warn
 CustomLog logs/access_log combined
 ```
 For detailed description of options, directives and variations see [Apache Docs](http://httpd.apache.org/docs/2.2/logs.html)
-# Log Rotation
+### Log Rotation
 ``` apacheconf
 CustomLog "|bin/rotatelogs logs/access_log 86400" common
 ```
-This creates the files in the format of logs/accesslog.nnnn every 24 hours where nnnn is the system time at which the log nominally starts.
+This creates the files in the format of logs/accesslog.nnnn every 24 hours where nnnn is the system timestamp at which the log starts.
 ``` apacheconf
 CustomLog "|bin/rotatelogs -l logs/access_log.%Y.%m.%d 86400" common
 ```
