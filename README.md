@@ -309,11 +309,9 @@ php_value max_execution_time 240
 
 ### Custom Error Pages
 ``` apacheconf
-ErrorDocument 400 /errors/breakingbad.html
-ErrorDocument 401 /errors/notrespassing.html
-ErrorDocument 403 /errors/mordor.html
+ErrorDocument 500 "Houston, we have a problem."
+ErrorDocument 401 http://error.yourdomain.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
-ErrorDocument 500 /errors/notabugitsafeature.html
 ```
 
 ### Force Downloading
