@@ -19,7 +19,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
     - [Allow All Access Except Spammers'](#allow-all-access-except-spammers)
-    - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directores)
+    - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directories)
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
