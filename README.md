@@ -3,7 +3,10 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
-**NOTE**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
+**IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
+
+## Credits
+What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've be been trying to credit where due, things might be missing. If you believe anything here is your work and you should be given credits, let me know, or just send a PR.
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
@@ -57,7 +60,7 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 This works for _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
 ### Force non-www
-It's actually [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the master race, so just in case you're a fan or bare domains, here you go:
+It's [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the master race, so if you happen to be a fan or bare domains, here you go:
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
@@ -229,7 +232,7 @@ Require valid-user
 
 </IfModule>
 ```
-[Source](https://h5bp.com)
+[Source](http://h5bp.com)
 
 
 ### Set Expires Headers
@@ -324,7 +327,7 @@ Sometimes you want to force the browser to download some content instead of disp
 ```
 
 ### Allow Cross-Domain Fonts
-CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). The following snippet from [HTML5Boilerplate](http://h5bp.com) should make it happen.
+CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). The following snippet from [alrra](https://github.com/h5bp/server-configs-apache/issues/32) should make it happen.
 ``` apacheconf
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|ttc|ttf|woff)$">
