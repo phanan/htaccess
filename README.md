@@ -148,7 +148,7 @@ These files may be left by some text/html editors (like Vi/Vim) and pose a great
     Satisfy All
 </FilesMatch>
 ```
-[Source](http://h5bp.com)
+[Source](https://github.com/h5bp/server-configs-apache)
 
 ### Disable Directory Browsing
 ``` apacheconf
@@ -232,12 +232,12 @@ Require valid-user
 
 </IfModule>
 ```
-[Source](http://h5bp.com)
+[Source](https://github.com/h5bp/server-configs-apache)
 
 
 ### Set Expires Headers
 _Expires headers_ tell the browser whether they should request a specific file from the server or just grab it from the cache. It is advisable to set static content's expires headers to something far in the future. 
-If you don't control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](http://h5bp.com)
+If you don't control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -345,7 +345,7 @@ AddDefaultCharset utf-8
 # Force UTF-8 for a number of file formats
 AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
-[Source](http://h5bp.com)
+[Source](https://github.com/h5bp/server-configs-apache)
 
 ### Switch to Another PHP Version
 If you're on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. For example, [Laravel](https://github.com/laravel/laravel) requires PHP >= 5.4. The following snippet should switch the PHP version for you.
