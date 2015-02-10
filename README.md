@@ -127,7 +127,7 @@ But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
 ``` apacheconf
-Order deny, allow
+Order deny,allow
 Deny from All
 Allow from xxx.xxx.xxx.xxx
 ```
@@ -137,7 +137,7 @@ Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
 ``` apacheconf
-Order deny, allow
+Order deny,allow
 Allow from All
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
