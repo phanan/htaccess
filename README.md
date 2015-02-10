@@ -109,23 +109,35 @@ Deny from All
 But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
+#### Apache < 2.4
 ``` apacheconf
 Order deny, allow
 Deny from All
 Allow from xxx.xxx.xxx.xxx
+```
+#### Apache >= 2.4
+``` apacheconf
+Require all denied
+Require ip xxx.xxx.xxx.xxx
 ```
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
+#### Apache < 2.4
 ``` apacheconf
 Order deny, allow
 Allow from All
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
 ```
-
+#### Apache >= 2.4
+``` apacheconf
+Require all granted
+Require not ip xxx.xxx.xxx.xxx
+Require not ip xxx.xxx.xxx.xxx
+```
 ### Deny Access to Hidden Files and Directories
 Hidden files and directories (those whose names start with a dot `.`) should most, if not all, of the time be secured. For example: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
@@ -141,6 +153,7 @@ RedirectMatch 404 /\..*$
 
 ### Deny Access to Backup and Source Files
 These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
+#### Apache < 2.4
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     Order allow,deny
@@ -148,6 +161,14 @@ These files may be left by some text/html editors (like Vi/Vim) and pose a great
     Satisfy All
 </FilesMatch>
 ```
+#### Apache >= 2.4
+``` apacheconf
+<FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+    Require all denied
+    Satisfy All
+</FilesMatch>
+```
+
 [Source](https://github.com/h5bp/server-configs-apache)
 
 ### Disable Directory Browsing
