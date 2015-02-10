@@ -6,7 +6,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
 **IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
 
 ## Credits
-What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've be been trying to credit where due, things might be missing. If you believe anything here is your work and you should be given credits, let me know, or just send a PR.
+What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let me know, or just send a PR.
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
