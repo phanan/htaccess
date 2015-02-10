@@ -29,6 +29,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
+    - [Enable gzip Compression](#enable-gzip-compression)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -295,6 +296,55 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
+### Enable gzip Compression
+
+Gzipping an easy way to reduce weight per page of your site.
+
+For `httpd-2.2` and below
+
+```apacheconf
+# Compress Text, HTML , JS, CSS, XML:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddType x-font/otf .otf
+AddType x-font/ttf .ttf
+AddType x-font/eot .eot
+AddType x-font/woff .woff
+AddType image/x-icon .ico
+AddType image/png .png
+```
+For `httpd-2.4` and up
+
+```
+# Declare a filter, which runs after all internal filters like PHP or SSI
+FilterDeclare  gzip CONTENT_SET
+
+# The "gzip" filter can change "Content-Length", can not be used with range requests
+FilterProtocol gzip change=yes;byteranges=no
+
+# Enable "gzip" filter if "Content-Type" contains Text, HTML , JS, CSS, XML:
+FilterProvider gzip DEFLATE resp=Content-Type $text/plain
+FilterProvider gzip DEFLATE resp=Content-Type $text/html
+FilterProvider gzip DEFLATE resp=Content-Type $text/css
+FilterProvider gzip DEFLATE resp=Content-Type $text/javascript
+FilterProvider gzip DEFLATE resp=Content-Type $application/javascript
+FilterProvider gzip DEFLATE resp=Content-Type $application/x-javascript
+FilterProvider gzip DEFLATE resp=Content-Type $application/xhtml+xml
+FilterProvider gzip DEFLATE resp=Content-Type $application/rss+xml
+FilterProvider gzip DEFLATE resp=Content-Type $application/xml
+
+# Add "gzip" filter to the chain of filters
+FilterChain    gzip
+```
+[Source: SoftScibe](http://softstribe.com/wordpress/enable-gzip-compression-in-wordpress)
+[Source: SO](http://stackoverflow.com/questions/5230202/apache-addoutputfilterbytype-is-deprecated-how-to-rewrite-using-mod-filter)
 
 ## Miscellaneous
 
