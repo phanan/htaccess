@@ -12,6 +12,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
     - [Force non-www](#force-non-www)
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
+    - [Force HTTP](#force-http)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Redirect an Entire Site](#redirect-an-entire-site)
@@ -76,6 +77,13 @@ Useful if you have a proxy in front of your server performing TLS termination.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+```
+
+### Force HTTP
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
 ### Force Trailing Slash
