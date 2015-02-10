@@ -300,9 +300,12 @@ FileETag None
 
 Gzipping an easy way to reduce weight per page of your site.
 
-For `httpd-2.2` 
+
 
 ```apacheconf
+
+#For Apache 2.2
+
 # Compress Text, HTML , JS, CSS, XML:
 AddOutputFilterByType DEFLATE text/plain
 AddOutputFilterByType DEFLATE text/html
@@ -319,10 +322,9 @@ AddType x-font/eot .eot
 AddType x-font/woff .woff
 AddType image/x-icon .ico
 AddType image/png .png
-```
-For `httpd-2.4` and up, in apache 2.2 you should enable `filter_module` and `deflate_module`. 
 
-```apacheconf
+# For Apache 2.4 + 
+
 # Declare a filter, which runs after all internal filters like PHP or SSI
 FilterDeclare  gzip CONTENT_SET
 
