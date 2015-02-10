@@ -109,9 +109,8 @@ Redirect 301 / http://newsite.com/
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Alias "Clean" URLs
+This snippet lets you use "clean URLs" -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
 ``` apacheconf
-# This snippet lets you use "clean URLs", without a PHP extension.
-# Example: "example.com/users" => "example.com/users.php"
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
