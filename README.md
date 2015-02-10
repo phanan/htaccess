@@ -300,7 +300,7 @@ FileETag None
 
 Gzipping an easy way to reduce weight per page of your site.
 
-For `httpd-2.2` and below
+For `httpd-2.2` 
 
 ```apacheconf
 # Compress Text, HTML , JS, CSS, XML:
@@ -320,9 +320,9 @@ AddType x-font/woff .woff
 AddType image/x-icon .ico
 AddType image/png .png
 ```
-For `httpd-2.4` and up
+For `httpd-2.4` and up, in apache 2.2 you should enable `filter_module` and `deflate_module`. 
 
-```
+```apacheconf
 # Declare a filter, which runs after all internal filters like PHP or SSI
 FilterDeclare  gzip CONTENT_SET
 
@@ -343,8 +343,7 @@ FilterProvider gzip DEFLATE resp=Content-Type $application/xml
 # Add "gzip" filter to the chain of filters
 FilterChain    gzip
 ```
-[Source: SoftScibe](http://softstribe.com/wordpress/enable-gzip-compression-in-wordpress)
-[Source: SO](http://stackoverflow.com/questions/5230202/apache-addoutputfilterbytype-is-deprecated-how-to-rewrite-using-mod-filter)
+[Source](http://softstribe.com/wordpress/enable-gzip-compression-in-wordpress)
 
 ## Miscellaneous
 
