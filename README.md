@@ -4,7 +4,7 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
 ## Credits
-What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've be been trying to credit where due, things might be missing. If you believe anything here is your work and you should be given credits, let me know, or just send a PR.
+What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let me know, or just send a PR.
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
@@ -15,7 +15,10 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
+    - [Alias a Single Directory](#alias-a-single-directory)
+    - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
+    - [Alias Clean URLs](#alias-clean-urls)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -34,6 +37,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
     - [Force Downloading](#force-downloading)
+    - [Prevent Downloading](#prevent-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
@@ -92,16 +96,45 @@ Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
+### Alias a Single Directory
+``` apacheconf
+RewriteEngine On
+RewriteRule ^source-directory/(.*) target-directory/$1
+```
+
+### Alias Paths To Script
+``` apacheconf
+RewriteEngine On
+RewriteRule ^$ index.fcgi/ [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
+```
+This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like.
+
 ### Redirect an Entire Site
 ``` apacheconf
 Redirect 301 / http://newsite.com/
 ```
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
+### Alias "Clean" URLs
+This snippet lets you use "clean URLs" -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
+``` apacheconf
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.php [NC,L]
+```
+[Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
+
 ## Security
 ### Deny All Access
 ``` apacheconf
-Deny from All
+## Apache 2.2
+Deny from all
+
+## Apache 2.4
+# Require all denied
 ```
 
 But wait, this will lock you out from your content as well! Thus introducing...
@@ -109,9 +142,14 @@ But wait, this will lock you out from your content as well! Thus introducing...
 ### Deny All Access Except Yours
 #### Apache < 2.4
 ``` apacheconf
-Order deny, allow
-Deny from All
+## Apache 2.2
+Order deny,allow
+Deny from all
 Allow from xxx.xxx.xxx.xxx
+
+## Apache 2.4
+# Require all denied
+# Require ip xxx.xxx.xxx.xxx
 ```
 #### Apache >= 2.4
 ``` apacheconf
@@ -125,10 +163,16 @@ Now of course there's a reversed version:
 ### Allow All Access Except Spammers'
 #### Apache < 2.4
 ``` apacheconf
-Order deny, allow
-Allow from All
+## Apache 2.2
+Order deny,allow
+Allow from all
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
+
+## Apache 2.4
+# Require all granted
+# Require not ip xxx.xxx.xxx.xxx
+# Require not ip xxx.xxx.xxx.xxy
 ```
 #### Apache >= 2.4
 ``` apacheconf
@@ -154,9 +198,13 @@ These files may be left by some text/html editors (like Vi/Vim) and pose a great
 #### Apache < 2.4
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+    ## Apache 2.2
     Order allow,deny
     Deny from all
     Satisfy All
+
+    ## Apache 2.4
+    # Require all denied
 </FilesMatch>
 ```
 #### Apache >= 2.4
@@ -343,6 +391,16 @@ Sometimes you want to force the browser to download some content instead of disp
     ForceType application/octet-stream
     Header set Content-Disposition attachment
 </Files>
+```
+
+Now there is a yang to this yin:
+
+### Prevent Downloading
+Sometimes you want to force the browser to display some content instead of downloading it. The following snippet will help.
+``` apacheconf
+<FilesMatch "\.(tex|log|aux)$">
+    Header set Content-Type text/plain
+</FilesMatch>
 ```
 
 ### Allow Cross-Domain Fonts
