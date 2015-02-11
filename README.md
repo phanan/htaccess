@@ -34,6 +34,9 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
+- [Logging](#logging)
+    - [Log Format](#log-format)
+    - [Log Rotation](#log-rotation)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -316,6 +319,31 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
+## Logging
+
+### Log Format
+``` apacheconf
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+ErrorLog /var/logs/apache/error_log
+LogLevel warn
+CustomLog logs/access_log combined
+```
+For detailed description of options, directives and variations see [Apache Docs](http://httpd.apache.org/docs/2.2/logs.html)
+### Log Rotation
+``` apacheconf
+CustomLog "|bin/rotatelogs logs/access_log 86400" common
+```
+This creates the files in the format of logs/accesslog.nnnn every 24 hours where nnnn is the system timestamp at which the log starts.
+``` apacheconf
+CustomLog "|bin/rotatelogs -l logs/access_log.%Y.%m.%d 86400" common
+```
+This creates the files in the format of logs/access_log.yyyy.mm.dd  Logging will switch to a new file every day at midnight, local time.
+``` apacheconf
+ErrorLog "|bin/rotatelogs /var/logs/apache/error_log.%Y-%m-%d-%H_%M_%S 5M"
+```
+This configuration will rotate the logfile whenever it reaches a size of 5 megabytes.
+
+For detailed description of options and variations see [Apache Docs](http://httpd.apache.org/docs/2.2/programs/rotatelogs.html)
 
 ## Miscellaneous
 
