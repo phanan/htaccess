@@ -38,6 +38,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
     - [Force Downloading](#force-downloading)
+    - [Prevent Downloading](#prevent-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
@@ -341,6 +342,14 @@ Sometimes you want to force the browser to download some content instead of disp
     ForceType application/octet-stream
     Header set Content-Disposition attachment
 </Files>
+```
+
+### Prevent Downloading
+Sometimes you want to force the browser to display some content instead of downloading it. The following snippet will help.
+``` apacheconf
+<FilesMatch "\.(tex|log|aux)$">
+    Header set Content-Type text/plain
+</FilesMatch>
 ```
 
 ### Allow Cross-Domain Fonts
