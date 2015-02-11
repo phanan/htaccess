@@ -132,16 +132,25 @@ RewriteRule ^([^.]+)$ $1.php [NC,L]
 ## Security
 ### Deny All Access
 ``` apacheconf
-Deny from All
+## Apache 2.2
+Deny from all
+
+## Apache 2.4
+# Require all denied
 ```
 
 But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
 ``` apacheconf
+## Apache 2.2
 Order deny,allow
-Deny from All
+Deny from all
 Allow from xxx.xxx.xxx.xxx
+
+## Apache 2.4
+# Require all denied
+# Require ip xxx.xxx.xxx.xxx
 ```
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
@@ -149,10 +158,16 @@ Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
 ``` apacheconf
+## Apache 2.2
 Order deny,allow
-Allow from All
+Allow from all
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
+
+## Apache 2.4
+# Require all granted
+# Require not ip xxx.xxx.xxx.xxx
+# Require not ip xxx.xxx.xxx.xxy
 ```
 
 ### Deny Access to Hidden Files and Directories
@@ -172,9 +187,13 @@ RedirectMatch 404 /\..*$
 These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+    ## Apache 2.2
     Order allow,deny
     Deny from all
     Satisfy All
+
+    ## Apache 2.4
+    # Require all denied
 </FilesMatch>
 ```
 [Source](https://github.com/h5bp/server-configs-apache)
