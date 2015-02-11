@@ -18,6 +18,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force Trailing Slash](#force-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Alias a Single Directory](#alias-a-single-directory)
+    - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
     - [Alias Clean URLs](#alias-clean-urls)
 - [Security](#security)
@@ -102,6 +103,16 @@ Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
 RewriteEngine On
 RewriteRule ^source-directory/(.*) target-directory/$1
 ```
+
+### Alias Paths To Script
+``` apacheconf
+RewriteEngine On
+RewriteRule ^$ index.fcgi/ [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
+```
+This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like.
 
 ### Redirect an Entire Site
 ``` apacheconf
