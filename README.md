@@ -24,6 +24,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
+    - [Block a Specific IP Address] (#block-a-specific-ip-address)
     - [Allow All Access Except Spammers'](#allow-all-access-except-spammers)
     - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directories)
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
@@ -146,6 +147,12 @@ Allow from xxx.xxx.xxx.xxx
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
+
+### Block a Specific IP Address
+``` apacheconf
+Order Deny,Allow
+Deny from xx.xxx.xxx.xx
+```
 
 ### Allow All Access Except Spammers'
 ``` apacheconf
