@@ -344,6 +344,8 @@ Sometimes you want to force the browser to download some content instead of disp
 </Files>
 ```
 
+Now there is a yang to this yin:
+
 ### Prevent Downloading
 Sometimes you want to force the browser to display some content instead of downloading it. The following snippet will help.
 ``` apacheconf
