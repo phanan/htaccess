@@ -13,7 +13,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force www](#force-www)
     - [Force www in a Generic Way](#force-www-in-a-generic-way)
     - [Force non-www](#force-non-www)
-    - [Force non-www in a generic way](#force-non-www-in-a-generic-way)
+    - [Force non-www in a Generic Way](#force-non-www-in-a-generic-way)
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
