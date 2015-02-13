@@ -35,6 +35,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
+    - [Apply google mod_pageSpeed](#apply-google-mod_pageSpeed)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -346,6 +347,52 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
+### Apply google mod_pageSpeed
+Some host like DreamHost support google mod_pageSpeed. This mod is very powerfull in speed up your server. ( [Source](https://developers.google.com/speed/pagespeed/module) )
+
+```
+<IfModule pagespeed_module>
+    
+    ModPagespeed on
+
+    ModPagespeedCssOutlineMinBytes 3000
+    ModPagespeedJsOutlineMinBytes 3000
+
+    ModPagespeedCssInlineMaxBytes 1000
+    ModPagespeedJsInlineMaxBytes 1000
+
+    # Optimize Caching
+    ModPagespeedEnableFilters extend_cache
+    ModPagespeedEnableFilters local_storage_cache
+    ModPagespeedEnableFilters outline_css
+    ModPagespeedEnableFilters outline_javascript
+
+    # Minimize Round Trip Times
+    ModPagespeedEnableFilters rewrite_css
+    ModPagespeedEnableFilters rewrite_style_attributes
+    ModPagespeedEnableFilters combine_css
+    ModPagespeedEnableFilters flatten_css_imports
+    ModPagespeedEnableFilters inline_css
+    ModPagespeedEnableFilters move_css_above_scripts
+
+    # Minimize Payload Size
+    ModPagespeedEnableFilters collapse_whitespace
+    ModPagespeedEnableFilters elide_attributes
+
+    ModPagespeedEnableFilters rewrite_images
+    ModPagespeedEnableFilters inline_images
+    ModPagespeedEnableFilters recompress_images
+    ModPagespeedEnableFilters recompress_jpeg
+    ModPagespeedEnableFilters recompress_png
+    ModPagespeedEnableFilters strip_image_meta_data
+    ModPagespeedEnableFilters jpeg_subsampling
+
+    ModPagespeedEnableFilters remove_comments
+    ModPagespeedEnableFilters remove_quotes
+    ModPagespeedEnableFilters lazyload_images
+    ModPagespeedEnableFilters rewrite_style_attributes
+</IfModule>
+```
 
 ## Miscellaneous
 
