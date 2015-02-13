@@ -31,6 +31,8 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Disable Image Hotlinking](#disable-image-hotlinking)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Deny Request Methods](#deny-request-methods)
+    - [Blocking based on User-Agent Header](#blocking-based-on-user-agent-header)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -42,8 +44,10 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force Downloading](#force-downloading)
     - [Prevent Downloading](#prevent-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
+    - [Set an environment variable](#set-an-environment-variable)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Send Custom Headers](#send-custom-headers)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -239,6 +243,19 @@ Require valid-user
 <FilesMatch ^((one|two|three)-rings?\.o)$>
 Require valid-user
 </FilesMatch>
+```
+
+### Deny Request Methods
+```
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|OPTIONS|POST|PUT)
+RewriteRule .* - [F]
+```
+
+### Blocking based on User-Agent Header
+```
+SetEnvIfNoCase ^User-Agent$ .*(craftbot|download|extract|stripper|sucker|ninja|clshttp|webspider|leacher|collector|grabber|webpictures) HTTP_SAFE_BADBOT
+SetEnvIfNoCase ^User-Agent$ .*(libwww-perl|aesop_com_spiderman) HTTP_SAFE_BADBOT
+Deny from env=HTTP_SAFE_BADBOT
 ```
 
 ## Performance
@@ -440,6 +457,15 @@ CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wik
     </FilesMatch>
 </IfModule>
 ```
+### Set an environment variable
+```
+SetEnv <VAR_NAME> <Value>
+```
+There are some useful variable
+#### Set Timezone of the Server (GMT) ^
+```
+SetEnv TZ America/Indianapolis
+```
 
 ### Auto UTF-8 Encode
 Your text content should always be UTF-8 encoded, no?
@@ -460,4 +486,12 @@ AddHandler application/x-httpd-php55 .php
 
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
+```
+
+### Send Custom Headers
+```
+Header set P3P "policyref="/w3c/p3p.xml""
+Header set X-Pingback "/xmlrpc.php"
+Header set Content-Language "en-US"
+Header set Vary "Accept-Encoding"
 ```
