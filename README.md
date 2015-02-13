@@ -329,6 +329,7 @@ If you don't control versioning with filename-based cache busting, consider lowe
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
   # Web fonts
+    ExpiresByType application/font-woff2                "access plus 1 month"
     ExpiresByType application/font-woff                 "access plus 1 month"
     ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
     ExpiresByType application/x-font-ttf                "access plus 1 month"
@@ -388,7 +389,7 @@ Sometimes you want to force the browser to display some content instead of downl
 CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). The following snippet from [alrra](https://github.com/h5bp/server-configs-apache/issues/32) should make it happen.
 ``` apacheconf
 <IfModule mod_headers.c>
-    <FilesMatch "\.(eot|otf|ttc|ttf|woff)$">
+    <FilesMatch "\.(eot|otf|ttc|ttf|woff|woff2)$">
         Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
 </IfModule>
