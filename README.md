@@ -13,6 +13,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force www](#force-www)
     - [Force www in a Generic Way](#force-www-in-a-generic-way)
     - [Force non-www](#force-non-www)
+    - [Force non-www in a Generic Way](#force-non-www-in-a-generic-way)
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
@@ -69,6 +70,15 @@ It's [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devc
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+```
+
+### Force non-www in a Generic Way
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteCond %{HTTPS}s ^on(s)|off
+RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\.)?(.+)$
+RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ```
 
 ### Force HTTPS
