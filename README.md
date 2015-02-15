@@ -220,6 +220,7 @@ RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?yourdomain.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 ```
+If you want block 'blank' referers too - delete `RewriteCond %{HTTP_REFERER} !^$` line.
 
 ### Password Protect a Directory
 First you need to create a `.htpasswd` file somewhere in the system:
