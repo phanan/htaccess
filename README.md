@@ -30,6 +30,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
+    - [Disable Image Hotlinking for Fixed Domains](#disable-image-hotlinking-for-fixed-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
 - [Performance](#performance)
@@ -220,7 +221,15 @@ RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?yourdomain.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 ```
-If you want block 'blank' referers too - delete `RewriteCond %{HTTP_REFERER} !^$` line.
+If you want block 'blank' referers too - delete `RewriteCond %{HTTP_REFERER} !^$` line (not recommended).
+
+### Disable Image Hotlinking for fixed domains
+This settings disabling image hotlinking for fixed sites only.
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} ^http(s)?://(www\.)?badsite.com.*$
+RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+```
 
 ### Password Protect a Directory
 First you need to create a `.htpasswd` file somewhere in the system:
