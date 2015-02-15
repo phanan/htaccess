@@ -30,6 +30,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
+    - [Disable Image Hotlinking for Fixed Domains with Block Banner](#disable-image-hotlinking-for-fixed-domains-with-block-banner)
     - [Disable Image Hotlinking for Fixed Domains](#disable-image-hotlinking-for-fixed-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
@@ -229,6 +230,14 @@ This settings disabling image hotlinking for fixed sites only.
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^http(s)?://(www\.)?badsite.com.*$
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+```
+
+### Disable Image Hotlinking for Fixed Domains with Block Banner
+This settings - rewrite all hotlinked images for fixed domains to your 'blocking banner' (ex. Image with you site url or message about hotlinking image)
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} ^http(s)?://(www\.)?badsite.com.*$
+RewriteRule \.(jpg|jpeg|png|gif) http://mysite.com/block_img.png [R,L]
 ```
 
 ### Password Protect a Directory
