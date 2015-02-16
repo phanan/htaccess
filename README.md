@@ -44,6 +44,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Serve WebP images](#serve-webp-images)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
