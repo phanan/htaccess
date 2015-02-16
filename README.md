@@ -425,3 +425,16 @@ AddHandler application/x-httpd-php55 .php
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
 ```
+
+### Serve WebP images
+If WebP images are supported and an image with a .webp extension is located as the same place as the jpg/png image that is going to be served, then the WebP image is served instead.
+
+``` apacheconf
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
+    RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
+</IfModule>
+```
+[Source](https://github.com/vincentorback/WebP-images-with-htaccess)
