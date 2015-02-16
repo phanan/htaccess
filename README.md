@@ -44,6 +44,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Force disable Internet Explorer compatibility view](#force-disable-ie-compatibility-view)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -424,4 +425,14 @@ AddHandler application/x-httpd-php55 .php
 
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
+```
+
+### Force disable ie compatibility view
+If clients browser is Internet Explorer, Force disable IE compatibility view(using edge rendering engine)
+
+``` apacheconf
+# Check clients browser
+BrowserMatch MSIE is-msie
+Header set X-UA-Compatible IE=edge env=is-msie
+
 ```
