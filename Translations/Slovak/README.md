@@ -36,7 +36,7 @@ Kolekcia užitočných .htaccess súborov, všetky na jednom mieste. Rozhodol so
     - [Automatické UTF-8 kódovanie](#auto-utf-8-encode)
 
 ## Prepisovanie a presmerovanie
-Poznámka: Predpokladá sa, že máte nainštalovaný a povolený `mod_rewrite`.
+Poznámka: Predpokladá sa, že máte nainštalovaný a povolený `mod_rewrite`. 
 
 ### Presmerovanie na WWW
 ``` apacheconf
