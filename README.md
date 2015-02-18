@@ -17,6 +17,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
+    - [Remove Trailing Slash](#remove-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
@@ -101,6 +102,11 @@ RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
+### Remove Trailing Slash
+``` apacheconf
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+```
 ### Redirect a Single Page
 ``` apacheconf
 Redirect 301 /oldpage.html http://www.yoursite.com/newpage.html
