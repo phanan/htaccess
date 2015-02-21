@@ -29,6 +29,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Disable Image Hotlinking](#disable-image-hotlinking)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Prevent some scripts from executing](#prevent-some-scripts-from-executing)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -42,7 +43,6 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
     - [Set Time Zone](#set-time-zone)
-    - [Prevent some scripts from executing](#prevent-some-scripts-from-executing)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -246,16 +246,6 @@ AuthUserFile /home/fellowship/.htpasswd
 Require valid-user
 ```
 
-### Prevent some scripts from executing
-``` apacheconf
-Options -ExecCGI
-AddHandler cgi-script <file extension>
-
-# For example:
-Options -ExecCGI
-AddHandler cgi-script .pl .py .sh .cgi
-```
-
 ### Password Protect a File or Several Files
 ``` apacheconf
 AuthName "One still does not simply"
@@ -269,6 +259,16 @@ Require valid-user
 <FilesMatch ^((one|two|three)-rings?\.o)$>
 Require valid-user
 </FilesMatch>
+```
+
+### Prevent some scripts from executing
+``` apacheconf
+Options -ExecCGI
+AddHandler cgi-script <file extension>
+
+# For example:
+Options -ExecCGI
+AddHandler cgi-script .pl .py .sh .cgi
 ```
 
 ## Performance
