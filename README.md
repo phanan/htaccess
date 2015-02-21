@@ -3,8 +3,6 @@ A collection of useful .htaccess snippets, all in one place. I decided to create
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
 
-**IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
-
 ## Credits
 What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let me know, or just send a PR.
 
@@ -33,6 +31,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Disable Image Hotlinking](#disable-image-hotlinking)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Prevent some scripts from executing](#prevent-some-scripts-from-executing)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -45,6 +44,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Set Time Zone](#set-time-zone)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -158,6 +158,7 @@ Deny from all
 But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
+#### Apache < 2.4
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -168,11 +169,17 @@ Allow from xxx.xxx.xxx.xxx
 # Require all denied
 # Require ip xxx.xxx.xxx.xxx
 ```
+#### Apache >= 2.4
+``` apacheconf
+Require all denied
+Require ip xxx.xxx.xxx.xxx
+```
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
+#### Apache < 2.4
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -185,7 +192,12 @@ Deny from xxx.xxx.xxx.xxy
 # Require not ip xxx.xxx.xxx.xxx
 # Require not ip xxx.xxx.xxx.xxy
 ```
-
+#### Apache >= 2.4
+``` apacheconf
+Require all granted
+Require not ip xxx.xxx.xxx.xxx
+Require not ip xxx.xxx.xxx.xxx
+```
 ### Deny Access to Hidden Files and Directories
 Hidden files and directories (those whose names start with a dot `.`) should most, if not all, of the time be secured. For example: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
@@ -201,6 +213,7 @@ RedirectMatch 404 /\..*$
 
 ### Deny Access to Backup and Source Files
 These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
+#### Apache < 2.4
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -212,6 +225,14 @@ These files may be left by some text/html editors (like Vi/Vim) and pose a great
     # Require all denied
 </FilesMatch>
 ```
+#### Apache >= 2.4
+``` apacheconf
+<FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+    Require all denied
+    Satisfy All
+</FilesMatch>
+```
+
 [Source](https://github.com/h5bp/server-configs-apache)
 
 ### Disable Directory Browsing
@@ -254,6 +275,16 @@ Require valid-user
 <FilesMatch ^((one|two|three)-rings?\.o)$>
 Require valid-user
 </FilesMatch>
+```
+
+### Prevent some scripts from executing
+``` apacheconf
+Options -ExecCGI
+AddHandler cgi-script <file extension>
+
+# For example:
+Options -ExecCGI
+AddHandler cgi-script .pl .py .sh .cgi
 ```
 
 ## Performance
@@ -430,4 +461,12 @@ AddHandler application/x-httpd-php55 .php
 
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
+```
+
+### Set Time Zone
+``` apacheconf
+SetEnv TZ <val>
+
+# For example:
+SetEnv TZ America/New_York
 ```
