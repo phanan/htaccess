@@ -1,7 +1,7 @@
 # Contributing
 
 1. Fork the repo.
-2. Add your section following the [styling guide](#styling).
+2. Add your section following the [styling guide](#styling). One snippet per PR, please!
 3. Commit changes.
 4. Push your commit.
 5. Create a pull request.
