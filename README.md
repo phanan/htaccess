@@ -47,6 +47,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
     - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
+    - [Serve WebP Images](#serve-webp-images)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -467,3 +468,14 @@ Compatibility View in IE may affect how some websites are displayed. The followi
     Header set X-UA-Compatible IE=edge env=is-msie
 </IfModule>
 ```
+
+### Serve WebP Images
+If [WebP images](https://developers.google.com/speed/webp/?csw=1) are supported and an image with a .webp extension and the same name is found at the same place as the jpg/png image that is going to be served, then the WebP image is served instead.
+
+``` apacheconf
+RewriteEngine On
+RewriteCond %{HTTP_ACCEPT} image/webp
+RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
+RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
+```
+[Source](https://github.com/vincentorback/WebP-images-with-htaccess)
