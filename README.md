@@ -31,8 +31,7 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
-    - [Disable Image Hotlinking for Fixed Domains with Block Banner](#disable-image-hotlinking-for-fixed-domains-with-block-banner)
-    - [Disable Image Hotlinking for Fixed Domains](#disable-image-hotlinking-for-fixed-domains)
+    - [Disable Image Hotlinking for Specific Domains](#disable-image-hotlinking-for-specific-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
 - [Performance](#performance)
@@ -224,26 +223,28 @@ Options All -Indexes
 ### Disable Image Hotlinking
 ``` apacheconf
 RewriteEngine on
+# Remove the following line if you want to block blank referrer too
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?yourdomain.com [NC]
-RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
-```
-If you want block 'blank' referers too - delete `RewriteCond %{HTTP_REFERER} !^$` line (not recommended).
 
-### Disable Image Hotlinking for fixed domains
-This settings disabling image hotlinking for fixed sites only.
-``` apacheconf
-RewriteEngine on
-RewriteCond %{HTTP_REFERER} ^http(s)?://(www\.)?badsite.com.*$
-RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?yourdomain.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
+
+# If you want to display a "blocked" banner in place of the hotlinked image, 
+# replace the above rule with:
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
 ```
 
-### Disable Image Hotlinking for Fixed Domains with Block Banner
-This settings - rewrite all hotlinked images for fixed domains to your 'blocking banner' (ex. Image with you site url or message about hotlinking image)
+### Disable Image Hotlinking for Specific Domains
+Sometimes you want to disable image hotlinking from some bad guys only. The following snippet should help you with that. 
 ``` apacheconf
 RewriteEngine on
-RewriteCond %{HTTP_REFERER} ^http(s)?://(www\.)?badsite.com.*$
-RewriteRule \.(jpg|jpeg|png|gif) http://mysite.com/block_img.png [R,L]
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite2\.com [NC,OR]
+RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+
+# If you want to display a "blocked" banner in place of the hotlinked image, 
+# replace the above rule with:
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
