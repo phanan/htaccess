@@ -45,6 +45,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -435,4 +436,14 @@ AddHandler application/x-httpd-php55 .php
 
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
+```
+
+### Disable Internet Explorer Compatibility View
+Compatibility View in IE may affect how some websites are displayed. The following snippet should force IE to use the Edge Rendering Engine and disable the Compatibility View.
+
+``` apacheconf
+<IfModule mod_headers.c>
+    BrowserMatch MSIE is-msie
+    Header set X-UA-Compatible IE=edge env=is-msie
+</IfModule>
 ```
