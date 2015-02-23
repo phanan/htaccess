@@ -38,9 +38,9 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
-    - [Enable gzip Compression for All Files Except for Images](#enable-gzip-compression)
+    - [Enable gzip Compression for All Files Except Images](#enable-gzip-compression-for-all-files-except-images)
     - [Disable gzip Compression](#disable-gzip-compression)
-    - [1 Day Caching](#one-day-caching)
+    - [One Day Caching](#one-day-caching)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -393,7 +393,7 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
-### Enable gzip Compression for All Files Except for Images
+### Enable gzip Compression for All Files Except Images
 This enables gzip compression for all files in the folder except for the images. Images are already compressed and re-compressing them is just waste of resources.
 ``` apacheconf
 SetOutputFilter DEFLATE
@@ -406,7 +406,7 @@ This disables gzip compression for the folder.
 SetEnv no-gzip 
 ```
 
-### 1 Day Caching
+### One Day Caching
 Allows the contents of the folder to be cached for one day. This can be adjusted to any different number of seconds.
 ``` apacheconf
 Header set Cache-Control "max-age=86400, public"
