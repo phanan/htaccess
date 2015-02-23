@@ -290,7 +290,7 @@ Require valid-user
 
 ### Block Visitors by Referrer
 This denies access for all users whom are referred by a specific domain.
-[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer)
+[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
 ``` apacheconf
 RewriteEngine on
 # Options +FollowSymlinks
