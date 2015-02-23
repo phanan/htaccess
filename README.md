@@ -34,6 +34,8 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Disable Image Hotlinking for Specific Domains](#disable-image-hotlinking-for-specific-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Block Visitors by Referrer](#block-visitors_by_referrer)
+    - [Prevent Framing the Site](#prevent_framing_the_site)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -284,6 +286,24 @@ Require valid-user
 <FilesMatch ^((one|two|three)-rings?\.o)$>
 Require valid-user
 </FilesMatch>
+```
+
+### Block Visitors by Referrer
+This denies access for all users whom are referred by a specific domain.
+``` apacheconf
+RewriteEngine on
+# Options +FollowSymlinks
+RewriteCond %{HTTP_REFERER} somedomain\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} anotherdomain\.com
+RewriteRule .* - [F]
+```
+
+### Prevent Framing the Site
+This prevents the website to be framed (i.e. into an iframe tag). However, it allows framing for a specific folder.
+``` apacheconf
+# prevent framing the site (except for myfolder)
+SetEnvIf Request_URI "/myfolder" allow_framing=true
+Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
 
 ## Performance
