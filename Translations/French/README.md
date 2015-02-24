@@ -470,7 +470,7 @@ La Compatibilité de vue dans IE peut affecter l'affichage de certains sites web
 </IfModule>
 ```
 
-### Serve WebP Images
+### Servir des Images WebP
 Si [WebP images](https://developers.google.com/speed/webp/?csw=1) est supporter et l'image avec l'extension .webp a le meme nom qu'un autre image jpg/png alors l'image Webp sera servi.
 
 ``` apacheconf
