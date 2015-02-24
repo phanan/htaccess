@@ -34,10 +34,15 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Disable Image Hotlinking for Specific Domains](#disable-image-hotlinking-for-specific-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Block Visitors by Referrer](#block-visitors-by-referrer)
+    - [Prevent Framing the Site](#prevent-framing-the-site)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
+    - [Enable gzip Compression for All Files Except Images](#enable-gzip-compression-for-all-files-except-images)
+    - [Disable gzip Compression](#disable-gzip-compression)
+    - [One Day Caching](#one-day-caching)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
@@ -283,6 +288,25 @@ Require valid-user
 </FilesMatch>
 ```
 
+### Block Visitors by Referrer
+This denies access for all users whom are referred by a specific domain.
+[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
+``` apacheconf
+RewriteEngine on
+# Options +FollowSymlinks
+RewriteCond %{HTTP_REFERER} somedomain\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} anotherdomain\.com
+RewriteRule .* - [F]
+```
+
+### Prevent Framing the Site
+This prevents the website to be framed (i.e. into an iframe tag). However, it allows framing for a specific folder.
+``` apacheconf
+# prevent framing the site (except for myfolder)
+SetEnvIf Request_URI "/myfolder" allow_framing=true
+Header set X-Frame-Options SAMEORIGIN env=!allow_framing
+```
+
 ## Performance
 ### Compress Text Files
 ``` apacheconf
@@ -390,6 +414,24 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
+### Enable gzip Compression for All Files Except Images
+This enables gzip compression for all files in the folder except for the images. Images are already compressed and re-compressing them is just waste of resources.
+``` apacheconf
+SetOutputFilter DEFLATE
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|bmp|tiff)$ no-gzip dont-vary
+```
+
+### Disable gzip Compression
+This disables gzip compression for the folder.
+``` apacheconf
+SetEnv no-gzip 
+```
+
+### One Day Caching
+Allows the contents of the folder to be cached for one day. This can be adjusted to any different number of seconds.
+``` apacheconf
+Header set Cache-Control "max-age=86400, public"
+```
 
 ## Miscellaneous
 
