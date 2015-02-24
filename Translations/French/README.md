@@ -46,7 +46,7 @@ Ce que je fais ici, c'est principalement collecter tous les snippets utiles trou
     - [Autoriser les Polices Cross-Domain](#autoriser-les-polices-cross-domain)
     - [Encodage UTF-8 Auto](#encodage-utf-8-auto)
     - [Basculer vers une Autre Version de PHP](#basculer-vers-une-autre-version-de-php)
-    - [Desactiver la Compatibilite De Vue pour Internet Explorer](#desactiver-la-compatibilit-de-vue-pour-internet-explorer)
+    - [Desactiver la Compatibilite De Vue pour Internet Explorer](#desactiver-la-compatibilite-de-vue-pour-internet-explorer)
     - [Servir des Images WebP](#servir-des-images-webp)
 
 ## Reecriture et Redirection
