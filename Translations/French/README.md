@@ -243,7 +243,7 @@ RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
 # RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
 ```
 
-### Désactiver le Hotlink des Images pour des Domaines Spécifiques
+### Desactiver le Hotlink des Images pour des Domaines Specifiques
 Parfois vous souhaitez désactiver l'image hotlinking seulement pour quelques méchants. L'extrait suivant devrait vous aider avec ça.
 ``` apacheconf
 RewriteEngine on
