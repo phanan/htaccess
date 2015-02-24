@@ -40,7 +40,6 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
     - [Turn eTags Off](#turn-etags-off)
-    - [Disable gzip Compression](#disable-gzip-compression)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
