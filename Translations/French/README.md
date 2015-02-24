@@ -40,9 +40,9 @@ Ce que je fais ici, c'est principalement collecter tous les snippets utiles trou
     - [Desactiver eTags](#desactiver-etags)
 - [Divers](#divers)
     - [Mettre en Place des Variables PHP](#mettre-en-place-des-variables-php)
-    - [Pages d'Erreur Personnalisees](#pages-d-erreur-personnalisees)
-    - [Forcer le Telechargement](#forcer-le-telechargement)
-    - [Empecher le Telechargement](#eviter-le-l-chargement)
+    - [Pages d'Erreur Personnalisees](#pages-derreur-personnalisees)
+    - [Forcer Telechargement](#forcer-telechargement)
+    - [Empecher  Telechargement](#eviter-telechargement)
     - [Autoriser les Polices Cross-Domain](#autoriser-les-polices-cross-domain)
     - [Encodage UTF-8 Auto](#encodage-utf-8-auto)
     - [Basculer vers une Autre Version de PHP](#basculer-vers-une-autre-version-de-php)
@@ -460,7 +460,7 @@ AddHandler application/x-httpd-php55 .php
 # Autrement, vous pouvez utiliser AddType
 AddType application/x-httpd-php55 .php
 ```
-### Désactiver la Compatibilité De Vue pour Internet Explorer
+### Desactiver la Compatibilite De Vue pour Internet Explorer
 La Compatibilité de vue dans IE peut affecter l'affichage de certains sites web. L'extrait suivant devrait forcer  IE d'utiliser le moteur d'interprétation Edge et desactiver  la Compatibilité De Vue.
 
 ``` apacheconf
