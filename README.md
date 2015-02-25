@@ -89,9 +89,7 @@ RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 
 ### Force HTTPS
 ``` apacheconf
-RewriteEngine on
-RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+Header always set Strict-Transport-Security "max-age=604800; includeSubDomains"
 ```
 
 ### Force HTTPS Behind a Proxy
