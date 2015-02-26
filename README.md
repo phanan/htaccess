@@ -409,7 +409,7 @@ If you don't control versioning with filename-based cache busting, consider lowe
 ```
 
 ### Turn eTags Off
-By removing the ETag header, you disable caches and browsers from being able to validate files, so they are forced to rely on your Cache-Control and Expires header. [Source](http://www.askapache.com/htaccess/apache-speed-etags.html)
+By removing the `ETag` header, you disable caches and browsers from being able to validate files, so they are forced to rely on your `Cache-Control` and `Expires` header. [Source](http://www.askapache.com/htaccess/apache-speed-etags.html)
 ``` apacheconf
 <IfModule mod_headers.c>
     Header unset ETag
