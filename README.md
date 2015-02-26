@@ -121,8 +121,8 @@ RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
 ### Redirect a Single Page
 ``` apacheconf
-Redirect 301 /oldpage.html http://www.yoursite.com/newpage.html
-Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
+Redirect 301 /oldpage.html http://www.example.com/newpage.html
+Redirect 301 /oldpage2.html http://www.example.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
