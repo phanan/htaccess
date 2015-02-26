@@ -251,7 +251,7 @@ RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
 ```
 
 ### Disable Image Hotlinking for Specific Domains
-Sometimes you want to disable image hotlinking from some bad guys only. The following snippet should help you with that. 
+Sometimes you want to disable image hotlinking from some bad guys only. 
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
@@ -436,7 +436,7 @@ ErrorDocument 404 /errors/halflife3.html
 ```
 
 ### Force Downloading
-Sometimes you want to force the browser to download some content instead of displaying it. The following snippet will help.
+Sometimes you want to force the browser to download some content instead of displaying it.
 ``` apacheconf
 <Files *.md>
     ForceType application/octet-stream
@@ -447,7 +447,7 @@ Sometimes you want to force the browser to download some content instead of disp
 Now there is a yang to this yin:
 
 ### Prevent Downloading
-Sometimes you want to force the browser to display some content instead of downloading it. The following snippet will help.
+Sometimes you want to force the browser to display some content instead of downloading it.
 ``` apacheconf
 <FilesMatch "\.(tex|log|aux)$">
     Header set Content-Type text/plain
@@ -455,7 +455,7 @@ Sometimes you want to force the browser to display some content instead of downl
 ```
 
 ### Allow Cross-Domain Fonts
-CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). The following snippet from [alrra](https://github.com/h5bp/server-configs-apache/issues/32) should make it happen.
+CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). This snippet solves the problem.
 ``` apacheconf
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|ttc|ttf|woff|woff2)$">
@@ -463,6 +463,7 @@ CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wik
     </FilesMatch>
 </IfModule>
 ```
+[Source](https://github.com/h5bp/server-configs-apache/issues/32)
 
 ### Auto UTF-8 Encode
 Your text content should always be UTF-8 encoded, no?
