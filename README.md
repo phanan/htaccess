@@ -1,12 +1,12 @@
 # .htaccess Snippets
-A collection of useful .htaccess snippets, all in one place. I decided to create this repo after getting so tired (and bored) with Googling everytime there's a need of forcing `www` for my new website.
+A collection of useful .htaccess snippets, all in one place. 
 
-**Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use with your own risks.
+**Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use at your own risk.
 
 **IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
 
 ## Credits
-What I'm doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While I've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let me know, or just send a PR.
+What we are doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While we've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let us know, or just send a PR.
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
@@ -31,8 +31,11 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
     - [Disable Directory Browsing](#disable-directory-browsing)
     - [Disable Image Hotlinking](#disable-image-hotlinking)
+    - [Disable Image Hotlinking for Specific Domains](#disable-image-hotlinking-for-specific-domains)
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
+    - [Block Visitors by Referrer](#block-visitors-by-referrer)
+    - [Prevent Framing the Site](#prevent-framing-the-site)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -45,6 +48,8 @@ What I'm doing here is mostly collecting useful snippets from all over the inter
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
+    - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
+    - [Serve WebP Images](#serve-webp-images)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -87,6 +92,13 @@ RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 RewriteEngine on
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+# Note: It's also recommended to enable HTTP Strict Transport Security (HSTS) 
+# on your HTTPS website to help prevent man-in-the-middle attacks.
+# See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
 ```
 
 ### Force HTTPS Behind a Proxy
@@ -122,13 +134,18 @@ RewriteRule ^source-directory/(.*) target-directory/$1
 
 ### Alias Paths To Script
 ``` apacheconf
+FallbackResource /index.fcgi
+```
+This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like. Get access to the original path from the PATH_INFO environment variable, as exposed to your scripting environment.
+
+``` apacheconf
 RewriteEngine On
 RewriteRule ^$ index.fcgi/ [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
-This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like.
+This is a less efficient version of the FallbackResource directive (because using `mod_rewrite` is more complex than just handling the `FallbackResource` directive), but it's also more flexible.
 
 ### Redirect an Entire Site
 ``` apacheconf
@@ -222,9 +239,28 @@ Options All -Indexes
 ### Disable Image Hotlinking
 ``` apacheconf
 RewriteEngine on
+# Remove the following line if you want to block blank referrer too
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?yourdomain.com [NC]
+
+RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?yourdomain.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
+
+# If you want to display a "blocked" banner in place of the hotlinked image, 
+# replace the above rule with:
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
+```
+
+### Disable Image Hotlinking for Specific Domains
+Sometimes you want to disable image hotlinking from some bad guys only. The following snippet should help you with that. 
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite2\.com [NC,OR]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+
+# If you want to display a "blocked" banner in place of the hotlinked image, 
+# replace the above rule with:
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
@@ -254,6 +290,24 @@ Require valid-user
 <FilesMatch ^((one|two|three)-rings?\.o)$>
 Require valid-user
 </FilesMatch>
+```
+
+### Block Visitors by Referrer
+This denies access for all users who are coming from (referred by) a specific domain.
+[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
+``` apacheconf
+RewriteEngine on
+# Options +FollowSymlinks
+RewriteCond %{HTTP_REFERER} somedomain\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} anotherdomain\.com
+RewriteRule .* - [F]
+```
+
+### Prevent Framing the Site
+This prevents the website to be framed (i.e. put into an `iframe` tag), when still allows framing for a specific URI.
+``` apacheconf
+SetEnvIf Request_URI "/starry-night" allow_framing=true
+Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
 
 ## Performance
@@ -363,7 +417,6 @@ By removing the ETag header, you disable caches and browsers from being able to 
 FileETag None
 ```
 
-
 ## Miscellaneous
 
 ### Set PHP Variables
@@ -431,3 +484,24 @@ AddHandler application/x-httpd-php55 .php
 # Alternatively, you can use AddType
 AddType application/x-httpd-php55 .php
 ```
+
+### Disable Internet Explorer Compatibility View
+Compatibility View in IE may affect how some websites are displayed. The following snippet should force IE to use the Edge Rendering Engine and disable the Compatibility View.
+
+``` apacheconf
+<IfModule mod_headers.c>
+    BrowserMatch MSIE is-msie
+    Header set X-UA-Compatible IE=edge env=is-msie
+</IfModule>
+```
+
+### Serve WebP Images
+If [WebP images](https://developers.google.com/speed/webp/?csw=1) are supported and an image with a .webp extension and the same name is found at the same place as the jpg/png image that is going to be served, then the WebP image is served instead.
+
+``` apacheconf
+RewriteEngine On
+RewriteCond %{HTTP_ACCEPT} image/webp
+RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
+RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
+```
+[Source](https://github.com/vincentorback/WebP-images-with-htaccess)
