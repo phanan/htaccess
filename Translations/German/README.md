@@ -14,9 +14,9 @@ Was wir hier tun ist hauptsächlich nützliche Ausschnitte überall aus dem Inte
     - [www allgemein erzwingen](#www-allgemein-erzwingen)
     - [nicht-www erzwingen](#nicht-www-erzwingen)
     - [nicht-www allgemein erzwingen](#nicht-www-allgemein-erzwingen)
-    - [HTTPS erzwingen](#http-erzwingen)
-    - [HTTPS hinter einem Proxy erzwingen](#http-hinter-einem-proxy-erzwingen)
-    - [Nachgestellete Querstrich erzwingen](#nachgestelleten-querstrich-erzwingen)
+    - [HTTPS erzwingen](#https-erzwingen)
+    - [HTTPS hinter einem Proxy erzwingen](#https-hinter-einem-proxy-erzwingen)
+    - [Nachgestellete Querstriche erzwingen](#nachgestellete-querstriche-erzwingen)
     - [Nachgestellete Querstriche entfernen](#nachgestellete-querstriche-entfernen)
     - [Eine einzelne Seite weiterleiten](#eine-einzelne-seite-weiterleiten)
     - [Ein einziges Verzeichnis aliasen](#ein-einziges-verzeichnis-aliasen)
@@ -108,7 +108,7 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Nachgestellete Querstrich erzwingen
+### Nachgestellete Querstriche erzwingen
 ``` apacheconf
 RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
