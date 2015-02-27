@@ -9,47 +9,47 @@ Eine Sammlung nützlicher .htaccess Asuschnitte, alle an einem Ort.
 Was wir hier tun ist hauptsächlich nützliche Ausschnitte überall aus dem Internet (z.B.: ein guter Ausschnitt ist von [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) an einem Ort zu sammeln. Obwohl wir versuchen alle zu erwähnen ist es Möglich, dass manches fehlt. Wenn Sie glauben, dass etwas hiervon Ihre Arbeit ist und Sie erwähnt werden sollten, lassen Sie uns dies wissen.
 
 ## Inhalt
-- [Rewrite und Redirection](#rewrite-and-redirection)
-    - [Force www](#force-www)
-    - [Force www in a Generic Way](#force-www-in-a-generic-way)
-    - [Force non-www](#force-non-www)
-    - [Force non-www in a Generic Way](#force-non-www-in-a-generic-way)
-    - [Force HTTPS](#force-https)
-    - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
-    - [Force Trailing Slash](#force-trailing-slash)
-    - [Remove Trailing Slash](#remove-trailing-slash)
-    - [Redirect a Single Page](#redirect-a-single-page)
-    - [Alias a Single Directory](#alias-a-single-directory)
-    - [Alias Paths to Script](#alias-paths-to-script)
-    - [Redirect an Entire Site](#redirect-an-entire-site)
-    - [Alias Clean URLs](#alias-clean-urls)
-- [Security](#security)
-    - [Deny All Access](#deny-all-access)
-    - [Deny All Access Except Yours](#deny-all-access-except-yours)
-    - [Allow All Access Except Spammers'](#allow-all-access-except-spammers)
-    - [Deny Access to Hidden Files and Directories](#deny-access-to-hidden-files-and-directories)
-    - [Deny Access to Backup and Source Files](#deny-access-to-backup-and-source-files)
-    - [Disable Directory Browsing](#disable-directory-browsing)
-    - [Disable Image Hotlinking](#disable-image-hotlinking)
-    - [Disable Image Hotlinking for Specific Domains](#disable-image-hotlinking-for-specific-domains)
-    - [Password Protect a Directory](#password-protect-a-directory)
-    - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
-    - [Block Visitors by Referrer](#block-visitors-by-referrer)
-    - [Prevent Framing the Site](#prevent-framing-the-site)
-- [Performance](#performance)
-    - [Compress Text Files](#compress-text-files)
-    - [Set Expires Headers](#set-expires-headers)
-    - [Turn eTags Off](#turn-etags-off)
-- [Miscellaneous](#miscellaneous)
-    - [Set PHP Variables](#set-php-variables)
-    - [Custom Error Pages](#custom-error-pages)
-    - [Force Downloading](#force-downloading)
-    - [Prevent Downloading](#prevent-downloading)
-    - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
-    - [Auto UTF-8 Encode](#auto-utf-8-encode)
-    - [Switch to Another PHP Version](#switch-to-another-php-version)
-    - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
-    - [Serve WebP Images](#serve-webp-images)
+- [Rewrite und Redirection](#rewrite-und-redirection)
+    - [www erzwingen](#www-erzwingen)
+    - [www allgemein erzwingen](#www-allgemein-erzwingen)
+    - [nicht-www erzwingen](#nicht-www-erzwingen)
+    - [nicht-www allgemein erzwingen](#nicht-www-allgemein-erzwingen)
+    - [HTTPS erzwingen](#http-erzwingen)
+    - [HTTPS hinter einem Proxy erzwingen](#http-hinter-einem-proxy-erzwingen)
+    - [Nachgestellete Querstrich erzwingen](#nachgestelleten-querstrich-erzwingen)
+    - [Nachgestellete Querstriche entfernen](#nachgestellete-querstriche-entfernen)
+    - [Eine einzelne Seite weiterleiten](#eine-einzelne-seite-weiterleiten)
+    - [Ein einziges Verzeichnis aliasen](#ein-einziges-verzeichnis-aliasen)
+    - [Pfad zu Skript aliasen](#pfad-zu-skript-aliasen)
+    - [Eine komplette Seite weiterleiten](#eine-komplette-seite-weiterleiten)
+    - ["Saubere" URLs aliasen](#saubere-urls-aliasen)
+- [Sicherheit](#sicherheit)
+    - [Kompletten Zugriff verbieten](#kompletten-zugriff-verbieten)
+    - [Kompletten Zugriff außer Ihren verbieten](#kompletten-zugriff-au%C3%9Fer-ihren-verbieten)
+    - [Zugriff erlauben, außer von Spammern](#zugriff-erlauben-au%C3%9Fer-von-spammern)
+    - [Zugriff zu versteckten Dateien und Verzeichnissen verbieten](#zugriff-zu-versteckten-dateien-und-verzeichnissen-verbieten)
+    - [Zugriff zu Backup- und Quelldateien verbieten](#zugriff-zu-backup--und-quelldateien-verbieten)
+    - [Verzeichnis-Auflistung abschalten](#verzeichnis-auflistung-abschalten)
+    - [Bild-Hotlinking abschalten](#bild-hotlinking-abschalten)
+    - [Bild-Hotlinking für spezielle Domains abschalten](#bild-hotlinking-f%C3%BCr-spezielle-domains-abschalten)
+    - [Ein Verzeichnis mit Passwort schützen](#ein-verzeichnis-mit-passwort-sch%C3%BCtzen)
+    - [Eine oder mehere Dateien mit Passwort schützen](#eine-oder-mehere-dateien-mit-passwort-sch%C3%BCtzen)
+    - [Besucher nach Referer blockieren](#besucher-nach-referer-blockieren)
+    - [Verbieten die Seite zu framen](#verbieten-die-seite-zu-framen)
+- [Leistung](#leistung)
+    - [Textdateien komprimieren](#textdateien-komprimieren)
+    - [Setzt Ablauf im Header](#setzt-ablauf-im-header)
+    - [eTags abschalten](#etags-abschalten)
+- [Verschiedenes](#verschiedenes)
+    - [PHP Variablen setzen](#php-variablen-setzen)
+    - [Eigene Fehlerseiten](#eigene-fehlerseiten)
+    - [Download erzwingen](#download-erzwingen)
+    - [Download verhindern](#download-verhindern)
+    - [Cross-Domain Schriftarten erlauben](#cross-domain-schriftarten-erlauben)
+    - [Automatisches UTF-8 Encoding](#automatisches-utf-8-encoding)
+    - [Zu einer anderen PHP Version wechseln](#zu-einer-anderen-php-version-wechseln)
+    - [Internet Explorer Kompatibilitätsansicht deaktivieren](#internet-explorer-kompatibilit%C3%A4tsansicht-deaktivieren)
+    - [WebP Bilder bereitstellen](#webp-bilder-bereitstellen)
 
 ## Rewrite und Redirection
 Bemerkung: Es ist vorausgesetzt, dass Sie `mod_rewrite` installiert und aktiviert haben.
@@ -108,7 +108,7 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Nachgestelleten Querstrich erzwingen
+### Nachgestellete Querstrich erzwingen
 ``` apacheconf
 RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
@@ -153,7 +153,7 @@ Redirect 301 / http://newsite.com/
 ```
 Auf diese Art bleiben die Links intakt. `www.oldsite.com/some/crazy/link.html` wird zu `www.newsite.com/some/crazy/link.html`. Dies ist sehr hilfreich, wenn Sie eine Seite nur zu einer neuen Domain "umziehen". [Quelle](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Alias "Clean" URLs
+### "Saubere" URLs aliasen
 This snippet lets you use "clean URLs" -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
 ``` apacheconf
 RewriteEngine On
