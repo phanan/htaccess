@@ -242,12 +242,12 @@ RewriteEngine on
 # Remove the following line if you want to block blank referrer too
 RewriteCond %{HTTP_REFERER} !^$
 
-RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?yourdomain.com [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?example.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
 
 # If you want to display a "blocked" banner in place of the hotlinked image, 
 # replace the above rule with:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Disable Image Hotlinking for Specific Domains
@@ -260,7 +260,7 @@ RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 
 # If you want to display a "blocked" banner in place of the hotlinked image, 
 # replace the above rule with:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
@@ -431,7 +431,7 @@ php_value max_execution_time 240
 ### Custom Error Pages
 ``` apacheconf
 ErrorDocument 500 "Houston, we have a problem."
-ErrorDocument 401 http://error.yourdomain.com/mordor.html
+ErrorDocument 401 http://error.example.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
 
