@@ -22,7 +22,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
-    - [Alias Clean URLs](#alias-clean-urls)
+    - [Alias "Clean" URLs](#alias-clean-urls)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -154,7 +154,7 @@ Redirect 301 / http://newsite.com/
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Alias "Clean" URLs
-This snippet lets you use "clean URLs" -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
+This snippet lets you use "clean" URLs -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
 ``` apacheconf
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
