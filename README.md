@@ -217,7 +217,7 @@ RedirectMatch 404 /\..*$
 ```
 
 ### Deny Access to Backup and Source Files
-These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger, when anyone can access them.
+These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger if exposed to public. 
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
