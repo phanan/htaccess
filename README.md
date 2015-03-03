@@ -19,7 +19,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
-    - [Time And Date Based Rewriting](#time-and-data-based-rewriting)
+    - [Time And Date Based Rewriting](#time-and-date-based-rewriting)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
