@@ -132,7 +132,7 @@ RewriteCond %{TIME_DAY} ^.?3
 RewriteRule ^index.html$ /index_november_23rd_2015.html[L]
 
 #From 9 to 5
-RewriteCond %{TIME_HOUR}%{TIME_MIN} >0900 [OR]
+RewriteCond %{TIME_HOUR}%{TIME_MIN} >0900
 RewriteCond %{TIME_HOUR}%{TIME_MIN} <1700
 RewriteRule ^index.html$ /index_working_hours.html[L]
 ```
