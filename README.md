@@ -121,7 +121,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
 
-## Time And Date Based Rewriting
+### Time And Date Based Rewriting
 ``` apacheconf
 #Only after the year 2000
 RewriteCond %{TIME_YEAR} > 2000
@@ -129,7 +129,7 @@ RewriteCond %{TIME_YEAR} > 2000
 RewriteCond %{TIME_MON} > 10 
 #Only on days ending in 3
 RewriteCond %{TIME_DAY} ^.?3
-RewriteRule ^index.html$ /index_working_hours.html[L]
+RewriteRule ^index.html$ /index_november_23rd_2015.html[L]
 
 #From 9 to 5
 RewriteCond %{TIME_HOUR}%{TIME_MIN} >0900 [OR]
