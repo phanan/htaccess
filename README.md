@@ -19,6 +19,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
+    - [Time And Date Based Rewriting](#time-and-data-based-rewriting)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
@@ -119,6 +120,23 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
+
+## Time And Date Based Rewriting
+``` apacheconf
+#Only after the year 2000
+RewriteCond %{TIME_YEAR} > 2000
+#Only if it's after October
+RewriteCond %{TIME_MON} > 10 
+#Only on days ending in 3
+RewriteCond %{TIME_DAY} ^.?3
+RewriteRule ^index.html$ /index_working_hours.html[L]
+
+#From 9 to 5
+RewriteCond %{TIME_HOUR}%{TIME_MIN} >0900 [OR]
+RewriteCond %{TIME_HOUR}%{TIME_MIN} <1700
+RewriteRule ^index.html$ /index_working_hours.html[L]
+```
+
 ### Redirect a Single Page
 ``` apacheconf
 Redirect 301 /oldpage.html http://www.example.com/newpage.html
