@@ -1,5 +1,5 @@
 # .htaccess Snippets
-A collection of useful .htaccess snippets, all in one place. 
+A collection of useful .htaccess snippets, all in one place.
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use at your own risk.
 
@@ -93,7 +93,7 @@ RewriteEngine on
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
-# Note: It's also recommended to enable HTTP Strict Transport Security (HSTS) 
+# Note: It's also recommended to enable HTTP Strict Transport Security (HSTS)
 # on your HTTPS website to help prevent man-in-the-middle attacks.
 # See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
@@ -217,7 +217,7 @@ RedirectMatch 404 /\..*$
 ```
 
 ### Deny Access to Backup and Source Files
-These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger if exposed to public. 
+These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger if exposed to public.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -242,25 +242,25 @@ RewriteEngine on
 # Remove the following line if you want to block blank referrer too
 RewriteCond %{HTTP_REFERER} !^$
 
-RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?example.com [NC]
-RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
+RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?example.com [NC]
+RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image, 
+# If you want to display a "blocked" banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Disable Image Hotlinking for Specific Domains
-Sometimes you want to disable image hotlinking from some bad guys only. 
+Sometimes you want to disable image hotlinking from some bad guys only.
 ``` apacheconf
 RewriteEngine on
-RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
-RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite2\.com [NC,OR]
-RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite2\.com [NC,OR]
+RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image, 
+# If you want to display a "blocked" banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
@@ -354,7 +354,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 
 
 ### Set Expires Headers
-_Expires headers_ tell the browser whether they should request a specific file from the server or just grab it from the cache. It is advisable to set static content's expires headers to something far in the future. 
+_Expires headers_ tell the browser whether they should request a specific file from the server or just grab it from the cache. It is advisable to set static content's expires headers to something far in the future.
 If you don't control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
