@@ -1,12 +1,12 @@
-# .htaccess Ausschnitte
-Eine Sammlung nützlicher .htaccess Asuschnitte, alle an einem Ort.
+# .htaccess-Ausschnitte
+Eine Sammlung nützlicher .htaccess-Ausschnitte, alle an einem Ort.
 
-**Disclaimer**: Obwohl das Einfügen der Ausschnitte in eine `.htaccess` Datei sehr Zeitspahrend ist gibt es Fälle, in denen bestimme Veränderungen nötig sein können. Benutzung auf eigene Gefahr.
+**Haftungsausschluss**: Obwohl das Einfügen der Ausschnitte in eine `.htaccess`-Datei sehr zeitsparend ist, gibt es Fälle, in denen bestimme Veränderungen nötig sein könnten. Benutzung auf eigene Gefahr.
 
-**WICHTIG**: Apache 2.4 führt ein paar Änderungen ein, welche die Konfiguration zerstören können, hauptsächlich in der Zugriffskontrolle. Für mehr Informationen schauen Sie das [Upgrading Dokument](https://httpd.apache.org/docs/2.4/upgrading.html) und [dieses Ticket](https://github.com/phanan/htaccess/issues/2) an.
+**WICHTIG**: Apache 2.4 führt einige Änderungen ein, welche die Konfiguration zerstören könnten, hauptsächlich in der Zugriffskontrolle. Für mehr Informationen schauen Sie das [Upgrading Dokument](https://httpd.apache.org/docs/2.4/upgrading.html) und [dieses Ticket](https://github.com/phanan/htaccess/issues/2) an.
 
 ## Credits
-Was wir hier tun ist hauptsächlich nützliche Ausschnitte überall aus dem Internet (z.B.: ein guter Ausschnitt ist von [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) an einem Ort zu sammeln. Obwohl wir versuchen alle zu erwähnen ist es Möglich, dass manches fehlt. Wenn Sie glauben, dass etwas hiervon Ihre Arbeit ist und Sie erwähnt werden sollten, lassen Sie uns dies wissen.
+Wir sammeln hier hauptsächlich nützliche Ausschnitte aus dem Internet (beispielsweise aus [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) an einem Ort. Obwohl wir versuchen, alle Autoren zu erwähnen, ist es möglich, dass einige davon fehlen. Wenn Sie glauben, dass etwas hiervon Ihre Arbeit ist und Sie erwähnt werden sollten, lassen Sie uns dies wissen.
 
 ## Inhalt
 - [Rewrite und Redirection](#rewrite-und-redirection)
@@ -46,13 +46,13 @@ Was wir hier tun ist hauptsächlich nützliche Ausschnitte überall aus dem Inte
     - [Download erzwingen](#download-erzwingen)
     - [Download verhindern](#download-verhindern)
     - [Cross-Domain Schriftarten erlauben](#cross-domain-schriftarten-erlauben)
-    - [Automatisches UTF-8 Encoding](#automatisches-utf-8-encoding)
+    - [Automatische UTF-8-Kodierung](#automatische-utf-8-kodierung)
     - [Zu einer anderen PHP Version wechseln](#zu-einer-anderen-php-version-wechseln)
     - [Internet Explorer Kompatibilitätsansicht deaktivieren](#internet-explorer-kompatibilit%C3%A4tsansicht-deaktivieren)
     - [WebP Bilder bereitstellen](#webp-bilder-bereitstellen)
 
 ## Rewrite und Redirection
-Bemerkung: Es ist vorausgesetzt, dass Sie `mod_rewrite` installiert und aktiviert haben.
+Bemerkung: Es wird vorausgesetzt, dass Sie `mod_rewrite` installiert und aktiviert haben.
 
 ### www erzwingen
 ``` apacheconf
@@ -93,8 +93,8 @@ RewriteEngine on
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
-# Bermerke: Es wird außerdem empfohlen HTTP Strict Transport Security (HSTS)
-# auf Ihrer HTTPS Webseite zu aktivieren, um Man-in-the-Middle Atacken zu vermeiden.
+# Bermerke: Es wird außerdem empfohlen, HTTP Strict Transport Security (HSTS)
+# auf Ihrer HTTPS-Webseite zu aktivieren, um Man-in-the-Middle-Attacken zu vermeiden.
 # Siehe https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
@@ -102,7 +102,7 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
 ### HTTPS hinter einem Proxy erzwingen
-Nützlich, wenn Sie einen Proxy vor Ihrem Server haben der TLS termination ausführt.
+Nützlich, wenn Sie einen Proxy vor Ihrem Server haben, der TLS-Termination ausführt.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
@@ -136,7 +136,7 @@ RewriteRule ^source-directory/(.*) target-directory/$1
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
-This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like. Get access to the original path from the PATH_INFO environment variable, as exposed to your scripting environment.
+In diesem Beispiel ist eine `index.fcgi`-Datei in einem Verzeichnis vorhanden und alle Anfragen in dieses Verzeichnis, die keinem vorhandenen Datei- oder Verzeichnisnamen zugewiesen werde können, werden stattdessen an das `index.fcgi`-Skript gesendet. Dies ist nützlich, wenn Sie möchten, dass `baz.foo/index.fcgi` von `baz.foo/some/cool/path` (was auch Anfragen an `baz.foo` bearbeitet) aufgerufen wird, während `baz.foo/css/style.css` und ähnliche Dateien weiterhin funktionieren. Sie können über die Umgebungsvariable `PATH_INFO`, die von Ihrer Skriptingumgebung zur Verfügung gestellt wird, auf den ursprünglichen Pfad zugreifen.
 
 ``` apacheconf
 RewriteEngine On
@@ -145,7 +145,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
-Dies ist eine weniger effiziente Variante von der FallbackResource direktive (da die Benutzung von `mod_rewrite` komplexer ist als einfach nur die `FallbackResource` Direktive zu nutezn), aber sie ist auch flexibler.
+Dies ist eine weniger effiziente Variante der FallbackResource-Direktive (da die Verwendung von `mod_rewrite` komplexer ist, als einfach nur die `FallbackResource`-Direktive zu nutzen), allerdings ist sie auch flexibler.
 
 ### Eine komplette Seite weiterleiten
 ``` apacheconf
@@ -154,7 +154,7 @@ Redirect 301 / http://newsite.com/
 Auf diese Art bleiben die Links intakt. `www.oldsite.com/some/crazy/link.html` wird zu `www.newsite.com/some/crazy/link.html`. Dies ist sehr hilfreich, wenn Sie eine Seite nur zu einer neuen Domain "umziehen". [Quelle](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### "Saubere" URLs aliasen
-This snippet lets you use "clean URLs" -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
+Dieser Ausschnitt erlaubt Ihnen, "saubere URLs", also URLs ohne Dateinamenserweiterung, beispielsweise `example.com/users` anstelle von `example.com/users.php` zu verwenden.
 ``` apacheconf
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
@@ -172,7 +172,7 @@ Deny from all
 # Require all denied
 ```
 
-Abre Moment, das wird Sie selbst von Ihrem Inhalt aussperren! Also...
+Achtung, dadurch werden alle Benutzer, auch Sie selbst, von der Webseite ausgesperrt.
 
 ### Kompletten Zugriff außer Ihren verbieten
 ``` apacheconf
@@ -185,7 +185,7 @@ Allow from xxx.xxx.xxx.xxx
 # Require all denied
 # Require ip xxx.xxx.xxx.xxx
 ```
-`xxx.xxx.xxx.xxx` ist Ihre IP. Wenn Sie die letzen drei Ziffern beispielsweise mit 0/12 ersetzen, spezifizieren Sie einen Bereich von IPs im selben Netzwerk. Dadurch müssen sie nicht alle erlaubten IPs aus einem Netz separat auflisten. [Quelle](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
+`xxx.xxx.xxx.xxx` ist Ihre IP-Adresse. Wenn Sie die letzten drei Ziffern beispielsweise mit 0/12 ersetzen, geben Sie einen Bereich von IP-Adressen im selben Netzwerk an. Dadurch müssen Sie nicht alle erlaubten IP-Adressen aus einem Netzwerk separat auflisten. [Quelle](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Natürlich gibt es auch eine umgekehrte Version:
 
@@ -204,14 +204,14 @@ Deny from xxx.xxx.xxx.xxy
 ```
 
 ### Zugriff zu versteckten Dateien und Verzeichnissen verbieten
-Versteckte Dateien und Verzeichnisse (die, deren Name mit einem Punkt `.` startet) sollen meistens, wenn nihct immer, abgesichert werden. Zum Beispiel: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
+Versteckte Dateien und Verzeichnisse (die, deren Name mit einem Punkt `.` startet) sollen meistens, wenn nicht immer, abgesichert werden. Zum Beispiel: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
 RewriteCond %{SCRIPT_FILENAME} -d [OR]
 RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Anternativ können Sie auch einen `Not Found` Fehler ausgeben, damit der Angreifer keine Hinweise bekommt:
+Alternativ können Sie auch einen `Not Found`-Fehler ausgeben, damit der Angreifer keinen Hinweis auf die Existenz der Dateien erhält:
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
@@ -245,21 +245,21 @@ RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?example.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
 
-# Wenn Sie ein "Blockiert" banner anstatt des gehotlinkten Bildes
-# anzeigen möchten ersetzen Sie die obere Regel mit:
+# Wenn Sie einen "Blockiert"-Banner anstatt des gehotlinkten Bildes
+# anzeigen möchten, ersetzen Sie die obere Regel mit:
 # RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Bild-Hotlinking für spezielle Domains abschalten
-Manchmal will man Bild-Hotlinking nur für manche deaktivieren.
+Manchmal will man Bild-Hotlinking nur für manche Seiten deaktivieren.
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
 RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite2\.com [NC,OR]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 
-# Wenn Sie ein "Blockiert" banner anstatt des gehotlinkten Bildes
-# anzeigen möchten ersetzen Sie die obere Regel mit:
+# Wenn Sie einen "Blockiert"-Banner anstatt des gehotlinkten Bildes
+# anzeigen möchten, ersetzen Sie die obere Regel mit:
 # RewriteRule \.(jpg|jpeg|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
@@ -293,7 +293,7 @@ Require valid-user
 ```
 
 ### Besucher nach Referer blockieren
-Verbietet den Zugriff für alle Benutzer, die von einer bestimmten Domain kommen (weitergeleitet werden).
+Verbietet den Zugriff für alle Benutzer, die von einer bestimmten Domain weitergeleitet wurden.
 [Quelle](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
 ``` apacheconf
 RewriteEngine on
@@ -315,7 +315,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ``` apacheconf
 <IfModule mod_deflate.c>
 
-    # Konpression für mangled headers erzwingen.
+    # Kompression für "mangled headers" erzwingen.
     # http://developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping
     <IfModule mod_setenvif.c>
         <IfModule mod_headers.c>
@@ -325,7 +325,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
     </IfModule>
 
     # Alles mit dem folgenden MIME-types komprimieren:
-    # (für Apache Versionen unter 2.3.7, muessen Sie `mod_filter` NICHT aktivieren
+    # (für Apache Versionen unter 2.3.7, müssen Sie `mod_filter` nicht aktivieren
     #  und können die Zeilen `<IfModule mod_filter.c>` und `</IfModule>` entfernen
     #  da `AddOutputFilterByType` noch immer in den Hauptdirektiven ist).
     <IfModule mod_filter.c>
@@ -354,8 +354,8 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 
 
 ### Setzt Ablauf im Header
-_Expire headers_ (Ablauf Header) sagen dem Browser, ob er eine bestimmte Datei vom Server, oder aus dem Cache holen soll. Es ist ratsam den Ablauf von statischen Inhalt weit in die Zukunft zu legen.
-Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren ziehen sie in Betracht die Cachezeit für Resourcen wie CSS und JS auf etwas wie eine Woche zu veringern. [Quelle](https://github.com/h5bp/server-configs-apache)
+_Expire headers_ (Ablauf-Header) teilen dem Browser mit, ob er eine bestimmte Datei vom Server oder aus dem Cache holen soll. Es ist ratsam, den Ablauf von statischen Inhalt weit in die Zukunft zu legen.
+Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren, ziehen Sie in Betracht, die Cachezeit für Ressourcen wie CSS und JS auf ca. eine Woche zu veringern. [Quelle](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -364,7 +364,7 @@ Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren ziehen sie in Be
   # CSS
     ExpiresByType text/css                              "access plus 1 year"
 
-  # Data interchange
+  # Datenaustausch
     ExpiresByType application/json                      "access plus 0 seconds"
     ExpiresByType application/xml                       "access plus 0 seconds"
     ExpiresByType text/xml                              "access plus 0 seconds"
@@ -372,7 +372,7 @@ Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren ziehen sie in Be
   # Favicon (kann nicht umbenannt werden!)
     ExpiresByType image/x-icon                          "access plus 1 week"
 
-  # HTML components (HTCs)
+  # HTML-Komponenten (HTCs)
     ExpiresByType text/x-component                      "access plus 1 month"
 
   # HTML
@@ -394,11 +394,11 @@ Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren ziehen sie in Be
     ExpiresByType video/ogg                             "access plus 1 month"
     ExpiresByType video/webm                            "access plus 1 month"
 
-  # Web feeds
+  # Web-Feeds
     ExpiresByType application/atom+xml                  "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
-  # Web Schriftarten
+  # Web-Schriftarten
     ExpiresByType application/font-woff2                "access plus 1 month"
     ExpiresByType application/font-woff                 "access plus 1 month"
     ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
@@ -410,7 +410,7 @@ Wenn Sie die Versionierung nicht durch Dateinamen kontrollieren ziehen sie in Be
 
 ### eTags abschalten
 ``` apacheconf
-Durch das Entfernen des `ETag` Headers machen Sie es Caches und Browsern unmöglich die Dateien zu validieren, wodurch sie von Ihren `Cache-Control` und `Expires` Headern abhängig sind. [Quelle](http://www.askapache.com/htaccess/apache-speed-etags.html)
+Durch das Entfernen des `ETag`-Headers machen Sie es Caches und Browsern unmöglich, die Dateien zu validieren, wodurch sie von Ihren `Cache-Control` und `Expires` Headern abhängig sind. [Quelle](http://www.askapache.com/htaccess/apache-speed-etags.html)
 <IfModule mod_headers.c>
     Header unset ETag
 </IfModule>
@@ -419,7 +419,7 @@ FileETag None
 
 ## Verschiedenes
 
-### PHP Variablen setzen
+### PHP-Variablen setzen
 ``` apacheconf
 php_value <key> <val>
 
@@ -436,7 +436,7 @@ ErrorDocument 404 /errors/halflife3.html
 ```
 
 ### Download erzwingen
-Manchmal wollen Sie den Browser dazu zwingen Inhalt zu downloaden, anstatt nur anzuzeigen.
+Manchmal wollen Sie den Browser dazu zwingen, Inhalte herunterzuladen, anstatt sie nur anzuzeigen.
 ``` apacheconf
 <Files *.md>
     ForceType application/octet-stream
@@ -447,15 +447,15 @@ Manchmal wollen Sie den Browser dazu zwingen Inhalt zu downloaden, anstatt nur a
 Es gibt auch ein Yang zu diesem Yin:
 
 ### Download verhindern
-Manchmal wollen Sie den Browser dazu zwingen Inhalt nur anzuzeigen, anstatt ihn zu downlaoden.
+Manchmal wollen Sie den Browser dazu zwingen, Inhalte nur anzuzeigen, anstatt sie herunterzuladen.
 ``` apacheconf
 <FilesMatch "\.(tex|log|aux)$">
     Header set Content-Type text/plain
 </FilesMatch>
 ```
 
-### Cross-Domain Schriftarten erlauben
-Web-Schriftarten von CDN funktionieren möglicherweise nicht in Firefox oder IE [siehe CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Dieser Ausschnitt löst dieses Problem.
+### Cross-Domain-Schriftarten erlauben
+Web-Schriftarten von CDNs funktionieren möglicherweise nicht in Firefox oder IE [siehe CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Dieser Ausschnitt löst dieses Problem.
 ``` apacheconf
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|ttc|ttf|woff|woff2)$">
@@ -465,29 +465,29 @@ Web-Schriftarten von CDN funktionieren möglicherweise nicht in Firefox oder IE 
 ```
 [Quelle](https://github.com/h5bp/server-configs-apache/issues/32)
 
-### Automatisches UTF-8 Encoding
-Iher text sollte immer UTF-8 encoded werden, nicht?
+### Automatische UTF-8-Kodierung
+Text sollte immer als UTF-8 kodiert werden, nicht?
 ``` apacheconf
-# Use UTF-8 encoding for anything served text/plain or text/html
+# UTF-8-Kodierung für alles verwenden, was als text/plain oder text/html angeboten wird
 AddDefaultCharset utf-8
 
-# Force UTF-8 for a number of file formats
+# UTF-8-Kodierung für bestimmte Dateiformate erzwingen
 AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
 [Quelle](https://github.com/h5bp/server-configs-apache)
 
 ### Zu einer anderen PHP Version wechseln
-Wenn Sie auf einem Shared Host sind ist es möglich, dass mehr als eine PHP Version installiert ist, und manchmal wollen Sie eine bestimmte Version für ihre Webseite. Zum Beispiel, [Laravel](https://github.com/laravel/laravel) benötigt PHP >= 5.4. Der folgene Ausschnitt sollte die PHP Version für Sie wechseln.
+Wenn Sie auf einem Shared Host sind, ist es möglich, dass mehr als eine PHP Version installiert ist, und manchmal wollen Sie eine bestimmte Version für ihre Webseite nutzen. Beispielsweise benötigt [Laravel](https://github.com/laravel/laravel) PHP >= 5.4. Der folgende Ausschnitt sollte die PHP-Version für Sie wechseln.
 
 ``` apacheconf
 AddHandler application/x-httpd-php55 .php
 
-# Anternativ können sie AddType benutzen
+# Anternativ können Sie AddType benutzen
 AddType application/x-httpd-php55 .php
 ```
 
 ### Internet Explorer Kompatibilitätsansicht deaktivieren
-Kompatibilitätsansicht in IE kann sich darauf auswirken, wie manche Webseiten dargestellt werden. Der folgende Ausschnitt sollte IE dazu zwingen die Edge Rendering Engine zu benutzen, und die Kompatibilitätsansicht zu deaktivieren.
+Die Kompatibilitätsansicht in IE kann sich darauf auswirken, wie manche Webseiten dargestellt werden. Der folgende Ausschnitt sollte IE dazu zwingen, die Edge Rendering Engine zu benutzen und die Kompatibilitätsansicht zu deaktivieren.
 
 ``` apacheconf
 <IfModule mod_headers.c>
@@ -497,7 +497,7 @@ Kompatibilitätsansicht in IE kann sich darauf auswirken, wie manche Webseiten d
 ```
 
 ### WebP Bilder bereitstellen
-Wenn [WebP Bilder](https://developers.google.com/speed/webp/?csw=1) unterstützt werden und ein Bild mit einer `.webp` Endung, mit dem selben Namen und am welben Ort wie ein jpg/png Bild, gefundne wird, dann wird das WebP Bild anstelle des jpg/png angezeigt.
+Wenn [WebP Bilder](https://developers.google.com/speed/webp/?csw=1) unterstützt werden und ein Bild mit der Dateinamenserweiterung `.webp`, mit dem selben Namen und am selben Ort wie ein jpg/png-Bild, gefunden wird, dann wird das WebP Bild anstelle des jpg/png Bildes angezeigt.
 
 ``` apacheconf
 RewriteEngine On
