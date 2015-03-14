@@ -35,7 +35,7 @@ Wir sammeln hier hauptsächlich nützliche Ausschnitte aus dem Internet (beispie
     - [Ein Verzeichnis mit Passwort schützen](#ein-verzeichnis-mit-passwort-sch%C3%BCtzen)
     - [Eine oder mehrere Dateien mit Passwort schützen](#eine-oder-mehrere-dateien-mit-passwort-sch%C3%BCtzen)
     - [Besucher nach Referrer blockieren](#besucher-nach-referrer-blockieren)
-    - [Verbieten, die Seite in Frames zu verwenden](#verbieten%2C-die-seite-in-frames-zu-verwenden)
+    - [Verbieten, die Seite in Frames zu verwenden](#verbieten-die-seite-in-frames-zu-verwenden)
 - [Leistung](#leistung)
     - [Textdateien komprimieren](#textdateien-komprimieren)
     - [Ablaufdatum im Header setzen](#ablaufdatum-im-header-setzen)
