@@ -5,7 +5,7 @@ Eine Sammlung nützlicher .htaccess-Ausschnitte, alle an einem Ort.
 
 **WICHTIG**: Apache 2.4 führt einige Änderungen ein, welche die Konfiguration zerstören könnten, hauptsächlich im Bereich der Zugangskontrolle. Für mehr Informationen sehen Sie sich das ["Upgrading"-Dokument](https://httpd.apache.org/docs/2.4/upgrading.html) und [dieses Ticket](https://github.com/phanan/htaccess/issues/2) an.
 
-## Danksagung
+## Danksagungen
 Wir sammeln hier hauptsächlich nützliche Ausschnitte aus dem Internet (beispielsweise aus [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) an einem Ort. Obwohl wir versuchen, alle Autoren zu erwähnen, ist es möglich, dass einige vergessen wurden. Sollten Sie glauben, dass etwas hiervon Ihre Arbeit ist und Sie erwähnt werden sollten, lassen Sie uns dies wissen oder erstellen Sie einfach eine Pull-Anfrage.
 
 ## Inhalt
