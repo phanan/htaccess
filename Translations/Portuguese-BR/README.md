@@ -55,14 +55,14 @@ O que estamos fazendo aqui é principalmente a coleta trechos úteis de todo o i
 ## Rewrite and Redirection
 Nota: Presume-se que você tem `mod_rewrite` instalado e habilitado.
 
-### Forçar www
+### Force www
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^example\.com [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
 ```
 
-### Forçar www de forma genérica
+### Force www de forma genérica
 ``` apacheconf
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^www\. [NC]
@@ -71,7 +71,7 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 ```
 Isso funciona para _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
-### Forçar non-www
+### Force non-www
 It's [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) se www ou non-www é o caminho a percorrer, por isso, se acontecer de você ser um fã de domínios descalços, aqui você vai:
 ``` apacheconf
 RewriteEngine on
@@ -79,7 +79,7 @@ RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Forçar non-www de forma genérica
+### Force non-www de forma genérica
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -88,7 +88,7 @@ RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\.)?(.+)$
 RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ```
 
-### Forçar HTTPS
+### Force HTTPS
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
@@ -102,14 +102,14 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </IfModule>
 ```
 
-### Forçar HTTPS atrás de um Proxy
+### Force HTTPS atrás de um Proxy
 Útil se você tiver um proxy na frente do seu servidor a realização de terminação TLS.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Forçar Trailing Slash
+### Force Trailing Slash
 ``` apacheconf
 RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
@@ -436,7 +436,7 @@ ErrorDocument 401 http://error.example.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
 
-### Força Downloading
+### Force Downloading
 Às vezes você quer forçar o navegador para baixar algum conteúdo em vez de exibi-lo.
 ``` apacheconf
 <Files *.md>
