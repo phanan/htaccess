@@ -62,7 +62,7 @@ RewriteCond %{HTTP_HOST} ^example\.com [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
 ```
 
-### Force www de forma genérica
+### Force www in a Generic Way
 ``` apacheconf
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^www\. [NC]
@@ -71,7 +71,7 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 ```
 Isso funciona para _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
-### Force non-www
+### Force non-www 
 It's [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) se www ou non-www é o caminho a percorrer, por isso, se acontecer de você ser um fã de domínios descalços, aqui você vai:
 ``` apacheconf
 RewriteEngine on
@@ -79,7 +79,7 @@ RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Force non-www de forma genérica
+### Force non-www in a Geniric Way
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -102,7 +102,7 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </IfModule>
 ```
 
-### Force HTTPS atrás de um Proxy
+### Force HTTPS Behind a Proxy
 Útil se você tiver um proxy na frente do seu servidor a realização de terminação TLS.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
@@ -115,25 +115,25 @@ RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
-### Remover Trailing Slash
+### Remove Trailing Slash
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
-### Redirecionar uma única página
+### Redirect a Single Page
 ``` apacheconf
 Redirect 301 /oldpage.html http://www.example.com/newpage.html
 Redirect 301 /oldpage2.html http://www.example.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Alias de um único diretório 
+### Alias a Single Directory 
 ``` apacheconf
 RewriteEngine On
 RewriteRule ^source-directory/(.*) target-directory/$1
 ```
 
-### Alias caminhos para roteiro
+### Alias Paths to Script
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
@@ -148,7 +148,7 @@ RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
 Esta é uma versão menos eficiente da directiva FallbackResource (porque o uso do `mod_rewrite` é mais complexa do que apenas lidar com o` directiva FallbackResource`), mas também é mais flexível.
 
-### Redirecionar um site inteiro
+### Redirect an Entire Site
 ``` apacheconf
 Redirect 301 / http://newsite.com/
 ```
@@ -163,7 +163,7 @@ RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
 [Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
-## Segurança
+## Security
 ### Deny All Access
 ``` apacheconf
 ## Apache 2.2
@@ -175,7 +175,7 @@ Deny from all
 
 Mas espere, isso irá bloqueá-lo a partir do seu conteúdo, bem! Assim, a introdução de ...
 
-### Deny All Access exceto o seu
+### Deny All Access Except Yours
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -190,7 +190,7 @@ Allow from xxx.xxx.xxx.xxx
 
 Agora é claro que há uma versão invertida:
 
-### Allow All Access exceto Spammers'
+### Allow All Access Except Spammers'
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -204,7 +204,7 @@ Deny from xxx.xxx.xxx.xxy
 # Require not ip xxx.xxx.xxx.xxy
 ```
 
-### Deny Access arquivos e diretorios ocultos
+### Deny Access to Hidden Files and Directories
 Arquivos e diretórios ocultos (aqueles cujos nomes começam com um ponto `.`) deve maioria, se não todos, o tempo ser assegurado. por exemplo: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
 RewriteCond %{SCRIPT_FILENAME} -d [OR]
@@ -217,7 +217,7 @@ Alternativamente, você pode simplesmente levantar uma `Not Found` erro, dando a
 RedirectMatch 404 /\..*$
 ```
 
-### Deny Access Backup e arquivos de origem
+### Deny Access to Backup and Source Files
 Esses arquivos podem ser deixados por alguns editores de texto / html (como Vi / Vim) e representam um grande perigo de segurança, se exposto a público.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
@@ -312,7 +312,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
 
 ## Performance
-### Comprima arquivos de texto
+### Compress Text Files
 ``` apacheconf
 <IfModule mod_deflate.c>
 
@@ -355,8 +355,8 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 
 
 ### Set Expires Headers
-_Expira headers_ dizer ao navegador se eles devem solicitar um arquivo específico do servidor ou apenas agarrá-lo a partir do cache. É aconselhável definir o conteúdo do estática expira cabeçalhos para algo distante no futuro.
-Se você não controlar o versionamento com cache baseado em filename rebentando, considerar uma redução do tempo de cache para recursos como CSS e JS para algo como uma semana. [Source](https://github.com/h5bp/server-configs-apache)
+_Expira headers_ dizer ao navegador se eles devem solicitar um arquivo específico do servidor ou apenas agarrá-lo a partir do cache. É aconselhável definir um conteúdo estática que expira no futuro.
+Se você não controlar o versionamento com cache baseado em filename, tem que considerar uma redução do tempo de cache para recursos como CSS e JS para algo como uma semana. [Source](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -429,9 +429,9 @@ php_value upload_max_filesize 50M
 php_value max_execution_time 240
 ```
 
-### Customizando página de erro
+### Custom Error Pages
 ``` apacheconf
-ErrorDocument 500 "Houston, we have a problem."
+ErrorDocument 500 "Houston, você tem um problema."
 ErrorDocument 401 http://error.example.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
@@ -469,7 +469,7 @@ CDN-served webfonts pode não funcionar no Firefox ou IE devido à [CORS](https:
 ### Auto UTF-8 Encode
 Seu texto deve ser sempre codificação UTF-8, não?
 ``` apacheconf
-# Use codificação UTF-8 para nada serviu text / plain ou text / html
+# Use codificação UTF-8 para qualquer coisa como text/plain ou text/html
 AddDefaultCharset utf-8
 
 # Força UTF-8 para um número de formatos de arquivo
@@ -487,8 +487,8 @@ AddHandler application/x-httpd-php55 .php
 AddType application/x-httpd-php55 .php
 ```
 
-### Desativar o Internet Explorer Compatibility View
-Exibição de Compatibilidade no IE pode afetar a forma como alguns sites são exibidos. O seguinte trecho deve forçar o IE para usar o mecanismo de processamento de Borda e desativar o Compatibility View.
+### Disable Internet Explorer Compatibility View
+Exibição de Compatibilidade no IE pode afetar a forma como alguns sites são exibidos. O seguinte trecho deve forçar o IE para usar o Edge Rendering Engine e desativar o Compatibility View.
 
 ``` apacheconf
 <IfModule mod_headers.c>
@@ -497,8 +497,8 @@ Exibição de Compatibilidade no IE pode afetar a forma como alguns sites são e
 </IfModule>
 ```
 
-### Sirva WebP Images
-Se [WebP images](https://developers.google.com/speed/webp/?csw=1) são suportados e uma imagem com uma extensão .webp eo mesmo nome encontra-se no mesmo lugar que o jpg / png imagem que vai ser servido, em seguida, a imagem WebP é servido em vez.
+### Serve WebP Images
+Se [WebP images](https://developers.google.com/speed/webp/?csw=1) são suportados em uma imagem com uma extensão .webp e ela encontra-se no mesmo lugar como o jpg/png imagem que vai ser servida, em seguida, a imagem WebP é servido em vez do jpg/png.
 
 ``` apacheconf
 RewriteEngine On
