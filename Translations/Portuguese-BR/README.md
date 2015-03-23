@@ -79,7 +79,7 @@ RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Force non-www in a Geniric Way
+### Force non-www in a Generic Way
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -477,7 +477,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
 [Source](https://github.com/h5bp/server-configs-apache)
 
-### Mudar para outra versão do PHP
+### Switch to Another PHP Version
 Se você estiver em um servidor compartilhado, as chances são de que há mais de uma versão do PHP instalado, e às vezes você quer uma versão específica para o seu site. por exemplo, [Laravel](https://github.com/laravel/laravel) requer PHP >= 5.4. O seguinte trecho deve mudar a versão do PHP para você.
 
 ``` apacheconf
