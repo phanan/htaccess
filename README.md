@@ -18,7 +18,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
-    - [Remove Trailing Slash from Arbitary Paths](#remove-trailing-slash-from-arbitary-paths)
+    - [Remove Trailing Slash from Arbitary Paths](#remove-trailing-slash-from-arbitrary-paths)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
@@ -121,7 +121,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
 
-### Remove Trailing Slash from Arbitary Paths
+### Remove Trailing Slash from Arbitrary Paths
 This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories).
 E.g., `http://www.example.com/blog/` -> `http://www.example.com/blog`
 This is important for SEO, since it is [recommended to have a "canonical URL" for every page](http://overit.com/blog/canonical-urls).
