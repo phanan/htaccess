@@ -18,7 +18,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
-    - [Remove Trailing Slash from Arbitary Paths](#remove-trailing-slash-from-arbitrary-paths)
+    - [Remove Trailing Slash from Arbitrary Paths](#remove-trailing-slash-from-arbitrary-paths)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
