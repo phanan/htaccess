@@ -129,7 +129,7 @@ Redirect 301 /oldpage2.html http://www.example.com/folder/
 ### Alias a Single Directory
 ``` apacheconf
 RewriteEngine On
-RewriteRule ^source-directory/(.*) target-directory/$1
+RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]
 ```
 
 ### Alias Paths To Script
