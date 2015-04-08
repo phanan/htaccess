@@ -122,9 +122,7 @@ RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
 
 ### Remove Trailing Slash from Arbitrary Paths
-This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories).
-E.g., `http://www.example.com/blog/` -> `http://www.example.com/blog`
-This is important for SEO, since it is [recommended to have a "canonical URL" for every page](http://overit.com/blog/canonical-urls).
+This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it's [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
