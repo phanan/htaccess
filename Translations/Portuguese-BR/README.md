@@ -194,7 +194,6 @@ Agora é claro que há uma versão invertida:
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
-Allow from all
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
 

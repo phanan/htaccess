@@ -109,7 +109,6 @@ Samozrejme je tu aj opačná verzia:
 ### Povoliť prístup všetkým, ale nie spamerom
 ``` apacheconf
 Order deny, allow
-Allow from All
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
 ```
