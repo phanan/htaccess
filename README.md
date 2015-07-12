@@ -196,7 +196,7 @@ Allow from xxx.xxx.xxx.xxx
 # Require all denied
 # Require ip xxx.xxx.xxx.xxx
 ```
-`xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
+`xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
 
@@ -221,7 +221,7 @@ RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Alternatively, you can just raise a `Not Found` error, giving the attacker dude no clue:
+Alternatively, you can just raise a "Not Found" error, giving the attacker dude no clue:
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
