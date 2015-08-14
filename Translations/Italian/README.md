@@ -5,8 +5,8 @@ Una collezione di esempi utili di .htaccess.
 
 **IMPORTANTE**: Apache 2.4 introduce alcuni cambiamenti, in particolare la configurazione del controllo degli accessi. Per maggiori informazioni potete consultare il [documento sull'aggiornamento](https://httpd.apache.org/docs/2.4/upgrading.html) oltre a [questa problematica](https://github.com/phanan/htaccess/issues/2).
 
-## Crediti
-Ciò che stiamo facendo è mettere insieme esempi utili da tutto il web (per esempio, una buona parte viene da [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) in un solo posto. Anche se abbiamo cercato di dare credito dove previsto potrebbe mancare qualche riferimento. Se credete che sia presente del vostro lavoro e volete che venga riportato fatecelo sapere o inviateci un PR.
+## Riconoscimenti
+Ciò che stiamo facendo è mettere insieme esempi utili da tutto il web (ad esempio, una buona parte viene da [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) in un solo posto. Anche se abbiamo cercato di dare riconoscimento, dove previsto, potrebbe mancare qualche riferimento. Se credete che sia presente del vostro lavoro e volete che venga riconosciuto fatecelo sapere e inviateci un PR.
 
 ## Sommario
 - [Rewrite e Redirection](#rewrite-and-redirection)
@@ -183,7 +183,7 @@ Deny from all
 # Require all denied
 ```
 
-In questa maniera rimarrai escluso anche tu dal tuo contenuto! Per questo introduciamo...
+In questa maniera rimarrai escluso anche tu dai tui contenuti! Per questo introduciamo...
 
 ### Nega l'accesso a tutti tranne per te stesso
 ``` apacheconf
@@ -214,20 +214,20 @@ Deny from xxx.xxx.xxx.xxy
 ```
 
 ### Nega l'accesso a Cartelle e File Nascosti
-Hidden files and directories (those whose names start with a dot `.`) should most, if not all, of the time be secured. For esempio: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
+La maggior parte, se non tutti, cartelle e File nascosti (quelli con i nomi che iniziano con il punto `.`) dovrebbero essere al sicuro. Per esempio: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
 RewriteCond %{SCRIPT_FILENAME} -d [OR]
 RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Alternatively, you can just raise a "Not Found" error, giving the attacker dude no clue:
+In alternativa puoi inviare il messaggio "Not Found" error, giving the attacker dude no clue:
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
 
 ### Nega l'accesso a Backup e File Sorgenti
-These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger if exposed to public.
+Questi file potrebbero esser stati lasciati da editor di testo o html (come Vi/Vim) e sono un possibile pericolo di sicurezza se mostrati al pubblico.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -249,7 +249,7 @@ Options All -Indexes
 ### Disabilita Hotlinking delle Immagini
 ``` apacheconf
 RewriteEngine on
-# Remove the following line if you want to block blank referrer too
+# Rimuovere la riga che segue se vuoi bloccare anche i referrer vuoti
 RewriteCond %{HTTP_REFERER} !^$
 
 RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?esempio.com [NC]
@@ -391,7 +391,7 @@ Se non controlli la versione del file in base al nome imposta la cache per risor
   # JavaScript
     ExpiresByType application/javascript                "access plus 1 year"
 
-  # file Manifesto
+  # File Manifesto
     ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
     ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
@@ -404,7 +404,7 @@ Se non controlli la versione del file in base al nome imposta la cache per risor
     ExpiresByType video/ogg                             "access plus 1 month"
     ExpiresByType video/webm                            "access plus 1 month"
 
-  # feed Web
+  # Feed Web
     ExpiresByType application/atom+xml                  "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
