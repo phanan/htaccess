@@ -255,21 +255,21 @@ RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?esempio.com [NC]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image,
-# replace the above rule with:
+# Se vuoi mostrare un banner di "blocco" al posto dell'immagine collegata (hotlinked),
+# sostituisci la regola precedente con:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://esempio.com/blocked.png [R,L]
 ```
 
 ### Disabilita Hotlinking delle Immagini per Domini Specifici
-Sometimes you want to disable image hotlinking from some bad guys only.
+A volte vuoi disabilitare il collegamento ad immagini del tuo sito (hotlinking) solo da alcuni cattivoni.
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite\.com [NC,OR]
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite2\.com [NC,OR]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image,
-# replace the above rule with:
+# Se vuoi mostrare un banner di "blocco" al posto dell'immagine collegata (hotlinked),
+# sostituisci la regola precedente con:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://esempio.com/blocked.png [R,L]
 ```
 
