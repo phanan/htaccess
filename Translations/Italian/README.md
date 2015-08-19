@@ -130,7 +130,7 @@ RewriteRule ^ %1 [L,R=301]
 ```
 [Sorgente](https://stackoverflow.com/questions/21417263/htaccess-add-remove-trailing-slash-from-url#27264788)
 
-### Redirect a Single Page
+### Redireziona una singola pagina
 ``` apacheconf
 Redirect 301 /vecchiapagina.html http://www.esempio.com/nuovapagina.html
 Redirect 301 /vecchiapagina2.html http://www.esempio.com/cartella/
