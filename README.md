@@ -20,6 +20,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Remove Trailing Slash](#remove-trailing-slash)
     - [Remove Trailing Slash from Arbitrary Paths](#remove-trailing-slash-from-arbitrary-paths)
     - [Redirect a Single Page](#redirect-a-single-page)
+    - [Redirect using RedirectMatch](#redirect-using-redirectmatch)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
@@ -136,6 +137,20 @@ Redirect 301 /oldpage.html http://www.example.com/newpage.html
 Redirect 301 /oldpage2.html http://www.example.com/folder/
 ```
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+### Redirect using RedirectMatch
+``` apacheconf
+RedirectMatch 301 /subdirectory(.*) http://www.newsite.com/newfolder/$1
+RedirectMatch 301 ^/(.*).htm$ /$1.html
+RedirectMatch 301 ^/200([0-9])/([^01])(.*)$ /$2$3
+RedirectMatch 301 ^/category/(.*)$ /$1
+RedirectMatch 301 ^/(.*)/htaccesselite-ultimate-htaccess-article.html(.*) /htaccess/htaccess.html
+RedirectMatch 301 ^/(.*).html/1/(.*) /$1.html$2
+RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1
+RedirectMatch 301 ^/dreamweaver/(.*)$ /tools/$1
+RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1
+```
+[Source](http://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
 
 ### Alias a Single Directory
 ``` apacheconf
