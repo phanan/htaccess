@@ -503,13 +503,13 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 [Source](https://github.com/h5bp/server-configs-apache)
 
 ### Switch to Another PHP Version
-If you’re on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. For example, [Laravel](https://github.com/laravel/laravel) requires PHP >= 5.4. The following snippet should switch the PHP version for you.
+If you’re on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. The following snippet should switch the PHP version for you.
 
 ``` apacheconf
-AddHandler application/x-httpd-php55 .php
+AddHandler application/x-httpd-php56 .php
 
 # Alternatively, you can use AddType
-AddType application/x-httpd-php55 .php
+AddType application/x-httpd-php56 .php
 ```
 
 ### Disable Internet Explorer Compatibility View
