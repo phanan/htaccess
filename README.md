@@ -6,7 +6,7 @@ A collection of useful .htaccess snippets, all in one place.
 **IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
 
 ## Credits
-What we are doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While we've been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let us know, or just send a PR.
+What we are doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While we’ve been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let us know, or just send a PR.
 
 ## Table of Contents
 - [Rewrite and Redirection](#rewrite-and-redirection)
@@ -73,7 +73,7 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 This works for _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
 ### Force non-www
-It's [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
+It’s [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
@@ -95,7 +95,7 @@ RewriteEngine on
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
-# Note: It's also recommended to enable HTTP Strict Transport Security (HSTS)
+# Note: It’s also recommended to enable HTTP Strict Transport Security (HSTS)
 # on your HTTPS website to help prevent man-in-the-middle attacks.
 # See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
@@ -123,7 +123,7 @@ RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
 
 ### Remove Trailing Slash from Arbitrary Paths
-This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it's [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
+This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it’s [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
@@ -162,7 +162,7 @@ RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
-This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It's good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like. Get access to the original path from the PATH_INFO environment variable, as exposed to your scripting environment.
+This example has an `index.fcgi` file in some directory, and any requests within that directory that fail to resolve a filename/directory will be sent to the `index.fcgi` script. It’s good if you want `baz.foo/some/cool/path` to be handled by `baz.foo/index.fcgi` (which also supports requests to `baz.foo`) while maintaining `baz.foo/css/style.css` and the like. Get access to the original path from the PATH_INFO environment variable, as exposed to your scripting environment.
 
 ``` apacheconf
 RewriteEngine On
@@ -171,16 +171,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
-This is a less efficient version of the FallbackResource directive (because using `mod_rewrite` is more complex than just handling the `FallbackResource` directive), but it's also more flexible.
+This is a less efficient version of the FallbackResource directive (because using `mod_rewrite` is more complex than just handling the `FallbackResource` directive), but it’s also more flexible.
 
 ### Redirect an Entire Site
 ``` apacheconf
 Redirect 301 / http://newsite.com/
 ```
-This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just "moving" a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just “moving” a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Alias "Clean" URLs
-This snippet lets you use "clean" URLs -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
+### Alias “Clean” URLs
+This snippet lets you use “clean” URLs -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
 ``` apacheconf
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
@@ -236,13 +236,13 @@ RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Alternatively, you can just raise a "Not Found" error, giving the attacker dude no clue:
+Alternatively, you can just raise a “Not Found” error, giving the attacker no clue:
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
 
 ### Deny Access to Backup and Source Files
-These files may be left by some text/html editors (like Vi/Vim) and pose a great security danger if exposed to public.
+These files may be left by some text/HTML editors (like Vi/Vim) and pose a great security danger if exposed to public.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -270,7 +270,7 @@ RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?example.com [NC]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image,
+# If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
@@ -283,7 +283,7 @@ RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite\.com [NC,OR]
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite2\.com [NC,OR]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a "blocked" banner in place of the hotlinked image,
+# If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
@@ -380,7 +380,8 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 
 ### Set Expires Headers
 _Expires headers_ tell the browser whether they should request a specific file from the server or just grab it from the cache. It is advisable to set static content's expires headers to something far in the future.
-If you don't control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](https://github.com/h5bp/server-configs-apache)
+
+If you don’t control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -502,7 +503,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 [Source](https://github.com/h5bp/server-configs-apache)
 
 ### Switch to Another PHP Version
-If you're on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. For example, [Laravel](https://github.com/laravel/laravel) requires PHP >= 5.4. The following snippet should switch the PHP version for you.
+If you’re on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. For example, [Laravel](https://github.com/laravel/laravel) requires PHP >= 5.4. The following snippet should switch the PHP version for you.
 
 ``` apacheconf
 AddHandler application/x-httpd-php55 .php
