@@ -18,7 +18,6 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
-    - [Remove Trailing Slash from Arbitrary Paths](#remove-trailing-slash-from-arbitrary-paths)
     - [Redirect a Single Page](#redirect-a-single-page)
     - [Redirect Using RedirectMatch](#redirect-using-redirectmatch)
     - [Alias a Single Directory](#alias-a-single-directory)
@@ -117,17 +116,11 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
 ### Remove Trailing Slash
-``` apacheconf
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ /$1 [R=301,L]
-```
-
-### Remove Trailing Slash from Arbitrary Paths
 This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it’s [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule ^ %1 [L,R=301]
+RewriteRule ^ %1 [R=301,L]
 ```
 [Source](https://stackoverflow.com/questions/21417263/htaccess-add-remove-trailing-slash-from-url#27264788)
 
