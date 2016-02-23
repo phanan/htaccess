@@ -53,26 +53,26 @@
     - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
     - [Serve WebP Images](#serve-webp-images)
 
-## Rewrite and Redirection
-Note: It is assumed that you have `mod_rewrite` installed and enabled.
+## Rewrite и Redirect
+Примечание: Предполагается, что модуль `mod_rewrite` установлен и включен.
 
-### Force www
+### Перенаправление с без www на с www
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^example\.com [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
 ```
 
-### Force www in a Generic Way
+### Перенаправление с без www на с www для любого протокола (http или https)
 ``` apacheconf
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteCond %{HTTPS}s ^on(s)|
 RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 ```
-This works for _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
+Это работает для _любого_ домена. [Источник](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
-### Force non-www
+### Перенаправление с www на без www
 It’s [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
 ``` apacheconf
 RewriteEngine on
@@ -80,7 +80,7 @@ RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Force non-www in a Generic Way
+### Перенаправление с www на без www для любого протокола (http или https)
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -89,7 +89,7 @@ RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\.)?(.+)$
 RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ```
 
-### Force HTTPS
+### Перенаправление на HTTPS
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
