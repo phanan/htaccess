@@ -17,11 +17,11 @@
     - [Force non-www in a Generic Way](#force-non-www-in-a-generic-way)
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
-    - [Вставить завершающий слэш](#force-trailing-slash)
-    - [Удалить завершающий слэш](#remove-trailing-slash)
+    - [Вставить завершающий слэш](#Вставить-завершающий-слэш)
+    - [Удалить завершающий слэш](#Удалить-завершающий-слэш)
     - [Редирект со страницы на страницу](#redirect-a-single-page)
     - [Редирект с использованием RedirectMatch](#redirect-using-redirectmatch)
-    - [Редирект с директории на директорию](#alias-a-single-directory)
+    - [Редирект с директории на директорию (???)](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Редирект всего сайта](#redirect-an-entire-site)
     - [Alias "Clean" URLs](#alias-clean-urls)
@@ -110,13 +110,13 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Force Trailing Slash
+### Вставить завершающий слэш
 ``` apacheconf
 RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
-### Remove Trailing Slash
+### Удалить завершающий слэш
 This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it’s [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
