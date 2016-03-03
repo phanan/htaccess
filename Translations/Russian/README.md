@@ -12,11 +12,11 @@
 ## Содержание
 - [Rewrite и Redirect](#Rewrite-и-Redirect)
     - [Перенаправление с без www на с www](#Перенаправление-с-без-www-на-с-www)
-    - [Перенаправление с без www на с www для HTTP или HTTPS](#Перенаправление-с-без-www-на-с-www-для-HTTP-или-HTTPS)
+    - [Перенаправление с без www на с www для http или https](#Перенаправление-с-без-www-на-с-www-для-http-или-https)
     - [Перенаправление с www на без www](#Перенаправление-с-www-на-без-www)
-    - [Перенаправление с www на без www для HTTP или HTTPS](#Перенаправление-с-www-на-без-www-для-HTTP-или-HTTPS)
-    - [Принудительное использование HTTPS](#Принудительное-использование-HTTPS)
-    - [Принудительное использование HTTPS за прокси](#Принудительное-использование-HTTPS-за-прокси)
+    - [Перенаправление с www на без www для http или https](#Перенаправление-с-www-на-без-www-для-http-или-https)
+    - [Принудительное использование https](#Принудительное-использование-https)
+    - [Принудительное использование https за прокси](#Принудительное-использование-https-за-прокси)
     - [Вставить завершающий слэш](#Вставить-завершающий-слэш)
     - [Удалить завершающий слэш](#Удалить-завершающий-слэш)
     - [Редирект со страницы на страницу](#Редирект-со-страницы-на-страницу)
@@ -63,7 +63,7 @@ RewriteCond %{HTTP_HOST} ^example\.com [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
 ```
 
-### Перенаправление с без www на с www для HTTP или HTTPS
+### Перенаправление с без www на с www для http или https
 ``` apacheconf
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^www\. [NC]
@@ -80,7 +80,7 @@ RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Перенаправление с www на без www для HTTP или HTTPS
+### Перенаправление с www на без www для http или https
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -89,7 +89,7 @@ RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\.)?(.+)$
 RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ```
 
-### Принудительное использование HTTPS
+### Принудительное использование https
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
@@ -103,7 +103,7 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </IfModule>
 ```
 
-### Принудительное использование HTTPS за прокси
+### Принудительное использование https за прокси
 Полезно, если вы имеете прокси перед вашим сервером для TLS.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
