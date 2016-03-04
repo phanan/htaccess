@@ -73,7 +73,7 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 Это работает для _любого_ домена. [Источник](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
 ### Перенаправление с www на без www
-It’s [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
+Это [вечная](http://www.sitepoint.com/domain-www-or-no-www/) [тема](https://devcenter.heroku.com/articles/apex-domains) [для](http://yes-www.org/) [дискуссий](http://no-www.org/) - использовать или не использовать www, но если вы поклонник "чистых" доменов, то:
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
@@ -97,7 +97,7 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 # Примечание: Рекомендуется включить HTTP Strict Transport Security (HSTS)
 # на вашем HTTPS сайте для предотвращения атак посредника (man-in-the-middle).
-# See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
+# https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
@@ -117,20 +117,21 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
 ### Удалить завершающий слэш
-This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it’s [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
+Этот сниппет перенаправляет из пути, который заканчивается на слэш, на путь без завершающего слэша (кроме реальных директорий), например, из `http://www.example.com/blog/` перенаправит на `http://www.example.com/blog`.
+Это важно для SEO, так как [рекомендуется](http://overit.com/blog/canonical-urls), чтобы каждая страница имела канонический URL.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 ```
-[Source](https://stackoverflow.com/questions/21417263/htaccess-add-remove-trailing-slash-from-url#27264788)
+[Источник](https://stackoverflow.com/questions/21417263/htaccess-add-remove-trailing-slash-from-url#27264788)
 
 ### Редирект со страницы на страницу
 ``` apacheconf
 Redirect 301 /oldpage.html http://www.example.com/newpage.html
 Redirect 301 /oldpage2.html http://www.example.com/folder/
 ```
-[Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+[Источник](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Редирект с использованием RedirectMatch
 ``` apacheconf
@@ -144,7 +145,7 @@ RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1
 RedirectMatch 301 ^/dreamweaver/(.*)$ /tools/$1
 RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1
 ```
-[Source](http://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
+[Источник](http://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
 
 ### Алиас для определенной директории
 ``` apacheconf
@@ -171,7 +172,7 @@ RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ``` apacheconf
 Redirect 301 / http://newsite.com/
 ```
-This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just “moving” a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+Этот сайт не "ломает" ссылки. Этот путь `www.oldsite.com/some/crazy/link.html` перенаправит вас на `www.newsite.com/some/crazy/link.html`. Это очень полезно, когда вы просто переносите сайт на новый домен. [Источник](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Использовать чистые URL
 Этот сниппет позволяет использовать "чистые" URL -- без расширения .php, например, `example.com/users` вместо `example.com/users.php`.
@@ -192,7 +193,7 @@ Deny from all
 # Require all denied
 ```
 
-But wait, this will lock you out from your content as well! Thus introducing...
+Подождите-ка, этот сниппет заблокирует доступ к сайту даже для вас! Сейчас исправим это...
 
 ### Запретить доступ всем, кроме...
 ``` apacheconf
@@ -205,9 +206,9 @@ Allow from xxx.xxx.xxx.xxx
 # Require all denied
 # Require ip xxx.xxx.xxx.xxx
 ```
-`xxx.xxx.xxx.xxx` - это ваш IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
+`xxx.xxx.xxx.xxx` - это ваш IP. Если вы замените последние три цифры, например, на `0/12`, этим вы определите диапазон IP внутри этой сети и это оградит вас от проблемы перечислять по отдельности все разрешённые IP. [Источник](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
-Now of course there's a reversed version:
+И, естественно, противоположная функция к этой:
 
 ### Разрешить доступ всем, кроме...
 ``` apacheconf
@@ -223,20 +224,20 @@ Deny from xxx.xxx.xxx.xxy
 ```
 
 ### Запретить доступ к скрытым файлам и директориям
-Hidden files and directories (those whose names start with a dot `.`) should most, if not all, of the time be secured. For example: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
+Скрытые файлы и директории (те, чьи имена начинаются с точки `.`) должны в большинстве, если не все, быть недоступны для других. Например: `.htaccess`, `.htpasswd`, `.git`, `.hg`...
 ``` apacheconf
 RewriteCond %{SCRIPT_FILENAME} -d [OR]
 RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Alternatively, you can just raise a “Not Found” error, giving the attacker no clue:
+Как вариант, вы можете показывать ошибку Not Found (не найдено), чтобы не давать атакующему подсказку:
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
 
 ### Запретить доступ к файлам
-These files may be left by some text/HTML editors (like Vi/Vim) and pose a great security danger if exposed to public.
+Эти файлы могут быть оставлены некоторыми редакторами text/html (вроде Vi/Vim) и представляют огромную дыру в безопасности, если станут общедоступными.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -258,37 +259,37 @@ Options All -Indexes
 ### Запретить хотлинкинг изображений
 ``` apacheconf
 RewriteEngine on
-# Remove the following line if you want to block blank referrer too
+# Удалите эту строчку, если вы хотите заблокировать пользователя с пустым Referrer
 RewriteCond %{HTTP_REFERER} !^$
 
 RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?example.com [NC]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a “blocked” banner in place of the hotlinked image,
-# replace the above rule with:
+# Если вы захотите отображать вместо заблокированного изображения свой баннер,
+# то замените правило выше на это:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Запретить хотлинкинг изображений для определенных доменов
-Sometimes you want to disable image hotlinking from some bad guys only.
+Иногда вам потребуется запретить хотлинкинг только для некоторых доменов.
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite\.com [NC,OR]
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite2\.com [NC,OR]
 RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
 
-# If you want to display a “blocked” banner in place of the hotlinked image,
-# replace the above rule with:
+# Если вы захотите отображать вместо заблокированного изображения свой баннер,
+# то замените правило выше на это:
 # RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 ```
 
 ### Защитить паролем директорию
-First you need to create a `.htpasswd` file somewhere in the system:
+Сначала нужно создать файл `.htpasswd` в определенной директории:
 ``` bash
-htpasswd -c /home/fellowship/.htpasswd boromir
+htpasswd -c /home/fellowship/.htpasswd ваш_суперсекретный_пароль
 ```
 
-Then you can use it for authentication:
+И потом использовать этот файл для аутентификации:
 ``` apacheconf
 AuthType Basic
 AuthName "One does not simply"
@@ -312,8 +313,8 @@ Require valid-user
 ```
 
 ### Заблокировать посетителя по Referrer
-This denies access for all users who are coming from (referred by) a specific domain.
-[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
+Блокирует доступ для всех пользователей, которые пришли (были перенаправлены) из определенного домена(-ов).
+[Источник](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
 ``` apacheconf
 RewriteEngine on
 # Options +FollowSymlinks
@@ -323,7 +324,7 @@ RewriteRule .* - [F]
 ```
 
 ### Запретить рендеринг сайта во фрейме
-This prevents the website to be framed (i.e. put into an `iframe` tag), when still allows framing for a specific URI.
+Этот сниппет запрещает отображение сайта во фрейме (например, в теге `iframe`), но разрешает отображение сайта во фрейме для определенных URI.
 ``` apacheconf
 SetEnvIf Request_URI "/starry-night" allow_framing=true
 Header set X-Frame-Options SAMEORIGIN env=!allow_framing
@@ -334,7 +335,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ``` apacheconf
 <IfModule mod_deflate.c>
 
-    # Force compression for mangled headers.
+    # Принудительное сжатие для исковерканных заголовков.
     # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html
     <IfModule mod_setenvif.c>
         <IfModule mod_headers.c>
@@ -343,10 +344,10 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
         </IfModule>
     </IfModule>
 
-    # Compress all output labeled with one of the following MIME-types
-    # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
-    #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines
-    #  as `AddOutputFilterByType` is still in the core directives).
+    # Сжимать исходящие данные с одним из следующих MIME типов
+    # (для Apache ниже версии 2.3.7 не нужно включать `mod_filter`
+    # и вы можете удалить строки `<IfModule mod_filter.c>` и `</IfModule>`
+    # так как `AddOutputFilterByType` все еще есть в ядре Apache).
     <IfModule mod_filter.c>
         AddOutputFilterByType DEFLATE application/atom+xml \
                                       application/javascript \
@@ -369,13 +370,13 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 
 </IfModule>
 ```
-[Source](https://github.com/h5bp/server-configs-apache)
+[Источник](https://github.com/h5bp/server-configs-apache)
 
 
 ### Установить Expires Headers
-_Expires headers_ tell the browser whether they should request a specific file from the server or just grab it from the cache. It is advisable to set static content's expires headers to something far in the future.
+_Expires headers_ говорят браузеру, должен ли он загружать файл из сервера или же из кэша. Для статичного контента рекомендуется установить `Expires` заголовки на что-нибудь далекое в будущем.
 
-If you don’t control versioning with filename-based cache busting, consider lowering the cache time for resources like CSS and JS to something like 1 week. [Source](https://github.com/h5bp/server-configs-apache)
+Если вы не контролируете изменение версий с помощью перебора, основанного на файлах, подумайте о том, чтобы уменьшить время кэша для CSS и JS, например, до 1 недели. [Источник](https://github.com/h5bp/server-configs-apache)
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -384,15 +385,15 @@ If you don’t control versioning with filename-based cache busting, consider lo
   # CSS
     ExpiresByType text/css                              "access plus 1 year"
 
-  # Data interchange
+  # Данные
     ExpiresByType application/json                      "access plus 0 seconds"
     ExpiresByType application/xml                       "access plus 0 seconds"
     ExpiresByType text/xml                              "access plus 0 seconds"
 
-  # Favicon (cannot be renamed!)
+  # Favicon
     ExpiresByType image/x-icon                          "access plus 1 week"
 
-  # HTML components (HTCs)
+  # HTML компоненты (HTCs)
     ExpiresByType text/x-component                      "access plus 1 month"
 
   # HTML
@@ -401,11 +402,11 @@ If you don’t control versioning with filename-based cache busting, consider lo
   # JavaScript
     ExpiresByType application/javascript                "access plus 1 year"
 
-  # Manifest files
+  # Файлы манифеста (Manifest)
     ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
     ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
-  # Media
+  # Медиа
     ExpiresByType audio/ogg                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
@@ -414,11 +415,11 @@ If you don’t control versioning with filename-based cache busting, consider lo
     ExpiresByType video/ogg                             "access plus 1 month"
     ExpiresByType video/webm                            "access plus 1 month"
 
-  # Web feeds
+  # Фиды
     ExpiresByType application/atom+xml                  "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
-  # Web fonts
+  # Web шрифты
     ExpiresByType application/font-woff2                "access plus 1 month"
     ExpiresByType application/font-woff                 "access plus 1 month"
     ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
@@ -506,8 +507,8 @@ AddHandler application/x-httpd-php56 .php
 AddType application/x-httpd-php56 .php
 ```
 
-### Выключить режим совместимости в Internet Explorer
-Compatibility View in IE may affect how some websites are displayed. The following snippet should force IE to use the Edge Rendering Engine and disable the Compatibility View.
+### Выключить просмотр в режиме совместимости в Internet Explorer
+Просмотр в режиме совместимости в IE может оказать влияние на то, как отображаются некоторые сайты. Этот сниппет заставляет IE использовать движок Edge Rendering и выключает просмотр в режиме совместимости.
 
 ``` apacheconf
 <IfModule mod_headers.c>
