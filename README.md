@@ -130,7 +130,10 @@ But wait, this will lock you out from your content as well! Thus introducing...
 Order deny,allow
 Deny from All
 Allow from xxx.xxx.xxx.xxx
+ErrorDocument 403 "Under maintenance..."
 ```
+The `ErrorDocument` directive can be a simple message or a html page, for example (ErrorDocument 403 /special_message.html).
+
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with 0/12 for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
