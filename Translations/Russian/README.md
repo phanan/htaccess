@@ -103,7 +103,7 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </IfModule>
 ```
 
-### Принудительное использование https за прокси
+### Принудительное использование HTTPS за прокси
 Полезно, если вы имеете прокси перед вашим сервером для TLS.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
