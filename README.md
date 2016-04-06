@@ -92,7 +92,7 @@ RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Note: It’s also recommended to enable HTTP Strict Transport Security (HSTS)
 # on your HTTPS website to help prevent man-in-the-middle attacks.
