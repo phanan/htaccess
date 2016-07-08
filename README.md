@@ -22,7 +22,8 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Redirect Using RedirectMatch](#redirect-using-redirectmatch)
     - [Alias a Single Directory](#alias-a-single-directory)
     - [Alias Paths to Script](#alias-paths-to-script)
-    - [Redirect an Entire Site](#redirect-an-entire-site)
+    - [Redirect an Entire Site with Links](#redirect-an-entire-site-with-links)
+    - [Redirect an Entire Site without Links](#redirect-an-entire-site-without-links)
     - [Alias "Clean" URLs](#alias-clean-urls)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
@@ -166,11 +167,17 @@ RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
 This is a less efficient version of the FallbackResource directive (because using `mod_rewrite` is more complex than just handling the `FallbackResource` directive), but it’s also more flexible.
 
-### Redirect an Entire Site
+### Redirect an Entire Site with Links
 ``` apacheconf
 Redirect 301 / http://newsite.com/
 ```
 This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just “moving” a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+### Redirect an Entire Site without Links
+``` apacheconf
+RewriteEngine On
+RewriteRule ^(.*)$ http://newsite.com/
+```
 
 ### Alias “Clean” URLs
 This snippet lets you use “clean” URLs -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
