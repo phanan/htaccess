@@ -18,6 +18,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Force non-www in a Generic Way](#force-non-www-in-a-generic-way)
     - [Force HTTPS](#force-https)
     - [Force HTTPS Behind a Proxy](#force-https-behind-a-proxy)
+    - [Force HTTP](#force-http)
     - [Force Trailing Slash](#force-trailing-slash)
     - [Remove Trailing Slash](#remove-trailing-slash)
     - [Redirect a Single Page](#redirect-a-single-page)
@@ -109,6 +110,13 @@ Useful if you have a proxy in front of your server performing TLS termination.
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+```
+
+### Force HTTP
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
 ### Force Trailing Slash
