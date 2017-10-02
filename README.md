@@ -45,6 +45,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Turn eTags Off](#turn-etags-off)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
+    - [Assign PHP to filetype](#assign-php-to-filetype)
     - [Custom Error Pages](#custom-error-pages)
     - [Force Downloading](#force-downloading)
     - [Prevent Downloading](#prevent-downloading)
@@ -447,6 +448,16 @@ php_value <key> <val>
 # For example:
 php_value upload_max_filesize 50M
 php_value max_execution_time 240
+```
+
+### Enable PHP on different filetypes
+``` apacheconf
+AddType application/x-httpd-php <filetype>
+AddHandler application/x-httpd-php <filetype>
+
+# Enable PHP in .HTML and .HTM files
+AddType application/x-httpd-php .html .htm
+AddHandler application/x-httpd-php .html .htm
 ```
 
 ### Custom Error Pages
