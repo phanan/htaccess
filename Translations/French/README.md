@@ -1,82 +1,116 @@
-# .htaccess Snippets
-Une collection de morceaux de .htaccess utiles, le tout dans un seul endroit.
+# .htaccess Snippets [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
-**Disclaimer**: Bien que l'extrait mis dans un fichier `.htaccess` est la plupart du temps suffisant, il ya des cas où certaines modifications pourraient être nécessaires. Utilisez à vos propres risques.
+> Une collection utile de fragments de configuration de fichier `.htaccess`, le
+> tout regroupé dans un seul endroit.
 
-** IMPORTANT **: Apache 2.4 a introduit quelques changements de rupture, notamment dans la configuration de contrôle d'accès. Pour plus d'information, consultez le [document de mise à niveau] (https://httpd.apache.org/docs/2.4/upgrading.html) ainsi que [cette issue] (https://github.com/phanan/htaccess/issues/2).
+**Avertissement** : Bien que l'extrait mis dans un fichier `.htaccess` est la
+plupart du temps suffisant, il ya des cas où certaines modifications pourraient
+être nécessaires. À utiliser à vos propres risques.
+
+**IMPORTANT** : Apache 2.4 a introduit quelques changements de rupture,
+notamment dans la configuration de contrôle d'accès. Pour plus d'information,
+consultez le
+[document de mise à niveau](https://httpd.apache.org/docs/2.4/upgrading.html)
+ainsi que [cette issue](https://github.com/phanan/htaccess/issues/2).
+
 
 ## Crédits
-Ce que nous faisons ici est principalement la collection des extraits utiles de partout sur le web (par exemple, une bonne partie est de [serveur Apache Configs] (https://github.com/h5bp/server-configs-apache)). Bien qu'ayant essayé de créditer la bonne personne, des éléments peuvent être manquant. Si vous pensez que quelque chose, ici, provient de votre travail et que vous devriez en être crédité, faites le moi savoir, ou faites une PR.
 
-## Table des Matières
-- [Réécriture et la Redirection](#r-criture-et-redirection)
-    - [Forcer www](#force-www)
+Ce que nous faisons ici est principalement la collection d'extraits pratiques en
+provenance d'un peu partout sur le web, par exemple, une bonne partie provient
+du dépôt [Apache Server Configs](https://github.com/h5bp/server-configs-apache).
+Bien qu'ayant essayé de créditer la bonne personne, des éléments peuvent être
+manquants. Si vous pensez que quelque chose ici provient de votre travail et que
+vous devriez en être crédité, faites le moi savoir, ou faites une PR.
+
+
+## Table des matières
+
+- [Réécriture et redirection](#r-criture-et-redirection)
+    - [Forcer www](#forcer-www)
     - [Forcer www d'une manière générique](#forcer-www-d-une-mani-re-g-n-rique)
     - [Forcer non-www](#forcer-non-www)
     - [Forcer non-www d'une manière générique](#forcer-non-www-d-une-mani-re-g-n-rique)
     - [Forcer HTTPS](#forcer-https)
-    - [Forcer HTTPS Derrière un Proxy](#forcer-https-d-rri-re-un-proxy)
-    - [Forcer le Slash de fin](#forcer-le-slash-de-fin)
-    - [Supprimer Slash](#supprimer-le-slash-de-fin)
-    - [Rediriger une Seule Page](#rediriger-une-seule-page)
-    - [Alias pour un Seul Dossier](#alias-pour-un-seul-dossier)
-    - [Alias de Chemins vers un Script](#alias-de-chemins-vers-un-script)
-    - [Rediriger un Site Entier](#rediriger-un-site-entier)
-   - [Alias en URLs Propres](#alias-en-urls-propres)
+    - [Forcer HTTPS derrière un proxy](#forcer-https-derri-re-un-proxy)
+    - [Forcer le slash de fin](#forcer-le-slash-de-fin)
+    - [Supprimer le slash de fin](#supprimer-le-slash-de-fin)
+    - [Rediriger une seule page](#rediriger-une-seule-page)
+    - [Alias pour un seul dossier](#alias-pour-un-seul-dossier)
+    - [Alias de chemins vers un script](#alias-de-chemins-vers-un-script)
+    - [Rediriger un site entier](#rediriger-un-site-entier)
+    - [Alias en URLs propres](#alias-en-urls-propres)
 - [Sécurité](#securit)
-    - [Refuser tout Accès](#refuser-tout-acc-s)
-    - [Refuser tout Accès sauf soi-même](#refuser-tout-acc-s-sauf-soi-m-me)
-    - [Autoriser tout Accès sauf Spammers'](#autoriser-tout-acc-s-sauf-spammeurs)
-    - [Refuser l'Accès aux fichiers et Répertoires Cachés](#refuser-acc-s-aux-fichiers-et-dossiers-cach-s)
-    - [Refuser l'Accès aux fichiers de Sauvegarde et Source](#refuser-acc-s-aux-sources-et-fichiers-de-sauvegarde)
-    - [Désactiver la Navigation de Dossier](#d-sactiver-la-navigation-de-dossier)
-    - [Désactiver le Hotlink des Images](#d-sactiver-le-hotlink-des-images)
-    - [Désactiver le Hotlink des Images pour des Domaines Spécifiques](#d-sactiver-le-hotlink-des-images-pour-des-domaines-sp-cifiques)
-    - [Protéger un Dossier par Mot de Passe](#prot-ger-un-dossier-par-mot-de-passe)
-    - [Protéger Un ou Plusieurs Fichiers par Mot de Passe](#prot-ger-un-ou-plusieurs-fichiers-par-mot-de-passe)
+    - [Refuser tout accès](#refuser-tout-acc-s)
+    - [Refuser tout accès sauf soi-même](#refuser-tout-acc-s-sauf-soi-m-me)
+    - [Autoriser tout accès sauf aux spammeurs'](#autoriser-tout-acc-s-sauf-aux-spammeurs)
+    - [Refuser l'accès aux fichiers et répertoires cachés](#refuser-l-acc-s-aux-fichiers-et-dossiers-cach-s)
+    - [Refuser l'accès aux sources et fichiers de sauvegarde](#refuser-l-acc-s-aux-sources-et-fichiers-de-sauvegarde)
+    - [Désactiver la navigation de dossier](#d-sactiver-la-navigation-de-dossier)
+    - [Désactiver le hotlink des images](#d-sactiver-le-hotlink-des-images)
+    - [Désactiver le hotlink des images pour des domaines spécifiques](#d-sactiver-le-hotlink-des-images-pour-des-domaines-sp-cifiques)
+    - [Protéger un dossier par mot de passe](#prot-ger-un-dossier-par-mot-de-passe)
+    - [Protéger un ou plusieurs fichiers par mot de passe](#prot-ger-un-ou-plusieurs-fichiers-par-mot-de-passe)
 - [Performance](#performance)
-    - [Compresser les Fichiers Texte](#compresser-les-fichiers-texte)
-    - [Donner l'En-tête "Expires"](#donner-l-en-t-te-expires)
-    - [Désactiver les eTags](#d-sactiver-etags)
+    - [Compresser les fichiers texte](#compresser-les-fichiers-texte)
+    - [Ajouter l'en-tête "Expires"](#ajouter-l-en-t-te-expires)
+    - [Désactiver eTags](#d-sactiver-etags)
 - [Divers](#divers)
-    - [Définition des variables de PHP](#mettre-en-place-des-variables-php)
-    - [Pages d'Erreur Personnalisées](#pages-d-erreur-personnalis-es)
-    - [Forcer le Téléchargement](#forcer-t-l-chargement)
-    - [Empêcher le Téléchargement](#eviter-t-l-chargement)
-    - [Autoriser les Polices Cross-Domain](#autoriser-les-polices-cross-domain)
-    - [Encodage UTF-8 Auto](#encodage-utf-8-auto)
-    - [Basculer vers une Autre Version de PHP](#basculer-vers-une-autre-version-de-php)
-    - [Désactiver la Compatibilité De Vue pour Internet Explorer](#d-sactiver-la-compatibilit-de-vue-pour-internet-explorer)
-    - [Servir les Images WebP](#servir-des-images-webp)
+    - [Définir des variables PHP](#d-finir-des-variables-php)
+    - [Pages d'erreur personnalisées](#pages-d-erreur-personnalis-es)
+    - [Forcer le téléchargement](#forcer-le-t-l-chargement)
+    - [Empêcher le téléchargement](#emp-cher-le-t-l-chargement)
+    - [Autoriser les polices Cross-Domain](#autoriser-les-polices-cross-domain)
+    - [Encodage UTF-8 automatique](#encodage-utf-8-automatique)
+    - [Basculer vers une autre version de PHP](#basculer-vers-une-autre-version-de-php)
+    - [Désactiver le mode de compatibilité pour Internet Explorer](#d-sactiver-le-mode-de-compatibilit-pour-internet-explorer)
+    - [Servir des images WebP](#servir-des-images-webp)
 
-## Réécriture et Redirection
-Remarque: Il est supposé  avoir `mod_rewrite` installé et activé.
+
+## Réécriture et redirection
+
+Remarque: On suppose avoir le module `mod_rewrite` installé et activé.
+
 
 ### Forcer www
+
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^example\.com [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
 ```
 
-### Forcer www d'une Manière Générique
+
+### Forcer www d'une manière générique
+
 ``` apacheconf
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteCond %{HTTPS}s ^on(s)|
 RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 ```
-Cela fonctionne pour _tous_ les domaines. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
+
+Cela fonctionne pour _tous_ les domaines.
+[Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
+
 
 ### Forcer non-www
-C'est [toujours](http://www.sitepoint.com/domain-www-or-no-www/) [en cours]](https://devcenter.heroku.com/articles/apex-domains) [de](http://yes-www.org/) [débat](http://no-www.org/) selon si www ou non-www est la bonne manière de faire, donc si vous êtes un fan de domaine "à nu", ceci est pour vous :
+
+C'est [toujours](http://www.sitepoint.com/domain-www-or-no-www/)
+[en cours](https://devcenter.heroku.com/articles/apex-domains)
+[de](http://yes-www.org/) [débat](http://no-www.org/) selon s'il faut
+prévilégier la forme avec ou sans `www`, donc si vous êtes un fan de domaine
+"à nu", ceci est pour vous :
+
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
 RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
 ```
 
-### Forcer non-www d'une Manière Générique
+
+### Forcer non-www d'une manière générique
+
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.
@@ -85,49 +119,75 @@ RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\.)?(.+)$
 RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]
 ```
 
+
 ### Forcer HTTPS
+
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Forcer HTTPS Dérrière un Proxy
-Utile si vous avez un proxy devant votre serveur faisant du TLS termination.
+
+### Forcer HTTPS derrière un proxy
+
+Ceci est utile si vous avez un proxy devant votre serveur faisant une
+termination TLS :
+
 ``` apacheconf
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ```
 
-### Forcer le Slash de fin
+
+### Forcer le slash de fin
+
 ``` apacheconf
 RewriteCond %{REQUEST_URI} /+[^\.]+$
 RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
-### Supprimer le Slash de fin
+
+### Supprimer le slash de fin
+
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 ```
-### Rediriger une Seule Page
+
+
+### Rediriger une seule page
+
 ``` apacheconf
-Redirect 301 /oldpage.html http://www.yoursite.com/newpage.html
-Redirect 301 /oldpage2.html http://www.yoursite.com/folder/
+Redirect 301 /anciennepage.html http://www.votresite.com/nouvellepage.html
+Redirect 301 /anciennepage2.html http://www.votresite.com/dossier/
 ```
+
 [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Alias pour un Seul Dossier
+
+### Alias pour un seul dossier
+
 ``` apacheconf
 RewriteEngine On
 RewriteRule ^source-directory/(.*) target-directory/$1
 ```
 
-### Alias de Chemins vers un Script
+
+### Alias de chemins vers un script
+
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
-Cet exemple a un fichier `index.fcgi` dans un répertoire,  et toutes les requêtes à l'intérieur de ce dossier qui ne peuvent résoudre le fichier/dossier demandé seront renvoyées vers le script `index.fcgi`.C'est utile si vous voulez que `baz.foo/some/cool/path` à etait manipulé par `baz.foo/index.fcgi` (qui prend également en charge les demandes vers `baz.foo`) tout en maintenant `baz.foo/css/style.css` ou autre fonctionnels. Accédez au chemin d'origine de la variable d'environnement PATH_INFO, comme exposé à votre environnement de scriptage.
+
+Cet exemple a un fichier `index.fcgi` dans un répertoire, et toutes les requêtes
+à l'intérieur de ce dossier qui ne peuvent résoudre le fichier/dossier demandé
+seront renvoyées vers le script `index.fcgi`. Ceci est utile si vous souhaitez
+que `baz.foo/une/route/sympa` soit manipulé par `baz.foo/index.fcgi` (qui prend
+également en charge les demandes vers `baz.foo`) tout en maintenant
+`baz.foo/css/style.css` ou autre fonctionnels. Accédez au chemin d'origine de la
+variable d'environnement `PATH_INFO`, comme exposé à votre environnement de
+scriptage.
 
 ``` apacheconf
 RewriteEngine On
@@ -136,26 +196,43 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.fcgi/$1 [QSA,L]
 ```
-Ceci est une version moins efficace de la directive du FallbackResource (car l'utilisation de `mod_rewrite` est plus complexe que de maintenir  la directive `du FallbackResource`), mais c'est quand même plus flexible. 
 
-### Rediriger un Site Entier
+Ceci est une version moins efficace de la directive `FallbackResource` (car
+l'utilisation de `mod_rewrite` est plus complexe que de maintenir la directive 
+`FallbackResource`), mais offre d'avantage de flexibilité.
+
+
+### Rediriger un site entier
+
 ``` apacheconf
-Redirect 301 / http://newsite.com/
+Redirect 301 / http://nouveausite.com/
 ```
-Ceci laisse les liens intacts. Ainsi, `www.oldsite.com/some/crazy/link.html` deviendra `www.newsite.com/some/crazy/link.html`. C'est très pratique quand vous voulez "bouger" un site vers un nouveau domaine. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
 
-### Alias en URLs Propres
-Ce snippet vous permet d'utiliser les "URLs propres" -- celles sans extension PHP, ex: `example.com/users` à la place de `example.com/users.php`.
+Ceci laisse les liens intacts. Ainsi `anciensite.com/lien/super/genial.html`
+deviendra `nouveausite.com/lien/super/genial.html`. Cela est très pratique
+lorsque vous souhaitez déplacer un site vers un nouveau domaine.
+
+[Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+
+
+### Alias en URLs propres
+
+Ce snippet vous permet d'utiliser des "URLs propres" –celles sans extension–,
+par exemple : `example.com/users` à la place de `example.com/users.php`.
+
 ``` apacheconf
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
+
 [Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
 
 ## Securité
-### Refuser Tout Accès
+
+### Refuser tout accès
+
 ``` apacheconf
 ## Apache 2.2
 Deny from all
@@ -164,9 +241,12 @@ Deny from all
 # Require all denied
 ```
 
-Mais… ceci vous bloquera de votre propre contenu aussi ! Donc voici…
+Mais… ceci vous bloquera vous également ! Si ce n'est pas ce que vous souhaitez,
+la partie suivante est sûrement faite pour vous !
 
-### Refuser Tout Accès Sauf Soi-même
+
+### Refuser tout accès sauf soi-même
+
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -177,11 +257,20 @@ Allow from xxx.xxx.xxx.xxx
 # Require all denied
 # Require ip xxx.xxx.xxx.xxx
 ```
-`xxx.xxx.xxx.xxx` est votre IP. Si vous remplacez les 3 dernières numéro par 0/12 par exemple, ceci spécifiera un interval d'IPs à l'intérieur d'un même réseau, vous évitant ainsi de lister toutes les IPs autorisées individuellement. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
+
+En remplaçant `xxx.xxx.xxx.xxx` par votre adresse IP, vous n'autoriserez l'accès
+à votre site que par vous. Si vous remplacez les 3 dernièrs numéros par `0/12`
+par exemple, ceci spécifiera un intervalle d'adresses IPs à l'intérieur d'un
+même réseau, vous évitant ainsi de lister toutes les IPs autorisées
+individuellement.
+
+[Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Bien sûr, il y a la version inverse :
 
-### Autoriser Tout Accès Sauf Spammeurs
+
+### Autoriser tout accès sauf aux spammeurs
+
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
@@ -194,21 +283,34 @@ Deny from xxx.xxx.xxx.xxy
 # Require not ip xxx.xxx.xxx.xxy
 ```
 
-### Refuser Accès aux Fichiers et Dossiers Cachés
-Les fichiers et dossiers cachés (ceux dont les noms commencent pas un point `.`) devraient être la plupart, voire tout, le temps sécurisé. Par exemple : `.htaccess`, `.htpasswd`, `.git`, `.hg`...
+
+### Refuser l'accès aux fichiers et dossiers cachés
+
+Les fichiers et dossiers cachés (ceux dont les noms commencent par un point `.`)
+devraient être pour la majorité d'entre eux sécurisés. On ne devrait par exemple
+pas avoir accès aux éléments suivants : `.htaccess`, `.htpasswd`, `.git`,
+`.hg`...
+
 ``` apacheconf
 RewriteCond %{SCRIPT_FILENAME} -d [OR]
 RewriteCond %{SCRIPT_FILENAME} -f
 RewriteRule "(^|/)\." - [F]
 ```
 
-Autre solution, vous pouvez lever une erreur `Not Found`, ne donnant aucun indice à l'attaquant :
+Une autre solution serait de lever une erreur `404 Not Found`, ne donnant aucun
+indice à l'attaquant quant à l'existance de la ressource :
+
 ``` apacheconf
 RedirectMatch 404 /\..*$
 ```
 
-### Refuser Accès aux Sources et Fichiers de Sauvegarde
-Ces fichiers peuvent être laissés par certains éditeurs texte/html (comme Vi/Vim) et poser un grand danger en terme de sécurité, quand quelqu'un y a accès.
+
+### Refuser l'accès aux sources et fichiers de sauvegarde
+
+Ces fichiers peuvent être laissés par certains éditeurs de texte/html (comme
+Vi/Vim) et poser un grand danger en terme de sécurité, quand quelqu'un y a
+accès.
+
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
     ## Apache 2.2
@@ -220,48 +322,61 @@ Ces fichiers peuvent être laissés par certains éditeurs texte/html (comme Vi/
     # Require all denied
 </FilesMatch>
 ```
+
 [Source](https://github.com/h5bp/server-configs-apache)
 
 
-### Désactiver la Navigation de Dossier
+### Désactiver la navigation de dossier
+
 ``` apacheconf
 Options All -Indexes
 ```
 
-### Désactiver le Hotlink des Images
+
+### Désactiver le hotlink des images
+
 ``` apacheconf
 RewriteEngine on
-# Enlever la ligne Ci-dessous si vous voulez blocker le referrer vide 
+# Enlever la ligne ci-dessous si vous souhaitez bloquer le referrer vide 
 RewriteCond %{HTTP_REFERER} !^$
 
-RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?yourdomain.com [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?votredomaine.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif|bmp)$ - [NC,F,L]
 
-# Si vous voulez afficher un banner "Blocked" au lieu du Hotlink de l'image, 
-# replacer Ci-dessus avec cette régle:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
+# Si vous souhaitez afficher une bannière "Bloquée" d'url 'blocked.png' au lieu
+# du hotlink de l'image, replacez la règle ci-dessus par celle-ci :
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://votredomaine.com/blocked.png [R,L]
 ```
 
-### Désactiver le Hotlink des Images pour des Domaines Spécifiques
-Parfois vous souhaitez désactiver l'image hotlinking seulement pour quelques méchants. L'extrait suivant devrait vous aider avec ça.
+
+### Désactiver le hotlink des images pour des domaines spécifiques
+
+Parfois vous souhaitez désactiver le hotlink d'images seulement pour quelques
+domaines spécifiques. L'extrait suivant devrait vous aider :
+
 ``` apacheconf
 RewriteEngine on
-RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite\.com [NC,OR]
-RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?badsite2\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?mauvaissite\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http(s)?://(.+\.)?mauvaissite2\.com [NC,OR]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 
-# Si vous voulez afficher un banner "Blocked" au lieu du Hotlink de l'image, 
-# replacer Ci-dessus avec cette régle:
-# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://yourdomain.com/blocked.png [R,L]
+# Si vous souhaitez afficher une bannière "Bloquée" d'url 'blocked.png' au lieu
+# du hotlink de l'image, replacez la règle ci-dessus par celle-ci :
+# RewriteRule \.(jpg|jpeg|png|gif|bmp) http://votredomaine.com/blocked.png [R,L]
 ```
 
-### Protéger un Dossier par Mot de Passe
-D'abord, vous aurez besoin de créer un fichier `.htpasswd` quelque part sur le système :
+
+### Protéger un dossier par mot de passe
+
+D'abord, vous aurez besoin de créer un fichier `.htpasswd` quelque part sur le
+système, avec l'aide de la commande suivante :
+
 ``` bash
 htpasswd -c /home/fellowship/.htpasswd boromir
 ```
 
-Ensuite, vous pouvez utiliser ceci pour authentification :
+Ensuite, vous pouvez utiliser ceci pour activer l'authentification :
+
 ``` apacheconf
 AuthType Basic
 AuthName "One does not simply"
@@ -269,7 +384,9 @@ AuthUserFile /home/fellowship/.htpasswd
 Require valid-user
 ```
 
-### Protéger Un ou Plusieurs Fichiers par Mot de Passe
+
+### Protéger un ou plusieurs fichiers par mot de passe
+
 ``` apacheconf
 AuthName "One still does not simply"
 AuthType Basic
@@ -284,8 +401,11 @@ Require valid-user
 </FilesMatch>
 ```
 
+
 ## Performance
-### Compresser les Fichiers Texte
+
+### Compresser les fichiers texte
+
 ``` apacheconf
 <IfModule mod_deflate.c>
 
@@ -324,12 +444,21 @@ Require valid-user
 
 </IfModule>
 ```
+
 [Source](https://github.com/h5bp/server-configs-apache)
 
 
-### Donner l'En-tête "Expires"
-_Expires headers_ indique au navigateur s'il doit requêter un fichier spécifique du serveur ou bien se contenter du cache. On peut conseiller pour les contenus statiques un en-tête d'expiration loin dans le futur. 
-Si vous n'utilisez pas la méthode du nom de fichier modifié par un système de contrôme de version, vous devriez diminuer le temps de cache des ressources telles que les fichiers CSS ou JS vers quelque chose proche de la semaine. [Source](https://github.com/h5bp/server-configs-apache)
+### Ajouter l'en-tête "Expires"
+
+L'en-tête *Expires* indique au navigateur s'il doit effectuer une requête au
+serveur pour récupérer un fichier spécifique ou bien se contenter du cache. On
+peut conseiller pour les contenus statiques un en-tête d'expiration loin dans le
+futur.
+
+Si vous n'utilisez pas la méthode du nom de fichier modifié par un système de
+contrôle de version, vous devriez diminuer le temps de cache des ressources
+telles que les fichiers CSS ou JS vers quelque chose proche de la semaine.
+
 ``` apacheconf
 <IfModule mod_expires.c>
     ExpiresActive on
@@ -382,8 +511,17 @@ Si vous n'utilisez pas la méthode du nom de fichier modifié par un système de
 </IfModule>
 ```
 
+[Source](https://github.com/h5bp/server-configs-apache)
+
+
 ### Désactiver eTags
-En retirant l'en-tête "eTag", vous empêchez le cache et les navigateurs de pouvoir valider les fichiers, ils sont donc forcer de se baser sur vous Cache-Control (Contrôle de Cache) et Expires header (En-tête d'expiration). [Source](http://www.askapache.com/htaccess/apache-speed-etags.html)
+
+En retirant l'en-tête "eTag", vous empêchez le cache et les navigateurs de
+pouvoir valider les fichiers, ils sont donc forcés de se baser sur le
+Cache-Control (contrôle de cache) et les Expires header (en-tête d'expiration).
+
+[Source](http://www.askapache.com/htaccess/apache-speed-etags.html)
+
 ``` apacheconf
 <IfModule mod_headers.c>
     Header unset ETag
@@ -394,7 +532,8 @@ FileETag None
 
 ## Divers
 
-### Mettre en Place des Variables PHP
+### Définir des variables PHP
+
 ``` apacheconf
 php_value <key> <val>
 
@@ -403,15 +542,21 @@ php_value upload_max_filesize 50M
 php_value max_execution_time 240
 ```
 
-### Pages d'Erreur Personnalisées
+
+### Pages d'erreur personnalisées
+
 ``` apacheconf
-ErrorDocument 500 "Houston, we have a problem."
-ErrorDocument 401 http://error.yourdomain.com/mordor.html
+ErrorDocument 500 "Houston, on a un problème."
+ErrorDocument 401 http://error.votredomaine.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
 
-### Forcer Téléchargement
-Parfois, vous voulez forcer le navigateur à télécharger certains contenus au lieu de l'afficher. Le snippet suivant vous aidera.
+
+### Forcer le téléchargement
+
+Parfois, vous souhaitez forcer le navigateur à télécharger certaines ressources
+au lieu de les afficher. Le snippet suivant vous sera utile :
+
 ``` apacheconf
 <Files *.md>
     ForceType application/octet-stream
@@ -419,18 +564,28 @@ Parfois, vous voulez forcer le navigateur à télécharger certains contenus au 
 </Files>
 ```
 
-Et il y a un yang pour ce yin:
+Si vous souhaitez l'action inverse :
 
-### Eviter Téléchargement
-Parfois, vous voulez forcer le navigateur à afficher certains contenus au lieu de les télécharger. Le snippet suivant vous aidera.
+
+### Empêcher le téléchargement
+
+Parfois, vous souhaitez forcer le navigateur à afficher certains contenus au
+lieu de les télécharger. Le snippet suivant devrait vous aider :
+
 ``` apacheconf
 <FilesMatch "\.(tex|log|aux)$">
     Header set Content-Type text/plain
 </FilesMatch>
 ```
 
-### Autoriser les Polices Cross-Domain
-Les polices desservies par un serveur CDN peuvent ne pas fonctionner sur Firefox ou IE à cause de [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Le snippet suivant de [alrra](https://github.com/h5bp/server-configs-apache/issues/32) devrait corriger cela.
+### Autoriser les polices Cross-Domain
+
+Les polices desservies par un serveur CDN peuvent ne pas fonctionner sur Firefox
+ou IE à cause de
+[CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Le snippet
+suivant de [alrra](https://github.com/h5bp/server-configs-apache/issues/32)
+devrait corriger cela :
+
 ``` apacheconf
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|ttc|ttf|woff|woff2)$">
@@ -439,8 +594,10 @@ Les polices desservies par un serveur CDN peuvent ne pas fonctionner sur Firefox
 </IfModule>
 ```
 
-### Encodage UTF-8 Auto
+### Encodage UTF-8 automatique
+
 Votre contenu textuel devrait toujours être encodé en UTF-8, non ?
+
 ``` apacheconf
 # Utiliser l'encodage UTF-8 pour tout ce qui est servi en text/plain ou text/html
 AddDefaultCharset utf-8
@@ -448,10 +605,18 @@ AddDefaultCharset utf-8
 # Forcer l'UTF-8 pour certains formats de fichier
 AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
+
 [Source](https://github.com/h5bp/server-configs-apache)
 
-### Basculer vers une Autre Version de PHP
-Si vous n'êtes pas sur un serveur mutualisé, Il y a des chances pour qu'il y ait plus d'une version de PHP installée, et parfois, vous voulez une version spécifique pour votre site web. Par exemple, [Laravel](https://github.com/laravel/laravel) nécessite PHP >= 5.4. Le snippet suivant devrait passer d'une version à l'autre de PHP pour vous.
+
+### Basculer vers une autre version de PHP
+
+Si vous êtes sur un serveur mutualisé, il y a des chances pour qu'il y ait plus
+d'une version de PHP installée, et parfois, vous avez besoin d'une version
+spécifique pour votre site web.
+
+Par exemple [Laravel](https://github.com/laravel/laravel) nécessite PHP >= 5.4.
+Le snippet suivant devrait passer d'une version à l'autre de PHP pour vous :
 
 ``` apacheconf
 AddHandler application/x-httpd-php55 .php
@@ -459,8 +624,13 @@ AddHandler application/x-httpd-php55 .php
 # Autrement, vous pouvez utiliser AddType
 AddType application/x-httpd-php55 .php
 ```
-### Désactiver la Compatibilité De Vue pour Internet Explorer
-La Compatibilité de vue dans IE peut affecter l'affichage de certains sites web. L'extrait suivant devrait forcer  IE d'utiliser le moteur d'interprétation Edge et desactiver disable la Compatibilité De Vue.
+
+
+### Désactiver le mode de compatibilité pour Internet Explorer
+
+Le mode de compatibilité dans IE peut affecter l'affichage de certains sites
+web. L'extrait suivant devrait forcer IE à utiliser le moteur d'interprétation
+Edge et ainsi désactiver le mode de compatibilité.
 
 ``` apacheconf
 <IfModule mod_headers.c>
@@ -469,8 +639,12 @@ La Compatibilité de vue dans IE peut affecter l'affichage de certains sites web
 </IfModule>
 ```
 
-### Servir des Images WebP
-Si [WebP images](https://developers.google.com/speed/webp/?csw=1) est supporter et l'image avec l'extension .webp a le meme nom qu'un autre image jpg/png alors l'image Webp sera servi.
+
+### Servir des images WebP
+
+Si [WebP images](https://developers.google.com/speed/webp/?csw=1) est supporté
+et que l'image avec l'extension `.webp` a le même nom qu'une image jpg/png alors
+l'image Webp sera servie à la place.
 
 ``` apacheconf
 RewriteEngine On
@@ -478,4 +652,5 @@ RewriteCond %{HTTP_ACCEPT} image/webp
 RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
 ```
+
 [Source](https://github.com/vincentorback/WebP-images-with-htaccess)
