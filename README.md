@@ -329,6 +329,12 @@ This prevents the website to be framed (i.e. put into an `iframe` tag), when sti
 SetEnvIf Request_URI "/starry-night" allow_framing=true
 Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
+### Helps Prevent Cross-Site Scripting (XSS)
+This uses the built-in reflective XSS protection found in Internet Explorer, Chrome and Safari (Webkit) to block the response if it detects an attack.
+``` apacheconf
+Header always set X-Xss-Protection "1; mode=block"
+```
+[Source](https://scotthelme.co.uk/hardening-your-http-response-headers/#x-xss-protection)
 
 ## Performance
 ### Compress Text Files
