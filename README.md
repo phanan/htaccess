@@ -39,6 +39,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
     - [Block Visitors by Referrer](#block-visitors-by-referrer)
     - [Prevent Framing the Site](#prevent-framing-the-site)
+    - [Help to Prevent Cross-Site Scripting](#help-to-prevent-cross-site-scripting)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
@@ -329,12 +330,13 @@ This prevents the website to be framed (i.e. put into an `iframe` tag), when sti
 SetEnvIf Request_URI "/starry-night" allow_framing=true
 Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
-### Helps Prevent Cross-Site Scripting (XSS)
+
+### Help to Prevent Cross-Site Scripting
 This uses the built-in reflective XSS protection found in Internet Explorer, Chrome and Safari (Webkit) to block the response if it detects an attack.
+[Source](https://scotthelme.co.uk/hardening-your-http-response-headers/#x-xss-protection)
 ``` apacheconf
 Header always set X-Xss-Protection "1; mode=block"
 ```
-[Source](https://scotthelme.co.uk/hardening-your-http-response-headers/#x-xss-protection)
 
 ## Performance
 ### Compress Text Files
