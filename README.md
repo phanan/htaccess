@@ -40,7 +40,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Block Visitors by Referrer](#block-visitors-by-referrer)
     - [Prevent Framing the Site](#prevent-framing-the-site)
     - [Help to Prevent Cross-Site Scripting](#help-to-prevent-cross-site-scripting)
-    - [Prevents Mime-Sniffing the Incorrect Content-Type(#prevents-mime-sniffing-the-incorrect-content-type)
+    - [Prevents Mime-Sniffing the Incorrect Content-Type](#prevents-mime-sniffing-the-incorrect-content-type)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
