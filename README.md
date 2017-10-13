@@ -341,7 +341,7 @@ Header always set X-Xss-Protection "1; mode=block"
 
 ### Prevents Mime-Sniffing the Incorrect Content-Type
 This reduces the risk of a file, such as an cleverly-misnamed executable, being treated as a different content-type by the browser than the one being declared by the server. It also reduces exposure to drive-by downloads.
-[Source](https://scotthelme.co.uk/hardening-your-http-response-headers/#x-xss-protection)
+[Source](https://scotthelme.co.uk/hardening-your-http-response-headers/#x-content-type-options)
 ``` apacheconf
 Header always set X-Content-Type-Options "nosniff"
 ```
