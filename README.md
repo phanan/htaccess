@@ -100,7 +100,9 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 # on your HTTPS website to help prevent man-in-the-middle attacks.
 # See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Strict-Transport-Security "max-age=31536000;"
+    # Or, if you want to force HSTS on the sudbmains as well
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 ```
 
