@@ -154,7 +154,7 @@ RewriteEngine On
 RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]
 ```
 
-### Alias Paths To Script
+### Alias Paths to Script
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
