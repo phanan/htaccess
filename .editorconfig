@@ -1,14 +1,6 @@
-# editorconfig.org
+You can use:
 
-root = true
+    RewriteCond %{QUERY_STRING} par1=(\d+)&lang=([^&]+)
+    RewriteRule ^index\.php http://www.example.com/index.php?parameter=%1&languages=%2 [R,L]
 
-[*]
-charset = utf-8
-end_of_line = lf
-indent_size = 4
-indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-[*.md]
-trim_trailing_whitespace = false
+`%1` an
