@@ -183,14 +183,14 @@ RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
+[Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
+
 ### Exclude URL from Redirection
 This snippet allows you to exclude a URL from redirection.  For example, if you have redirection rules setup but want to exclude robots.txt so search engines can access that URL as expected.
 ``` apacheconf
 RewriteEngine On
 RewriteRule ^robots.txt - [L]
 ```
-
-[Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
 ## Security
 ### Deny All Access
