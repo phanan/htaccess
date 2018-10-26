@@ -26,6 +26,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
     - [Alias "Clean" URLs](#alias-clean-urls)
+    - [Exclude a URL from Redirection](#exclude-url-from-redirection)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -182,6 +183,13 @@ RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
+### Exclude URL from Redirection
+This snippet allows you to exclude a URL from redirection.  For example, if you have redirection rules setup but want to exclude robots.txt so search engines can access that URL as expected.
+``` apacheconf
+RewriteEngine On
+RewriteRule ^robots.txt - [L]
+```
+
 [Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
 ## Security
