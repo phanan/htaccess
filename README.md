@@ -1,4 +1,19 @@
 # .htaccess Snippets [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+
+[Français](https://github.com/phanan/htaccess/tree/master/Translations/French)
+&nbsp;&bullet;&nbsp;
+[Deutsche](https://github.com/phanan/htaccess/tree/master/Translations/German)
+&nbsp;&bullet;&nbsp;
+[Italiano](https://github.com/phanan/htaccess/tree/master/Translations/Italian)
+&nbsp;&bullet;&nbsp;
+[日本人](https://github.com/phanan/htaccess/tree/master/Translations/Japanese)
+&nbsp;&bullet;&nbsp;
+[Português Brasileiro](https://github.com/phanan/htaccess/tree/master/Translations/Portuguese-BR)
+&nbsp;&bullet;&nbsp;
+[Pусский](https://github.com/phanan/htaccess/tree/master/Translations/Russian)
+&nbsp;&bullet;&nbsp;
+[Cлова:](https://github.com/phanan/htaccess/tree/master/Translations/Slovak)
+
 A collection of useful .htaccess snippets, all in one place.
 
 **NOTE**: `.htaccess` files are for people that do not have rights to edit the main server configuration file. They are intrinsically slower and more complicated than using the main config. Please see the [howto in the httpd documentation](https://httpd.apache.org/docs/current/howto/htaccess.html) for further details.
