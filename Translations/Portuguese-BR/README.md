@@ -1,18 +1,18 @@
 # Trechos de Códigos .htaccess &nbsp; [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
-[Français](#)
+[Français](https://github.com/phanan/htaccess/tree/master/Translations/French)
 &nbsp;&bullet;&nbsp;
-[Deutsche](#)
+[Deutsche](https://github.com/phanan/htaccess/tree/master/Translations/German)
 &nbsp;&bullet;&nbsp;
-[Italiano](#)
+[Italiano](https://github.com/phanan/htaccess/tree/master/Translations/Italian)
 &nbsp;&bullet;&nbsp;
-[日本人](#)
+[日本人](https://github.com/phanan/htaccess/tree/master/Translations/Japanese)
 &nbsp;&bullet;&nbsp;
-[Português Brasileiro](#)
+[Português Brasileiro](https://github.com/phanan/htaccess/tree/master/Translations/Portuguese-BR)
 &nbsp;&bullet;&nbsp;
-[Pусский](#)
+[Pусский](https://github.com/phanan/htaccess/tree/master/Translations/Russian)
 &nbsp;&bullet;&nbsp;
-[Cлова:](#)
+[Cлова:](https://github.com/phanan/htaccess/tree/master/Translations/Slovak)
 
 Uma coleção de trechos de códigos úteis para arquivos `.htaccess`, todos em um só lugar.
 
