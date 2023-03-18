@@ -473,6 +473,7 @@ Sometimes you want to force the browser to download some content instead of disp
     Header set Content-Disposition attachment
 </Files>
 ```
+[Source](https://www.askapache.com/htaccess/](https://www.askapache.com/htaccess/#Force_File_Save_Prompt)
 
 Now there is a yang to this yin:
 
