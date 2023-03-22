@@ -536,3 +536,5 @@ RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
 ```
 [Source](https://github.com/vincentorback/WebP-images-with-htaccess)
+
+[Ultimate Htaccess](https://www.askapache.com/htaccess/)
