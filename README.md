@@ -435,6 +435,8 @@ If you don’t control versioning with filename-based cache busting, consider lo
     ExpiresByType application/x-font-ttf                "access plus 1 month"
     ExpiresByType font/opentype                         "access plus 1 month"
     ExpiresByType image/svg+xml                         "access plus 1 month"
+    ExpiresByType image/webp                            "access plus 1 month"
+    ExpiresByType image/avif                            "access plus 1 month"
 </IfModule>
 ```
 
