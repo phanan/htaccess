@@ -64,7 +64,7 @@ Note: It is assumed that you have `mod_rewrite` installed and enabled.
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^example\.com [NC]
-RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]
+RewriteRule ^(.*)$ https://www.example.com/$1 [L,R=301,NC]
 ```
 
 ### Force www in a Generic Way
@@ -77,11 +77,11 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 This works for _any_ domain. [Source](https://stackoverflow.com/questions/4916222/htaccess-how-to-force-www-in-a-generic-way)
 
 ### Force non-www
-It’s [still](http://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](http://yes-www.org/) [debate](http://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
+It’s [still](https://www.sitepoint.com/domain-www-or-no-www/) [open](https://devcenter.heroku.com/articles/apex-domains) [for](https://yes-www.org/) [debate](https://no-www.org/) whether www or non-www is the way to go, so if you happen to be a fan of bare domains, here you go:
 ``` apacheconf
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^www\.example\.com [NC]
-RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+RewriteRule ^(.*)$ https://example.com/$1 [L,R=301]
 ```
 
 ### Force non-www in a Generic Way
@@ -122,7 +122,7 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 ```
 
 ### Remove Trailing Slash
-This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `http://www.example.com/blog/` to `http://www.example.com/blog`. This is important for SEO, since it’s [recommended](http://overit.com/blog/canonical-urls) to have a canonical URL for every page.
+This snippet will redirect paths ending in slashes to their non-slash-terminated counterparts (except for actual directories), e.g. `https://www.example.com/blog/` to `https://www.example.com/blog`. This is important for SEO, since it’s [recommended](https://overit.com/blog/canonical-urls) to have a canonical URL for every page.
 ``` apacheconf
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
@@ -132,24 +132,24 @@ RewriteRule ^ %1 [R=301,L]
 
 ### Redirect a Single Page
 ``` apacheconf
-Redirect 301 /oldpage.html http://www.example.com/newpage.html
-Redirect 301 /oldpage2.html http://www.example.com/folder/
+Redirect 301 /oldpage.html https://www.example.com/newpage.html
+Redirect 301 /oldpage2.html https://www.example.com/folder/
 ```
-[Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+[Source](https://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Redirect Using RedirectMatch
 ``` apacheconf
-RedirectMatch 301 /subdirectory(.*) http://www.newsite.com/newfolder/$1
+RedirectMatch 301 /subdirectory(.*) https://www.newsite.com/newfolder/$1
 RedirectMatch 301 ^/(.*).htm$ /$1.html
 RedirectMatch 301 ^/200([0-9])/([^01])(.*)$ /$2$3
 RedirectMatch 301 ^/category/(.*)$ /$1
 RedirectMatch 301 ^/(.*)/htaccesselite-ultimate-htaccess-article.html(.*) /htaccess/htaccess.html
 RedirectMatch 301 ^/(.*).html/1/(.*) /$1.html$2
-RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1
+RedirectMatch 301 ^/manual/(.*)$ https://www.php.net/manual/$1
 RedirectMatch 301 ^/old-directory/(.*)$ /new-directory/$1
-RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1
+RedirectMatch 301 ^/z/(.*)$ https://static.askapache.com/$1
 ```
-[Source](http://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
+[Source](https://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
 
 ### Alias a Single Directory
 ``` apacheconf
@@ -174,9 +174,9 @@ This is a less efficient version of the FallbackResource directive (because usin
 
 ### Redirect an Entire Site
 ``` apacheconf
-Redirect 301 / http://newsite.com/
+Redirect 301 / https://newsite.com/
 ```
-This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just “moving” a site to a new domain. [Source](http://css-tricks.com/snippets/htaccess/301-redirects/)
+This way does it with links intact. That is `www.oldsite.com/some/crazy/link.html` will become `www.newsite.com/some/crazy/link.html`. This is extremely helpful when you are just “moving” a site to a new domain. [Source](https://css-tricks.com/snippets/htaccess/301-redirects/)
 
 ### Alias “Clean” URLs
 This snippet lets you use “clean” URLs -- those without a PHP extension, e.g. `example.com/users` instead of `example.com/users.php`.
@@ -185,7 +185,7 @@ RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
-[Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
+[Source](https://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
 
 ### Exclude URL from Redirection
 This snippet allows you to exclude a URL from redirection.  For example, if you have redirection rules setup but want to exclude robots.txt so search engines can access that URL as expected.
@@ -207,7 +207,7 @@ But wait, this will lock you out from your content as well! Thus introducing...
 Require all denied
 Require ip xxx.xxx.xxx.xxx
 ```
-`xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
+`xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](https://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
 Now of course there's a reversed version:
 
@@ -256,7 +256,7 @@ RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico)$ - [NC,F,L]
 
 # If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) https://example.com/blocked.png [R,L]
 ```
 
 ### Disable Image Hotlinking for Specific Domains
@@ -269,7 +269,7 @@ RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico)$ - [NC,F,L]
 
 # If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) https://example.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
@@ -303,7 +303,7 @@ Require valid-user
 
 ### Block Visitors by Referrer
 This denies access for all users who are coming from (referred by) a specific domain.
-[Source](http://www.htaccess-guide.com/deny-visitors-by-referrer/)
+[Source](https://www.htaccess-guide.com/deny-visitors-by-referrer/)
 ``` apacheconf
 RewriteEngine on
 # Options +FollowSymlinks
@@ -410,7 +410,7 @@ If you don’t control versioning with filename-based cache busting, consider lo
 ```
 
 ### Turn eTags Off
-By removing the `ETag` header, you disable caches and browsers from being able to validate files, so they are forced to rely on your `Cache-Control` and `Expires` header. [Source](http://www.askapache.com/htaccess/apache-speed-etags.html)
+By removing the `ETag` header, you disable caches and browsers from being able to validate files, so they are forced to rely on your `Cache-Control` and `Expires` header. [Source](https://www.askapache.com/htaccess/apache-speed-etags.html)
 ``` apacheconf
 <IfModule mod_headers.c>
     Header unset ETag
@@ -432,7 +432,7 @@ php_value max_execution_time 240
 ### Custom Error Pages
 ``` apacheconf
 ErrorDocument 500 "Houston, we have a problem."
-ErrorDocument 401 http://error.example.com/mordor.html
+ErrorDocument 401 https://error.example.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
 
