@@ -42,18 +42,28 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Password Protect a Directory](#password-protect-a-directory)
     - [Password Protect a File or Several Files](#password-protect-a-file-or-several-files)
     - [Block Visitors by Referrer](#block-visitors-by-referrer)
+    - [Block Specific User Agents](#block-specific-user-agents)
     - [Prevent Framing the Site](#prevent-framing-the-site)
+    - [Content Security Policy (CSP)](#content-security-policy-csp)
+    - [Prevent MIME Type Sniffing](#prevent-mime-type-sniffing)
+    - [Set Referrer Policy](#set-referrer-policy)
+    - [Set Permissions Policy](#set-permissions-policy)
+    - [Remove Server Signature](#remove-server-signature)
 - [Performance](#performance)
     - [Compress Text Files](#compress-text-files)
     - [Set Expires Headers](#set-expires-headers)
+    - [Set Cache-Control Headers](#set-cache-control-headers)
     - [Turn eTags Off](#turn-etags-off)
 - [Miscellaneous](#miscellaneous)
     - [Set PHP Variables](#set-php-variables)
     - [Custom Error Pages](#custom-error-pages)
+    - [Custom Maintenance Page](#custom-maintenance-page)
     - [Force Downloading](#force-downloading)
     - [Prevent Downloading](#prevent-downloading)
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
+    - [Enable CORS](#enable-cors)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
+    - [Set Custom MIME Types](#set-custom-mime-types)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
     - [Serve WebP/AVIF Images](#serve-webpavif-images)
 
@@ -312,11 +322,59 @@ RewriteCond %{HTTP_REFERER} anotherdomain\.com
 RewriteRule .* - [F]
 ```
 
+### Block Specific User Agents
+This will block specific user agents from accessing your site, useful for blocking scrapers and bad bots.
+``` apacheconf
+RewriteEngine on
+RewriteCond %{HTTP_USER_AGENT} BadBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} EvilScraper [NC]
+RewriteRule .* - [F,L]
+```
+
 ### Prevent Framing the Site
 This prevents the website to be framed (i.e. put into an `iframe` tag), when still allows framing for a specific URI.
 ``` apacheconf
 SetEnvIf Request_URI "/starry-night" allow_framing=true
 Header set X-Frame-Options SAMEORIGIN env=!allow_framing
+```
+
+### Content Security Policy (CSP)
+A Content Security Policy header helps mitigate cross-site scripting (XSS) and other code injection attacks by declaring which dynamic resources are allowed to load.
+``` apacheconf
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'"
+</IfModule>
+```
+Adjust the directives to fit your needs. See the [CSP reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) for all available directives.
+
+### Prevent MIME Type Sniffing
+This prevents browsers from trying to guess ("sniff") the MIME type of a resource, which can have security implications. The browser will trust what the server says and block the resource if it doesn't match the expected type.
+``` apacheconf
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
+```
+
+### Set Referrer Policy
+Control how much referrer information is included with requests. This helps protect user privacy by preventing the full URL from leaking to external sites.
+``` apacheconf
+<IfModule mod_headers.c>
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+```
+
+### Set Permissions Policy
+Restrict which browser features your site can use, such as camera, microphone, geolocation, etc.
+``` apacheconf
+<IfModule mod_headers.c>
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+</IfModule>
+```
+
+### Remove Server Signature
+Prevent Apache from exposing its version number and OS information in HTTP headers and error pages.
+``` apacheconf
+ServerSignature Off
 ```
 
 ## Performance
@@ -409,6 +467,32 @@ If you don’t control versioning with filename-based cache busting, consider lo
 </IfModule>
 ```
 
+### Set Cache-Control Headers
+`Cache-Control` headers provide more fine-grained control over browser caching than Expires headers. You can use both together for maximum compatibility.
+``` apacheconf
+<IfModule mod_headers.c>
+    # Cache CSS and JS for 1 year
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+
+    # Cache images for 1 month
+    <FilesMatch "\.(jpe?g|png|gif|webp|avif|svg|ico)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+
+    # Cache fonts for 1 month
+    <FilesMatch "\.(woff2?|ttf|otf)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+
+    # Do not cache HTML
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+    </FilesMatch>
+</IfModule>
+```
+
 ### Turn eTags Off
 By removing the `ETag` header, you disable caches and browsers from being able to validate files, so they are forced to rely on your `Cache-Control` and `Expires` header. [Source](https://www.askapache.com/htaccess/apache-speed-etags.html)
 ``` apacheconf
@@ -435,6 +519,17 @@ ErrorDocument 500 "Houston, we have a problem."
 ErrorDocument 401 https://error.example.com/mordor.html
 ErrorDocument 404 /errors/halflife3.html
 ```
+
+### Custom Maintenance Page
+Redirect all traffic to a maintenance page while still allowing access from a specific IP address.
+``` apacheconf
+RewriteEngine on
+RewriteCond %{REMOTE_ADDR} !^xxx\.xxx\.xxx\.xxx
+RewriteCond %{REQUEST_URI} !/maintenance.html$ [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpe?g|gif|svg|ico)$ [NC]
+RewriteRule .* /maintenance.html [R=503,L]
+```
+Replace `xxx.xxx.xxx.xxx` with your IP address to retain access while the site is under maintenance.
 
 ### Force Downloading
 Sometimes you want to force the browser to download some content instead of displaying it.
@@ -466,6 +561,17 @@ CDN-served webfonts might not work in Firefox due to [CORS](https://en.wikipedia
 ```
 [Source](https://github.com/h5bp/server-configs-apache/issues/32)
 
+### Enable CORS
+Enable Cross-Origin Resource Sharing (CORS) for your site, allowing other domains to make requests to your server.
+``` apacheconf
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+```
+To restrict access to specific domains, replace `*` with the domain, e.g. `https://example.com`.
+
 ### Auto UTF-8 Encode
 Your text content should always be UTF-8 encoded, no?
 ``` apacheconf
@@ -476,6 +582,15 @@ AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 ```
 [Source](https://github.com/h5bp/server-configs-apache)
+
+### Set Custom MIME Types
+Define custom MIME types for file formats that Apache may not recognize by default.
+``` apacheconf
+AddType application/manifest+json .webmanifest
+AddType application/wasm .wasm
+AddType application/x-ndjson .ndjson
+AddType text/vtt .vtt
+```
 
 ### Switch to Another PHP Version
 If you’re on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. The following snippet should switch the PHP version for you.
