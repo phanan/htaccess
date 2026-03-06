@@ -489,10 +489,10 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 If you’re on a shared host, chances are there are more than one version of PHP installed, and sometimes you want a specific version for your website. The following snippet should switch the PHP version for you.
 
 ``` apacheconf
-AddHandler application/x-httpd-php56 .php
+AddHandler application/x-httpd-php84 .php
 
 # Alternatively, you can use AddType
-AddType application/x-httpd-php56 .php
+AddType application/x-httpd-php84 .php
 ```
 
 ### Disable Internet Explorer Compatibility View
