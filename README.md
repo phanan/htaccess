@@ -55,7 +55,6 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
-    - [Disable Internet Explorer Compatibility View](#disable-internet-explorer-compatibility-view)
     - [Serve WebP Images](#serve-webp-images)
 
 ## Rewrite and Redirection
@@ -147,7 +146,7 @@ RedirectMatch 301 ^/category/(.*)$ /$1
 RedirectMatch 301 ^/(.*)/htaccesselite-ultimate-htaccess-article.html(.*) /htaccess/htaccess.html
 RedirectMatch 301 ^/(.*).html/1/(.*) /$1.html$2
 RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1
-RedirectMatch 301 ^/dreamweaver/(.*)$ /tools/$1
+RedirectMatch 301 ^/old-directory/(.*)$ /new-directory/$1
 RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1
 ```
 [Source](http://www.askapache.com/htaccess/301-redirect-with-mod_rewrite-or-redirectmatch.html#301_Redirects_RedirectMatch)
@@ -341,7 +340,6 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
                                       application/javascript \
                                       application/json \
                                       application/rss+xml \
-                                      application/vnd.ms-fontobject \
                                       application/x-font-ttf \
                                       application/x-web-app-manifest+json \
                                       application/xhtml+xml \
@@ -352,7 +350,6 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
                                       text/css \
                                       text/html \
                                       text/plain \
-                                      text/x-component \
                                       text/xml
     </IfModule>
 
@@ -381,9 +378,6 @@ If you don’t control versioning with filename-based cache busting, consider lo
   # Favicon (cannot be renamed!)
     ExpiresByType image/x-icon                          "access plus 1 week"
 
-  # HTML components (HTCs)
-    ExpiresByType text/x-component                      "access plus 1 month"
-
   # HTML
     ExpiresByType text/html                             "access plus 0 seconds"
 
@@ -392,7 +386,6 @@ If you don’t control versioning with filename-based cache busting, consider lo
 
   # Manifest files
     ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
-    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
   # Media
     ExpiresByType audio/ogg                             "access plus 1 month"
@@ -410,7 +403,6 @@ If you don’t control versioning with filename-based cache busting, consider lo
   # Web fonts
     ExpiresByType application/font-woff2                "access plus 1 month"
     ExpiresByType application/font-woff                 "access plus 1 month"
-    ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
     ExpiresByType application/x-font-ttf                "access plus 1 month"
     ExpiresByType font/opentype                         "access plus 1 month"
     ExpiresByType image/svg+xml                         "access plus 1 month"
@@ -464,10 +456,10 @@ Sometimes you want to force the browser to display some content instead of downl
 ```
 
 ### Allow Cross-Domain Fonts
-CDN-served webfonts might not work in Firefox or IE due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). This snippet solves the problem.
+CDN-served webfonts might not work in Firefox due to [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). This snippet solves the problem.
 ``` apacheconf
 <IfModule mod_headers.c>
-    <FilesMatch "\.(eot|otf|ttc|ttf|woff|woff2)$">
+    <FilesMatch "\.(otf|ttc|ttf|woff|woff2)$">
         Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
 </IfModule>
@@ -493,16 +485,6 @@ AddHandler application/x-httpd-php84 .php
 
 # Alternatively, you can use AddType
 AddType application/x-httpd-php84 .php
-```
-
-### Disable Internet Explorer Compatibility View
-Compatibility View in IE may affect how some websites are displayed. The following snippet should force IE to use the Edge Rendering Engine and disable the Compatibility View.
-
-``` apacheconf
-<IfModule mod_headers.c>
-    BrowserMatch MSIE is-msie
-    Header set X-UA-Compatible IE=edge env=is-msie
-</IfModule>
 ```
 
 ### Serve WebP Images
