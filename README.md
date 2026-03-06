@@ -5,7 +5,7 @@ A collection of useful .htaccess snippets, all in one place.
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use at your own risk.
 
-**IMPORTANT**: These snippets are for Apache 2.2. For Apache 2.4, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2) for breaking changes, most notably in access control configuration.
+**IMPORTANT**: These snippets are for Apache 2.4. If you are still using Apache 2.2, check the `2.2` branch. For details on the breaking changes between 2.2 and 2.4, see the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
 
 ## Credits
 What we are doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While we’ve been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let us know, or just send a PR.
@@ -195,16 +195,15 @@ RewriteRule ^robots.txt - [L]
 ## Security
 ### Deny All Access
 ``` apacheconf
-Deny from all
+Require all denied
 ```
 
 But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
 ``` apacheconf
-Order deny,allow
-Deny from all
-Allow from xxx.xxx.xxx.xxx
+Require all denied
+Require ip xxx.xxx.xxx.xxx
 ```
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
@@ -212,9 +211,9 @@ Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
 ``` apacheconf
-Order deny,allow
-Deny from xxx.xxx.xxx.xxx
-Deny from xxx.xxx.xxx.xxy
+Require all granted
+Require not ip xxx.xxx.xxx.xxx
+Require not ip xxx.xxx.xxx.xxy
 ```
 
 ### Deny Access to Hidden Files and Directories
@@ -234,9 +233,7 @@ RedirectMatch 404 /\..*$
 These files may be left by some text/HTML editors (like Vi/Vim) and pose a great security danger if exposed to public.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
-    Order allow,deny
-    Deny from all
-    Satisfy All
+    Require all denied
 </FilesMatch>
 ```
 [Source](https://github.com/h5bp/server-configs-apache)
@@ -335,23 +332,26 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
     </IfModule>
 
     # Compress all output labeled with one of the following MIME-types
-    AddOutputFilterByType DEFLATE application/atom+xml \
-                                  application/javascript \
-                                  application/json \
-                                  application/rss+xml \
-                                  application/vnd.ms-fontobject \
-                                  application/x-font-ttf \
-                                  application/x-web-app-manifest+json \
-                                  application/xhtml+xml \
-                                  application/xml \
-                                  font/opentype \
-                                  image/svg+xml \
-                                  image/x-icon \
-                                  text/css \
-                                  text/html \
-                                  text/plain \
-                                  text/x-component \
-                                  text/xml
+    # (mod_filter is required for Apache 2.4)
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE application/atom+xml \
+                                      application/javascript \
+                                      application/json \
+                                      application/rss+xml \
+                                      application/vnd.ms-fontobject \
+                                      application/x-font-ttf \
+                                      application/x-web-app-manifest+json \
+                                      application/xhtml+xml \
+                                      application/xml \
+                                      font/opentype \
+                                      image/svg+xml \
+                                      image/x-icon \
+                                      text/css \
+                                      text/html \
+                                      text/plain \
+                                      text/x-component \
+                                      text/xml
+    </IfModule>
 
 </IfModule>
 ```
