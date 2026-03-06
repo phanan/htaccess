@@ -5,7 +5,7 @@ A collection of useful .htaccess snippets, all in one place.
 
 **Disclaimer**: While dropping the snippet into an `.htaccess` file is most of the time sufficient, there are cases when certain modifications might be required. Use at your own risk.
 
-**IMPORTANT**: Apache 2.4 introduces a few breaking changes, most notably in access control configuration. For more information, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2).
+**IMPORTANT**: These snippets are for Apache 2.2. For Apache 2.4, check the [upgrading document](https://httpd.apache.org/docs/2.4/upgrading.html) as well as [this issue](https://github.com/phanan/htaccess/issues/2) for breaking changes, most notably in access control configuration.
 
 ## Credits
 What we are doing here is mostly collecting useful snippets from all over the interwebs (for example, a good chunk is from [Apache Server Configs](https://github.com/h5bp/server-configs-apache)) into one place. While we’ve been trying to credit where due, things might be missing. If you believe anything here is your work and credits should be given, let us know, or just send a PR.
@@ -195,25 +195,16 @@ RewriteRule ^robots.txt - [L]
 ## Security
 ### Deny All Access
 ``` apacheconf
-## Apache 2.2
 Deny from all
-
-## Apache 2.4
-# Require all denied
 ```
 
 But wait, this will lock you out from your content as well! Thus introducing...
 
 ### Deny All Access Except Yours
 ``` apacheconf
-## Apache 2.2
 Order deny,allow
 Deny from all
 Allow from xxx.xxx.xxx.xxx
-
-## Apache 2.4
-# Require all denied
-# Require ip xxx.xxx.xxx.xxx
 ```
 `xxx.xxx.xxx.xxx` is your IP. If you replace the last three digits with `0/12` for example, this will specify a range of IPs within the same network, thus saving you the trouble to list all allowed IPs separately. [Source](http://speckyboy.com/2013/01/08/useful-htaccess-snippets-and-hacks/)
 
@@ -221,15 +212,9 @@ Now of course there's a reversed version:
 
 ### Allow All Access Except Spammers'
 ``` apacheconf
-## Apache 2.2
 Order deny,allow
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
-
-## Apache 2.4
-# Require all granted
-# Require not ip xxx.xxx.xxx.xxx
-# Require not ip xxx.xxx.xxx.xxy
 ```
 
 ### Deny Access to Hidden Files and Directories
@@ -249,13 +234,9 @@ RedirectMatch 404 /\..*$
 These files may be left by some text/HTML editors (like Vi/Vim) and pose a great security danger if exposed to public.
 ``` apacheconf
 <FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
-    ## Apache 2.2
     Order allow,deny
     Deny from all
     Satisfy All
-
-    ## Apache 2.4
-    # Require all denied
 </FilesMatch>
 ```
 [Source](https://github.com/h5bp/server-configs-apache)
@@ -354,28 +335,23 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
     </IfModule>
 
     # Compress all output labeled with one of the following MIME-types
-    # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
-    #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines
-    #  as `AddOutputFilterByType` is still in the core directives).
-    <IfModule mod_filter.c>
-        AddOutputFilterByType DEFLATE application/atom+xml \
-                                      application/javascript \
-                                      application/json \
-                                      application/rss+xml \
-                                      application/vnd.ms-fontobject \
-                                      application/x-font-ttf \
-                                      application/x-web-app-manifest+json \
-                                      application/xhtml+xml \
-                                      application/xml \
-                                      font/opentype \
-                                      image/svg+xml \
-                                      image/x-icon \
-                                      text/css \
-                                      text/html \
-                                      text/plain \
-                                      text/x-component \
-                                      text/xml
-    </IfModule>
+    AddOutputFilterByType DEFLATE application/atom+xml \
+                                  application/javascript \
+                                  application/json \
+                                  application/rss+xml \
+                                  application/vnd.ms-fontobject \
+                                  application/x-font-ttf \
+                                  application/x-web-app-manifest+json \
+                                  application/xhtml+xml \
+                                  application/xml \
+                                  font/opentype \
+                                  image/svg+xml \
+                                  image/x-icon \
+                                  text/css \
+                                  text/html \
+                                  text/plain \
+                                  text/x-component \
+                                  text/xml
 
 </IfModule>
 ```
