@@ -55,7 +55,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Allow Cross-Domain Fonts](#allow-cross-domain-fonts)
     - [Auto UTF-8 Encode](#auto-utf-8-encode)
     - [Switch to Another PHP Version](#switch-to-another-php-version)
-    - [Serve WebP Images](#serve-webp-images)
+    - [Serve WebP/AVIF Images](#serve-webpavif-images)
 
 ## Rewrite and Redirection
 Note: It is assumed that you have `mod_rewrite` installed and enabled.
@@ -487,13 +487,19 @@ AddHandler application/x-httpd-php84 .php
 AddType application/x-httpd-php84 .php
 ```
 
-### Serve WebP Images
-If [WebP images](https://developers.google.com/speed/webp/?csw=1) are supported and an image with a .webp extension and the same name is found at the same place as the jpg/png image that is going to be served, then the WebP image is served instead.
+### Serve WebP/AVIF Images
+If a modern format image (AVIF or WebP) with the same name exists alongside the original jpg/png, it will be served instead. AVIF is preferred over WebP when the browser supports both.
 
 ``` apacheconf
 RewriteEngine On
+
+# Serve AVIF if supported and available
+RewriteCond %{HTTP_ACCEPT} image/avif
+RewriteCond %{DOCUMENT_ROOT}/$1.avif -f
+RewriteRule (.+)\.(jpe?g|png)$ $1.avif [T=image/avif,E=accept:1]
+
+# Otherwise, serve WebP if supported and available
 RewriteCond %{HTTP_ACCEPT} image/webp
 RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
 ```
-[Source](https://github.com/vincentorback/WebP-images-with-htaccess)
