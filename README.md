@@ -252,11 +252,11 @@ RewriteEngine on
 RewriteCond %{HTTP_REFERER} !^$
 
 RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?example.com [NC]
-RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
+RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico)$ - [NC,F,L]
 
 # If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) http://example.com/blocked.png [R,L]
 ```
 
 ### Disable Image Hotlinking for Specific Domains
@@ -265,11 +265,11 @@ Sometimes you want to disable image hotlinking from some bad guys only.
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite\.com [NC,OR]
 RewriteCond %{HTTP_REFERER} ^https?://(.+\.)?badsite2\.com [NC,OR]
-RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
+RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico)$ - [NC,F,L]
 
 # If you want to display a “blocked” banner in place of the hotlinked image,
 # replace the above rule with:
-# RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
+# RewriteRule \.(jpe?g|png|gif|bmp|webp|avif|svg|ico) http://example.com/blocked.png [R,L]
 ```
 
 ### Password Protect a Directory
