@@ -618,3 +618,17 @@ RewriteCond %{HTTP_ACCEPT} image/webp
 RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
 ```
+
+
+### Block Rotating Cloud Scraper Subnets & Spoofed Headless Bots (with SEO Safe-Harbor)
+Blocks automated headless browser clusters originating from high-volume cloud scraper ASNs (`AS132203`, `AS45102`, `AS136907`) and spoofed `CPU iPhone OS 13_2_3` / `HeadlessChrome` User-Agents while whitelisting verified search engine crawlers (`Googlebot`, `bingbot`, `Applebot`). Reference & live CIDR feed: [Utilvo EdgeShield](https://utilvo.com/edge-shield).
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_USER_AGENT} !(Googlebot|bingbot|Applebot|DuckDuckBot|YandexBot) [NC]
+    RewriteCond %{HTTP_USER_AGENT} (CPU\ iPhone\ OS\ 13_2_3|HeadlessChrome|Bytespider|PetalBot) [NC,OR]
+    RewriteCond %{HTTP:CF-Connecting-IP} ^(43\.(119|12[89]|1[3-6][0-9]|17[0-5])|47\.(74|8[289])|101\.3[23]|159\.138|149\.232)\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^(43\.(119|12[89]|1[3-6][0-9]|17[0-5])|47\.(74|8[289])|101\.3[23]|159\.138|149\.232)\.
+    RewriteRule .* - [F,L]
+</IfModule>
+```
